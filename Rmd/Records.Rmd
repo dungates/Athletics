@@ -1,6 +1,7 @@
 ---
 title: "Which World Record is Most Impressive?"
 author: "Duncan Gates"
+date: "[Return to Website](https://duncangates.me)"
 output:
   rmdformats::html_docco:
     self_contained: true # Other options are downcute, material, readthedown, html_clean, html_docco, lockdown, https://github.com/juba/rmdformats
