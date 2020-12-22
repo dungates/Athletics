@@ -1,0 +1,431 @@
+---
+title: "Scraping and Cleaning Running World Record Data"
+author: "Duncan Gates"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  rmdformats::downcute:
+    self_contained: true # Other options are downcute, material, readthedown, html_clean, html_docco, lockdown, https://github.com/juba/rmdformats
+    thumbnails: false
+    lightbox: true
+    gallery: false
+    highlight: tango
+    number_sections: false
+---
+
+# Initial Data Obtain
+
+```{r}
+knitr::opts_chunk$set(message = F, warning = F)
+library(rvest)
+library(xml2)
+library(tidyverse)
+library(hrbrthemes)
+library(here)
+library(lubridate)
+```
+
+## Initial Data Scrape with rvest
+
+Men's world records scrape.
+
+```{r echo = T}
+url <- "https://www.worldathletics.org/records/by-category/world-records"
+mens_world_records <- url %>% 
+  read_html() %>% 
+  html_nodes(xpath='//*[@id="menoutdoor"]/table') %>% 
+  html_table()
+mens_world_records <- mens_world_records[[1]]
+```
+
+Women's world records scrape.
+
+```{r echo = T}
+womens_world_records <- url %>% 
+  read_html() %>% 
+  html_nodes(xpath='//*[@id="womenoutdoor"]/table') %>% 
+  html_table()
+womens_world_records <- womens_world_records[[1]]
+```
+
+
+https://en.wikipedia.org/wiki/Athletics_record_progressions for later bigger data obtain on each event.
+
+## Men's and Women's Current World Records Data Cleaning
+
+```{r echo = T}
+mens_world_records <- mens_world_records %>% 
+  select(Discipline, Perf, Competitor, DOB, Country, Date) %>%
+  mutate(DOB = lubridate::dmy(DOB),
+         Date = lubridate::dmy(Date)) %>%
+  mutate(Perf = gsub("h #", "", Perf),
+         Perf = str_remove(Perf, "h"),
+         Perf = str_remove(Perf, "   *"),
+         Perf = str_remove(Perf, "\\*"),
+         Perf = str_remove(Perf, "   (i)"),
+         Discipline = factor(Discipline),
+         Country = factor(Country))
+
+womens_world_records <- womens_world_records %>% 
+  select(Discipline, Perf, Competitor, DOB, Country, Date) %>%
+  mutate(DOB = lubridate::dmy(DOB),
+         Date = lubridate::dmy(Date)) %>%
+  mutate(Perf = gsub("h #", "", Perf),
+         Perf = gsub(" #", "", Perf),
+         Perf = str_remove(Perf, "h"),
+         Perf = str_remove(Perf, "Wo   *"),
+         Perf = str_remove(Perf, "Wo"),
+         Perf = str_remove(Perf, " Mx"),
+         Perf = str_remove(Perf, "\\*"),
+         Perf = str_remove(Perf, "   (i)"),
+         Discipline = factor(Discipline),
+         Country = factor(Country))
+womens_world_records$Perf[8] <- "5:23.75" # Can't tell why (i) is not getting removed
+# xlsx::write.xlsx(womens_world_records, here("Data/womens_world_records.xlsx"))
+# xlsx::write.xlsx(mens_world_records, "mens_world_records.xlsx") # Not sure how to change times like I need to here -> character to numeric and in hms, ms, and s format so I just wrote it to excel and used =cellvalue *86400 which makes it seconds
+# Turns out correct way to do this is either ms or hms and wrap that in period_to_seconds from lubridate
+# I then use scale_y_time in ggplot to make this adapt and breaks_pretty from scales to determine how many times should be listed
+```
+
+
+## All Current Running Records
+
+```{r fig.width = 10}
+# These excel files were modified with the aforementioned seconds changes, so don't run the write.xlsx functions above unless you want to reproduce the full data cleaning, which is done correctly and more efficiently later on
+mens_world_records_seconds <- readxl::read_excel(here("Data/mens_world_records.xlsx"), range = "B1:G46")
+womens_world_records_seconds <- readxl::read_excel(here("Data/womens_world_records.xlsx"), range = "B1:G50")
+womens_world_records_seconds_join <- womens_world_records_seconds %>% 
+  slice(1:25) %>%
+  mutate(Gender = "Women")
+mens_world_records_seconds_join <- mens_world_records_seconds %>%
+  slice(1:21) %>% 
+  mutate(Gender = "Men")
+mens_womens_records <- full_join(womens_world_records_seconds_join, mens_world_records_seconds_join)
+# write_rds(mens_womens_records, here("Data/mens_womens_current_records.rds"))
+```
+
+
+## Progression of the 100 meter world record
+
+I downloaded this file from somewhere random, I think it may have been a Tableau portfolio so credit to whoever made that.
+
+```{r}
+world_record_100 <- readr::read_csv(file = here("Data/100mworldrecord.csv"), col_types = list(col_character(), 
+                                                                                                                             col_character(),
+                                                                                                                             col_character(),
+                                                                                                                             col_character(),
+                                                                                                                             col_character(),
+                                                                                                                             col_character(),
+                                                                                                                             col_double(),
+                                                                                                                             col_character(),
+                                                                                                                             col_double()))
+world_record_100$`Day of Date`[35] <- "14-Oct-68"
+
+foo <- function(x, year=1968){
+  m <- year(x) %% 100
+  year(x) <- ifelse(m > year %% 100, 1900+m, 2000+m)
+  x
+} # Function that rewrites date with lubridate differing between reading in 21st and 20th centuries based on year entered as second parameter. Year should be set equal to first occurring date in the 20th century.
+
+world_record_100_clean <- world_record_100 %>% 
+  rename(Time = `Min. Time`) %>%
+  mutate(Date = foo(dmy(`Day of Date`), 1911))
+
+onehundred_progression <- world_record_100_clean %>%
+  select(-`Day of Date`, Athlete, Nationality, `Location of race`, Record, Wind, Time, Date, -Nationality_1, -Auto) %>%
+  relocate(Date, .before = Athlete)
+
+# write_rds(onehundred_progression, here("Data/onehundred_progression.rds"))
+```
+
+
+# Getting Data From Wikipedia
+
+```{r}
+wikipedia_table_scrape <- function(url, xpath = '//*[@id="mw-content-text"]/div[1]/table[1]') {
+  url <- url
+  progression <- url %>% 
+  read_html() %>% 
+  html_nodes(xpath=xpath) %>% 
+  html_table()
+progression <- progression[[1]]
+}
+```
+
+
+## 200m Data Obtain
+
+```{r}
+twohundred_progression_one <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_200_metres_world_record_progression",
+                       xpath = '//*[@id="mw-content-text"]/div[1]/table[1]')
+twohundred_progression_two <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_200_metres_world_record_progression",
+                       xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+
+## 400m Data Obtain
+
+```{r}
+fourhundred_progression_one <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_400_metres_world_record_progression",
+                       xpath = '//*[@id="mw-content-text"]/div[1]/table[1]')
+fourhundred_progression_two <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_400_metres_world_record_progression",
+                       xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+
+## 800m Data Obtain
+
+```{r}
+eighthundred_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_800_metres_world_record_progression")
+```
+
+## 1000m Data Obtain
+
+```{r}
+thousand_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/1000_metres_world_record_progression")
+```
+
+
+## 1500m Data Obtain
+
+```{r}
+fifteenhundred_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/1500_metres_world_record_progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+
+## Mile Data Obtain
+
+```{r}
+# /Users/dunk/Github/Athletics/Men's Mile Run Record Progression.xlsx
+mile_progression <- readxl::read_excel(here("Data/Men's Mile Run Record Progression.xlsx"))
+mile_progression_clean <- mile_progression %>%
+  mutate(Time = str_remove(Time, "\\*"),
+         Time = str_remove(Time, "\\*"),
+         Date = str_remove(Date, "\\[5\\]"),
+         Date = dmy(Date))
+```
+
+
+## 3000m Data Obtain
+
+
+```{r}
+threethousand_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Men%27s_3000_metres_world_record_progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+## 2 mile Data Obtain
+
+```{r}
+twomile <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Two_miles#World_Record_Progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[4]')
+```
+
+
+## 5000m Data Obtain
+
+```{r}
+fivethousand_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/5000_metres_world_record_progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+
+
+## 10000m Data Obtain
+
+```{r}
+tenthousand_progression <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/10000_metres_world_record_progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[2]')
+```
+
+
+
+## Half Marathon Data Obtain
+
+```{r}
+halfmarathon <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Half_marathon_world_record_progression")
+```
+
+
+## Marathon Data Obtain
+
+
+```{r}
+marathon <- wikipedia_table_scrape(url = "https://en.wikipedia.org/wiki/Marathon_world_record_progression",
+                                                     xpath = '//*[@id="mw-content-text"]/div[1]/table[1]')
+```
+
+
+# Data Combine and Clean
+
+Things get a little messy here but I maintain that this was the most efficient way to comb through the data, each dataset has similar parts that need to be cleaned but not exactly the same making it not worth the time to write a cleaning algorithm with extremely complicated regex. Additionally, there are different column names furthering the complexity of the issue, so instead I clean each dataset and bind it to the preceding one, adding to each bind as I go. Upon finishing data cleaning I add a column for distance before binding, the final dataframe is then written to the data as an rds, and a csv for kaggle.
+
+```{r}
+onehundred_progression_clean <- world_record_100_clean %>% select(Athlete, Date, Nationality, Time, `Location of race`) 
+twohundred_progression_clean_one <- twohundred_progression_one %>% 
+  select(Athlete, Date, Nationality, Time, `Location of race`) %>%
+  mutate(Date = str_remove(Date, "\\[2\\]"),
+         Date = str_remove(Date, "\\[3\\]"),
+         Time = str_remove(Time, "y"),
+         Time = str_remove(Time, "A"),
+         Time = str_remove(Time, "\\+")) %>%
+  mutate(Date = mdy(Date)) %>%
+  mutate(Time = as.double(Time))
+twohundred_progression_clean_two <- twohundred_progression_two %>% 
+  select(Athlete, Date, Nationality, Time, `Location of race`) %>%
+  mutate(Date = str_remove(Date, "\\[2\\]"),
+         Date = str_remove(Date, "\\[1\\]\\[5\\]\\[6\\]"),
+         Time = str_remove(Time, "y"),
+         Time = str_remove(Time, " A"),
+         Time = str_remove(Time, "\\+")) %>%
+  mutate(Date = mdy(Date)) %>%
+  mutate(Time = as.double(Time))
+two_hundred_final <- bind_rows(twohundred_progression_clean_one, twohundred_progression_clean_two) %>% 
+  mutate(Distance = "200 Meters")
+oneandtwo <- onehundred_progression_clean %>% 
+  mutate(Distance = "100 Meters") %>%
+  bind_rows(two_hundred_final)
+
+fourhundred_clean_one <- fourhundred_progression_one %>%
+  select(Athlete, Date, Nationality, Time, `Location of race`) %>%
+  mutate(Date = str_remove(Date, "\\[1\\]"),
+         Date = str_remove(Date, "\\[2\\]"),
+         Date = str_remove(Date, "\\[4\\]"),
+         Date = str_remove(Date, "\\[note 1\\]\\[3\\]:49"),
+         Time = str_remove(Time, "y"),
+         Time = str_remove(Time, "A"),
+         Time = str_remove(Time, "\\+")) %>%
+  mutate(Date = mdy(Date)) %>%
+  mutate(Time = as.double(Time))
+fourhundred_clean_two <- fourhundred_progression_two %>%
+  select(Athlete, Date, Nationality, Time, `Location of race`) %>%
+  mutate(Date = str_remove(Date, "\\[1\\]"),
+         Date = str_remove(Date, "\\[5\\]"),
+         Time = str_remove(Time, " A")) %>%
+  mutate(Date = mdy(Date)) %>%
+  mutate(Time = as.double(Time))
+
+fourhundred_clean_final <- bind_rows(fourhundred_clean_two, fourhundred_clean_one)
+
+onetwofour <- fourhundred_clean_final %>%
+  mutate(Distance = "400 Meters") %>% 
+  bind_rows(oneandtwo)
+
+eighthundred_clean <- eighthundred_progression %>%
+  select(Athlete, Date, Time, `Location`) %>%
+  mutate(Location = str_remove(Location, "\\[1\\]"),
+         Date = str_remove(Date, "\\[5\\]"),
+         Time = str_remove(Time, " A"),
+         Time = str_remove(Time, "\\+"),
+         Time = str_remove(Time, "y")) %>%
+  mutate(Date = ymd(Date)) %>%
+  mutate(Time = period_to_seconds(ms(Time))) %>%
+  mutate(Time = as.double(Time)) %>%
+  rename(`Location of race` = Location)
+
+onetwofoureight <- eighthundred_clean %>%
+  mutate(Distance = "800 Meters") %>%
+  bind_rows(onetwofour)
+
+thousand_progression_clean <- thousand_progression %>%
+  mutate(Date = str_remove(Date, "\\[1\\]")) %>%
+  mutate(Date = ymd(Date)) %>%
+  mutate(Time = period_to_seconds(ms(Time))) %>%
+  mutate(Time = as.double(Time)) %>%
+  rename(Nationality = Country, `Location` = Venue) %>%
+  mutate(Distance = "1000 Meters")
+fivetot_clean <- onetwofoureight %>%
+  rename(Location = `Location of race`) %>%
+  bind_rows(thousand_progression_clean)
+
+fifteenhundred_clean <- fifteenhundred_progression %>%
+  select(-Auto) %>%
+  rename(Location = Place) %>%
+  mutate(Date = ymd(Date),
+         Time = str_remove(Time, "\\+")) %>%
+  mutate(Distance = "1500 Meters",
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time))
+sixtot_clean <- fivetot_clean %>%
+  bind_rows(fifteenhundred_clean)
+
+
+mile_progression_final <- mile_progression_clean %>%
+  select(Time, Athlete, Nationality, Date, Venue) %>%
+  rename(Location = Venue) %>%
+  mutate(Date = ymd(Date),
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time),
+         Distance = "One Mile")
+seventot_clean <- sixtot_clean %>%
+  bind_rows(mile_progression_final)  
+  
+threethousand_clean <- threethousand_progression %>%
+  rename(Location = Place) %>%
+  mutate(Date = str_remove(Date, "\\[1\\]"),
+         Date = ymd(Date),
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time),
+         Distance = "3000 Meters")
+eighttot_clean <- seventot_clean %>%
+  bind_rows(threethousand_clean)
+
+
+twomile_clean <- twomile %>%
+  rename(Nationality = PLACE, Athlete = ATHLETE, Date = DATE, Time = TIME) %>%
+  mutate(Date = ymd(Date),
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time),
+         Distance = "Two Mile")
+ninetot_clean <- eighttot_clean %>%
+  bind_rows(twomile_clean)
+
+fivethousand_clean <- fivethousand_progression %>%
+  mutate(Location = str_remove(Location, "\\[1\\]"),
+         Location = str_remove(Location, "\\[4\\]"),
+         Date = ymd(Date),
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time),
+         Distance = "5000 Meters")
+tentot_clean <- ninetot_clean %>%
+  bind_rows(fivethousand_clean)
+
+tenthousand_clean <- tenthousand_progression %>%
+  select(-Auto) %>%
+  rename(Location = Place) %>%
+  mutate(Location = str_remove(Location, "\\[1\\]"),
+         Date = mdy(Date),
+         Time = period_to_seconds(ms(Time)),
+         Time = as.double(Time),
+         Distance = "10000 Meters")
+eleventot_clean <- tentot_clean %>%
+  bind_rows(tenthousand_clean)
+
+halfmarathon_clean <- halfmarathon %>%
+  select(Time, Nationality, Date, Name, `Event/Place`) %>%
+  rename(Location = `Event/Place`, Athlete = Name) %>%
+  arrange(Time) %>%
+  mutate(Location = str_remove(Location, "\\[1\\]"),
+         Date = dmy(Date),
+         Time = ifelse(Date <= "1993-04-15", period_to_seconds(hms(Time)), period_to_seconds(ms(Time))),
+         Time = as.double(Time),
+         Distance = "Half Marathon")
+halfmarathon_clean$Time[40] <- 3624
+twelvetot_clean <- eleventot_clean %>%
+  bind_rows(halfmarathon_clean)
+
+marathon_clean <- marathon %>%
+  select(Time, Nationality, Date, Name, `Event/Place`) %>%
+  rename(Location = `Event/Place`, Athlete = Name) %>%
+  arrange(Time) %>%
+  mutate(Date = str_remove(Date, "\\[nb 6\\]"),
+         Date = mdy(Date),
+         Time = period_to_seconds(hms(Time)),
+         Time = as.double(Time),
+         Distance = "Marathon")
+thirteentot_clean <- twelvetot_clean %>%
+  bind_rows(marathon_clean)
+# write_csv(thirteentot_clean, here("Data/RunningRecordsOverTime.rds"))
+# write_rds(thirteentot_clean, here("Data/RunningRecordsOverTime.rds"))
+```
+
