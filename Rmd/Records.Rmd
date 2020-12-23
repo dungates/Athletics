@@ -14,6 +14,11 @@ output:
       after_body: footer.html
 ---
 
+```{css echo = F}
+h1 {
+  text-align: center;
+}
+```
 
 ```{r include = F}
 library(gganimate)
@@ -44,11 +49,11 @@ htmltools::tagList(rmarkdown::html_dependency_font_awesome()) # Needed so fa's i
 theme_set(theme_ipsum_pub())
 ```
 
-<center>
-# Current Running World Records
-</center>
 
-This plot shows men's world records for running at each distance. It's hard to read much here since the marathon and 100 km are such long distances all other records sort of lose meaning on a graph. ~40,000 meters is a lot compaared to 100 meters, but astonishingly the pace difference is not that disparate, falling by less than half at ~55.4% of the pace.
+# Current Running World Records
+
+
+This plot shows men's world records for running at each distance. It's hard to read much here since the marathon and 100 km are such long distances all other records sort of lose meaning on a graph. ~40,000 meters is a lot compared to 100 meters, but astonishingly the pace difference is not that disparate, falling by less than half at ~55.4% of the pace.
 
 ```{r running-time-distance, fig.width = 10}
 # Read in the data
@@ -157,7 +162,7 @@ mens_world_records_seconds %>%
   slice(5:10) %>%
   ggplot(aes(x = Discipline, y = Perf, group = 1)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = Competitor), size = 5, point.padding = 5) + 
+  ggrepel::geom_label_repel(aes(label = Competitor), size = 4, point.padding = 5) + 
   stat_summary(fun.y = sum, geom = "line", color = "deepskyblue4", linetype = "dashed") +
   scale_y_time() + 
   labs(x = "Distance", y = "Time", title = "Men's Middle Distance Records") +
@@ -198,7 +203,7 @@ mens_world_records_seconds %>%
   slice(-2, -3, -8) %>% # SELECT OUT UNNECESSARY ONES: kamworor old world record for half, mo farah for timed distance, cheptegei and kipruto for road records
   ggplot(aes(x = Discipline, y = Perf, group = 1)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = paste0(Competitor, ": ", Date)), size = 5, point.padding = 5) + 
+  ggrepel::geom_label_repel(aes(label = paste0(Competitor, ": \n", Date)), size = 4) + 
   stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
   scale_y_time(breaks = breaks_pretty(n = 8)) + 
   labs(x = "Distance", y = "Time", title = "Men's Long Distance Records") +
@@ -219,7 +224,7 @@ mens_world_records_seconds %>%
              y = Pace, group = 1)) + 
   geom_point(color = "deepskyblue4") +
   ggrepel::geom_label_repel(aes(label = paste0(round((Pace), 2), ":", 
-                                               Competitor, "\n", Date)), size = 5) +
+                                               Competitor, "\n", Date)), size = 4) +
   stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
   scale_y_continuous(breaks = breaks_pretty(n = 10)) + 
   ggtitle("Men's Long Distance World Record Pace") +
@@ -254,7 +259,7 @@ mens_womens_records %>%
 ```
 
 
-## Faceted Men's and Women's Records with Pace
+## Men's and Women's Records with Pace
 
 ```{r fig.width = 14, height = 14}
 faceted_records <- mens_womens_records %>% 
@@ -272,7 +277,7 @@ faceted_records <- mens_womens_records %>%
 ggplot(data = faceted_records, aes(x = Discipline, y = Perf, color = Gender, group = Gender)) + 
   geom_point() + 
   geom_line(linetype = "dashed") +
-  ggrepel::geom_text_repel(aes(label = paste(round(Pace, 2), "m/s")), point.padding = 5) +
+  ggrepel::geom_text_repel(aes(label = paste(round(Pace, 2), "m/s")), nudge_y = 1, nudge_x = 0.1) +
   facet_wrap( ~ Distance, scales = "free") +
   scale_color_manual(values = c("deepskyblue3", "darkorchid4")) +
   scale_y_time(breaks = scales::breaks_pretty(10), limits = c(0, NA)) + 
@@ -280,7 +285,7 @@ ggplot(data = faceted_records, aes(x = Discipline, y = Perf, color = Gender, gro
        and 
        <span style='color:#9932cc;'>Women's</span>
        Running World Records") +
-  theme(axis.text.x = element_text(size = 7),
+  theme(axis.text.x = element_text(size = 5),
         plot.title = element_markdown(hjust = 0.5),
         legend.position = "none")
 ```
@@ -310,9 +315,9 @@ ggplot(records_difference, aes(x = Discipline, y = Ratio, fill = Ratio)) +
         legend.position = "none")
 ```
 
-<center>
+
 # Progression of the 100 meter world record
-</center>
+
 
 The vast majority of world records have been broken at positive wind speeds, is this because the races are run in non-windy conditions, or wind speed has a drastic effect on runners? Given how minor the negative wind speeds are when it is broken, it is likely that this is because it is having a significant impact.
 
@@ -356,7 +361,7 @@ world_record_100_clean %>%
   ggrepel::geom_label_repel(aes(label = ifelse(Record == "Ratified" & Wind > 0,
                                                paste("Wind Speed:", Wind),
                                                ""),
-                                fill = Wind), size = 1, point.padding = 5, max.overlaps = 20) +
+                                fill = Wind), size = 3, max.overlaps = 20) +
   scale_x_date(breaks = scales::breaks_pretty(n = 10)) +
   facet_wrap( ~ Record) +
   labs(x = "Date", title = "World Records in the 100 Meters") +
@@ -392,7 +397,7 @@ ggplot(record_improve, aes(x = Date, y = Time, fill = Time_diff)) +
                                                "\n Improvement: ", 
                                                (100*round(Time_diff, 4)), 
                                                "%"), ""),
-                                fill = Time_diff), size = 1) +
+                                fill = Time_diff), size = 3) +
   scale_x_date(breaks = scales::breaks_pretty(n = 10)) +
   labs(x = "Date", title = "Ratified World Records in the 100 Meters") +
   theme(plot.title = element_text(hjust = 0.5),
@@ -413,14 +418,11 @@ record_improve_graph <- ggplot(record_improve, aes(x = Date, y = Time)) +
   transition_time(Date) +
   ease_aes('linear')
 record_improve_graph
-animate(record_improve_graph,
-        duration = 30,
-        nframes = 30)
 ```
 
-<center>
+
 # Running Records Over Time
-</center>
+
 
 ```{r fig.width = 16, fig.height = 16}
 runningrecords <- read_rds(here("Data/RunningRecordsOverTime.rds"))
@@ -434,7 +436,7 @@ col = grDevices::colorRampPalette(c("skyblue", "dodgerblue4"))
 ggplot(runningrecords, aes(x = Date, y = Time, color = factor(Distance))) +
   geom_line() +
   geom_point() +
-  facet_wrap( ~ Distance, scales = "free_y") +
+  facet_wrap( ~ factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon")), scales = "free_y") +
   scale_color_manual(values = col(13)) +
   ggtitle("All Records Over Time") +
   scale_y_time(breaks = scales::breaks_pretty(n = 10)) +
