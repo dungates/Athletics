@@ -22,6 +22,7 @@ h1 {
 
 ```{r include = F}
 library(gganimate)
+library(transformr)
 library(ggtext)
 library(rvest)
 library(xml2)
