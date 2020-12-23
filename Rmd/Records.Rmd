@@ -554,15 +554,16 @@ anim_records <- runningrecords %>%
   
 
 anim <- ggplot(anim_records, aes(x = Date, y = Time, color = factor(Distance))) +
-  geom_line() +
-  geom_point() +
+  geom_line(aes(group = 1)) +
+  geom_point(size = 2) +
   geom_label(aes(label = paste0(round(Improvement, 2), "%"))) +
   facet_wrap( ~ factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon")), scales = "free_y") +
   scale_color_manual(values = col(13)) +
   ggtitle("All Records Over Time") +
   scale_y_time(breaks = scales::breaks_pretty(n = 10)) +
-  theme(legend.position = "none") +
-  transition_time(Date) +
+  theme(legend.position = "none",
+        axis.text.y = element_blank()) +
+  transition_reveal(Date) +
   ease_aes('linear')
 anim
 ```
