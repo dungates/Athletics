@@ -550,19 +550,25 @@ runningrecords %>%
 anim_records <- runningrecords %>%
   arrange(Distance, Date) %>%
   group_by(Distance) %>%
-  mutate(Improvement = 100*(1-(Time / lag(Time))))
+  mutate(Improvement = 100*(1-(Time / lag(Time)))) %>%
+  mutate()
   
 
 anim <- ggplot(anim_records, aes(x = Date, y = Time, color = factor(Distance))) +
   geom_line(aes(group = 1)) +
-  geom_point(size = 2) +
+  geom_point(aes(group = 1), size = 2) +
   geom_label(aes(label = paste0(round(Improvement, 2), "%"))) +
   facet_wrap( ~ factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon")), scales = "free_y") +
   scale_color_manual(values = col(13)) +
   ggtitle("All Records Over Time") +
-  scale_y_time(breaks = scales::breaks_pretty(n = 10)) +
+  scale_y_time(breaks = scales::breaks_pretty(n = 2)) +
+  scale_x_date(breaks = scales::breaks_pretty(n = 6)) +
+  theme_minimal() +
+  labs(subtitle = "Label is Improvement on Previous Record") +
   theme(legend.position = "none",
-        axis.text.y = element_blank()) +
+        axis.text.y = element_text(size = 6, angle = 90, face = "bold"),
+        axis.text.x = element_text(angle = 90, face = "bold"),
+        plot.title = element_text(hjust = "center")) +
   transition_reveal(Date) +
   ease_aes('linear')
 anim
