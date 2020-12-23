@@ -3,6 +3,7 @@ ggplot2
 dplyr
 data.table
 gganimate
+transformr
 ggtext
 xml2
 rvest
@@ -19,4 +20,4 @@ knitr
 lubridate
 scales
 gt
-transformr
+countrycode

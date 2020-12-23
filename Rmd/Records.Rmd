@@ -33,6 +33,7 @@ library(knitr)
 library(lubridate)
 library(scales)
 library(gt)
+library(countrycode)
 
 ## Global options
 options(max.print="75")
@@ -46,6 +47,8 @@ opts_chunk$set(echo=FALSE,
                fig.align = 'center')
 opts_knit$set(width=100)
 
+
+col = grDevices::colorRampPalette(c("skyblue", "dodgerblue4")) # Color palette maker for blue theme
 htmltools::tagList(rmarkdown::html_dependency_font_awesome()) # Needed so fa's in footer will show
 theme_set(theme_ipsum_pub())
 ```
@@ -54,7 +57,7 @@ theme_set(theme_ipsum_pub())
 # Current Running World Records
 
 
-This plot shows men's world records for running at each distance. It's hard to read much here since the marathon and 100 km are such long distances all other records sort of lose meaning on a graph. ~40,000 meters is a lot compared to 100 meters, but astonishingly the pace difference is not that disparate, falling by less than half at ~55.4% of the pace.
+This initial plot shows men's world records for running at each distance. It's hard to read much here since the marathon and 100 km are such long distances all other records sort of lose meaning on a graph. ~40,000 meters is a lot compared to 100 meters, but astonishingly the pace difference is not that disparate, falling by less than half at ~55.4% of the pace.
 
 ```{r running-time-distance, fig.width = 10}
 # Read in the data
@@ -78,6 +81,30 @@ mens_world_records_seconds %>%
         plot.title = element_text(hjust = 0.5))
 ```
 
+Looking at this by the distance in meters without the 100km event we see an almost perfectly linear trend in distance vs. time. To identify trend it is probably more useful to look at change in pace by event which I do in the next graph
+
+```{r}
+mens_world_records_seconds %>% 
+  mutate(Perf = as.numeric(Perf),
+         Discipline = factor(Discipline, levels = c("100 Metres","200 Metres","400 Metres","800 Metres","1000 Metres","1500 Metres",
+                                                    "One Mile","2000 Metres","3000 Metres","5000 Metres", "5 Kilometres", "10,000 Metres", "10 Kilometres","20,000 Metres","One Hour","Half Marathon","25,000 Metres","30,000 Metres","Marathon","100 Kilometres")),
+         Competitor = str_to_title(Competitor)) %>%
+  slice(1:21) %>%
+  slice(-15, -11, -13, -16) %>% # SELECT OUT UNNECESSARY ONES: kamworor old world record for half, mo farah for timed distance, cheptegei and kipruto for road records
+  mutate(Distance = c(100,200,400,800,1000,1500,1609.344, 2000, 3000, 5000, 10000, 20000, 21097.5, 25000, 30000, 42195, 100000)) %>%
+  slice(1:16) %>%
+  ggplot(aes(x = Distance, y = Perf)) + 
+  geom_point(color = "deepskyblue4") + 
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
+  scale_y_time(labels = time_format("%H:%M:%S")) +
+  scale_x_continuous(labels = scales::comma, breaks = pretty_breaks(n = 10)) +
+  labs(x = "Distance (Meters)", y = "Time", title = "Current Men's Running World Records") +
+  theme(axis.text.x = element_text(size = 5),
+        plot.title = element_text(hjust = 0.5))
+```
+
+Pace falls consistently, but this definitely needs to be looked at in ranges that make sense, the athletes in the long distance events could not cross over into the sprint territory, Usain Bolt's average pace is going almost twice as fast as Eliud Kipchoge during the marathon. 
+
 ```{r running-pace-distance, fig.width = 10}
 # Realized this would be better for men and women in one graph, saving for posterity
 mens_world_records_seconds %>% 
@@ -89,15 +116,15 @@ mens_world_records_seconds %>%
   mutate(Distance = c(100,200,400,800,1000,1500,1609.344, 2000, 3000, 5000, 10000, 20000, 21097.5, 25000, 30000, 42195, 100000),
          Competitor = str_to_title(Competitor)) %>%
   mutate(Pace = Distance/Perf) %>%
-  ggplot(aes(x = Discipline, y = Pace, group = 1)) + 
+  ggplot(aes(x = Distance, y = Pace, group = 1)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = paste(round(Pace, 2), ":", Competitor)), size = 4, point.padding = 5, nudge_y = -0.1) + 
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
+  ggrepel::geom_label_repel(aes(label = paste0(round(Pace, 2), ": ", Competitor)), size = 3, nudge_y = -0.1) + 
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
   scale_y_continuous(breaks = breaks_pretty(n = 10)) + 
   ggtitle("Pace by Distance") +
   labs(x = "", y = "Pace (m/s)") +
   theme(plot.title = element_text(hjust = 0.5),
-        axis.text.x = element_text(size = 5))
+        axis.text.x = element_text(size = 6))
 ```
 
 
@@ -105,7 +132,7 @@ mens_world_records_seconds %>%
 
 ## Separated by Track, Middle Distance, and Long Distance
 
-The track world records are what I consider to be sprints, which are the 100 through 800 meters. I also add the 300 meters and 60 meters in this part since it is a somewhat significant event, and useful for analyzing pace decline rate. The arbitrary distance of one lap of a track being 400 meters likely does have an impact on which world records are best since all training is conducted on that basis, and hardly anyone targets training for 3/4ths of a lap. I consider these to be sprints because their pace is consistently above 20 miles per hour other than the 800 meters which can't really be considered middle distance. By pace Usain Bolt's 200 meters seems pretty crazy given how little it fell off compared to his 100 meter world record, but that seems like the nature of short distance sprinting, the start is what really matters in the 100 meters, look at the current world champion Christian Coleman for more evidence of that. The 60 meters world record pace is actually slower than the 300 meter world record! It seems that it is really hard for humans to get moving. A plot/animation of the speed of sprinters over the course of the race would be very interesting to see.
+For comparing pace by distance I look at each distance by its common grouping. The track world records are what I consider to be sprints, which are the 100 through 800 meters. I also add the 300 meters and 60 meters in this part since it is a somewhat significant event, and useful for analyzing pace decline rate. The arbitrary distance of one lap of a track being 400 meters likely does have an impact on which world records are best since all training is conducted on that basis, and hardly anyone targets training for 3/4ths of a lap. I consider these to be sprints because their pace is consistently above 20 miles per hour other than the 800 meters which can't really be considered middle distance. By pace Usain Bolt's 200 meters seems pretty crazy given how little it fell off compared to his 100 meter world record, but that seems like the nature of short distance sprinting, the start is what really matters in the 100 meters, look at the current world champion Christian Coleman for more evidence of that. The 60 meters world record pace is actually slower than the 300 meter world record! It seems that it is really hard for humans to get moving. A plot/animation of the speed of sprinters over the course of the race would be very interesting to see.
 
 ```{r running-distance-track, fig.width = 10}
 mens_world_records_seconds %>% 
@@ -115,12 +142,17 @@ mens_world_records_seconds %>%
          Competitor = str_to_title(Competitor)) %>%
   slice(1:4) %>%
   slice(-15, -11, -13, -16) %>% # SELECT OUT UNNECESSARY ONES: kamworor old world record for half, mo farah for timed distance, cheptegei and kipruto for road records
-  ggplot(aes(x = Discipline, y = Perf, group = 1)) + 
+  add_row(.after = 2, Discipline = "300 Meters", Perf = 30.81, Competitor = "Wayde Van Niekirk",
+          DOB = ymd("1992-07-15"), Country = "RSA", Date = ymd("2017-06-29")) %>%
+  add_row(.before = 1, Discipline = "60 Meters", Perf = 6.34, Competitor = "Christian Coleman",
+          DOB = ymd("1996-03-06"), Country = "USA", Date = ymd("2018-02-18")) %>%
+  mutate(Distance = c(60, 100, 200, 300, 400, 800)) %>%
+  ggplot(aes(x = Distance, y = Perf)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = Competitor), size = 5, point.padding = 5) + 
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
-  scale_y_time() + 
-  labs(x = "Distance", y = "Time", title = "Men's Track Records") +
+  ggrepel::geom_label_repel(aes(label = Competitor), size = 6) + 
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
+  scale_y_time(labels = time_format("%M:%S")) + 
+  labs(x = "Distance (Meters)", y = "Time", title = "Men's Short Distance Track Records") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
@@ -135,38 +167,43 @@ mens_world_records_seconds %>%
           DOB = ymd("1992-07-15"), Country = "RSA", Date = ymd("2017-06-29")) %>%
   add_row(.before = 1, Discipline = "60 Meters", Perf = 6.34, Competitor = "Christian COLEMAN",
           DOB = ymd("1996-03-06"), Country = "USA", Date = ymd("2018-02-18")) %>%
-  mutate(Distance = c(60, 100,200,300,400,800)) %>%
+  mutate(Distance = c(60,100,200,300,400,800)) %>%
   mutate(Discipline = gsub("Metres", "Meters", Discipline)) %>%
   mutate(Pace = Distance/Perf,
          Competitor = str_to_title(Competitor)) %>%
-  ggplot(aes(x = factor(Discipline, 
-                             levels = c("60 Meters", "100 Meters","200 Meters", "300 Meters", 
-                                        "400 Meters","800 Meters")), 
-             y = Pace, group = 1)) + 
+  ggplot(aes(x = Distance, 
+             y = Pace)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = paste(round((Pace*2.23694), 2), ":", Competitor)), size = 5) + 
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
+  ggrepel::geom_label_repel(aes(label = paste0(round((Pace*2.23694), 2), ": ", Competitor)), size = 5) + 
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
   scale_y_continuous(breaks = breaks_pretty(n = 10), labels = function(y) round((y*2.23694), 1)) + 
+  scale_x_comma() +
   ggtitle("Men's Short Distance Track World Record Pace") +
-  labs(x = "", y = "Pace (mph)") +
+  labs(x = "Distance (Meters)", y = "Pace (mph)") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
 
 Next we have the "middle distance records", which are some of the longest standing records in athletics, other than the 5000 meters which was just broken after 17 years by Joshua Cheptegei, the other records have stood in excess of 20 years, in spite of technological improvements in one of the most straightforward venues of athleticism. These records paces are also plotted in kilometers per hour (kmph).
+Hicham el Guerrouj and Daniel Komen's records seem almost unbreakable, and el Guerrouj's dominance across the lower middle distance world is truly astonishing.
 
 ```{r running-middledistance-track, fig.width = 10}
-mens_world_records_seconds %>% 
+test <- mens_world_records_seconds %>% 
   mutate(Perf = as.numeric(Perf),
          Discipline = factor(Discipline, levels = c("100 Metres","200 Metres","400 Metres","800 Metres","1000 Metres","1500 Metres","One Mile","2000 Metres","3000 Metres","5000 Metres", "5 Kilometres", "10,000 Metres", "10 Kilometres","20,000 Metres","One Hour","Half Marathon","25,000 Metres","30,000 Metres","Marathon","100 Kilometres"))) %>%
   slice(5:10) %>%
-  ggplot(aes(x = Discipline, y = Perf, group = 1)) + 
+  mutate(Distance = c(1000, 1500, 1609.34, 2000, 3000, 5000)) %>%
+  mutate(Year = as.character(year(Date)))
+ggplot(data = test, aes(x = Distance, y = Perf)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = Competitor), size = 4, point.padding = 5) + 
-  stat_summary(fun.y = sum, geom = "line", color = "deepskyblue4", linetype = "dashed") +
-  scale_y_time() + 
-  labs(x = "Distance", y = "Time", title = "Men's Middle Distance Records") +
+  ggrepel::geom_label_repel(aes(label = paste(str_to_title(Competitor), 
+                                "\n", Year)), 
+                            size = 4) + 
+  geom_line(color = "deepskyblue4", linetype = "dashed") +
+  scale_y_time(labels = time_format("%M:%S")) + 
+  scale_x_comma() +
+  labs(x = "Distance (Meters)", y = "Time", title = "Men's Middle Distance Records") +
   theme(axis.text.x = element_text(size = 6),
         plot.title = element_text(hjust = 0.5))
 ```
@@ -180,20 +217,20 @@ mens_world_records_seconds %>%
   mutate(Discipline = gsub("Metres", "Meters", Discipline)) %>%
   mutate(Pace = Distance/Perf,
          Competitor = str_to_title(Competitor)) %>%
-  ggplot(aes(x = factor(Discipline, levels = c("1000 Meters","1500 Meters","One Mile",
-                                               "2000 Meters","3000 Meters","5000 Meters")), 
+  ggplot(aes(x = Distance, 
              y = Pace, group = 1)) + 
   geom_point(color = "deepskyblue4") +
   ggrepel::geom_label_repel(aes(label = paste(round((Pace*3.6), 2), ":", Competitor)), size = 5,
                             point.padding = 5) + 
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
   scale_y_continuous(breaks = breaks_pretty(n = 10), labels = function(y) round((y*3.6), 1)) + 
+  scale_x_comma(breaks = breaks_pretty(n = 8)) +
   ggtitle("Men's Middle Distance Track World Record Pace") +
-  labs(x = "", y = "Pace (kmph)") +
+  labs(x = "Distance (Meters)", y = "Pace (kmph)") +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-Finally we have the long distance world records by time and pace, two things stand out right away, GEBRSELASSIE Gebrselassie and Moses' world records are set to go, and pace decreases very slowly at this point. Humans are remarkably capable of maintaining a pace over long distances, once again acceleration over time would be great to see, for long distance runners I imagine it would be flat at 0 up until the final few kilometers.
+Finally we have the long distance world records by time and pace, two things stand out right away, Gebrselassie and Moses' world records are set to go, and pace decreases very slowly at this point. Humans are remarkably capable of maintaining a pace over long distances, once again acceleration over time would be great to see, for long distance runners I imagine it would be flat at 0 up until the final few kilometers.
 
 ```{r running-long-distance, fig.width = 10}
 mens_world_records_seconds %>% 
@@ -202,12 +239,14 @@ mens_world_records_seconds %>%
                                                     "One Mile","2000 Metres","3000 Metres","5000 Metres", "5 Kilometres", "10,000 Metres", "10 Kilometres","20,000 Metres","One Hour","Half Marathon","25,000 Metres","30,000 Metres","Marathon","100 Kilometres"))) %>%
   slice(14:21) %>%
   slice(-2, -3, -8) %>% # SELECT OUT UNNECESSARY ONES: kamworor old world record for half, mo farah for timed distance, cheptegei and kipruto for road records
-  ggplot(aes(x = Discipline, y = Perf, group = 1)) + 
+  mutate(Distance = c(20000, 21097.5, 25000, 30000, 42195)) %>%
+  ggplot(aes(x = Distance, y = Perf)) + 
   geom_point(color = "deepskyblue4") +
-  ggrepel::geom_label_repel(aes(label = paste0(Competitor, ": \n", Date)), size = 4) + 
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
+  ggrepel::geom_label_repel(aes(label = paste0(str_to_title(Competitor), ": \n", Date)), size = 4) + 
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
   scale_y_time(breaks = breaks_pretty(n = 8)) + 
-  labs(x = "Distance", y = "Time", title = "Men's Long Distance Records") +
+  scale_x_comma() +
+  labs(x = "Distance (Meters)", y = "Time", title = "Men's Long Distance Records") +
   theme(axis.text.x = element_text(size = 6),
         plot.title = element_text(hjust = 0.5))
 ```
@@ -221,17 +260,80 @@ mens_world_records_seconds %>%
   mutate(Perf = as.numeric(Perf),
          Pace = Distance/Perf,
          Competitor = str_to_title(Competitor)) %>%
-  ggplot(aes(x = factor(Discipline, levels = c("10,000 Meters","20,000 Meters","Half Marathon","25,000 Meters","30,000 Meters","Marathon")), 
-             y = Pace, group = 1)) + 
+  ggplot(aes(x = Distance, 
+             y = Pace)) + 
   geom_point(color = "deepskyblue4") +
   ggrepel::geom_label_repel(aes(label = paste0(round((Pace), 2), ":", 
                                                Competitor, "\n", Date)), size = 4) +
-  stat_summary(fun.y = sum, geom = "line", linetype = "dashed", color = "deepskyblue4") +
+  geom_line(linetype = "dashed", color = "deepskyblue4") +
   scale_y_continuous(breaks = breaks_pretty(n = 10)) + 
+  scale_x_comma() +
   ggtitle("Men's Long Distance World Record Pace") +
-  labs(x = "", y = "Pace (m/s)") +
+  labs(x = "Distance (Meters)", y = "Pace (m/s)") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(size = 6))
+```
+
+Decomposing each of these distances into the three groups allows us to autocorrelate from an intercept of 0 and see the rate of time trend increase. I filter out Moses and Gebrselassie's record since they are clearly ready to be beaten, they just haven't been attempted at that distance yet. We see that at longer distances the rate of increase is actually lesser, which is to be expected since it takes less effort to maintain lower paces. To have any real meaning to this data a lot more would be needed as can be seen from the ridiculously high R^2 values. The formula by each group here is $y = 0 + \beta_1*log(x) + \mu$, and the listed correlation coefficient therefore corresponds each 1% increase in Time to a y% increase in distance.
+
+
+```{r}
+formula = y ~ 0 + log(x)
+mens_world_records_seconds %>%
+  slice(1:20) %>%
+  slice(-11, -14, -15, -16, -18, -19, -13) %>%
+  mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195),
+         Perf = as.numeric(Perf)) %>%
+  mutate(Group = case_when(Distance < 1000 ~ "Short Distance",
+                           Distance >= 1000 & Distance < 10000 ~ "Middle Distance",
+                           Distance >= 10000 ~ "Long Distance")) %>%
+  ggplot(aes(x = Perf, y = Distance)) +
+  geom_point(color = "deepskyblue4", alpha = 0.3) +
+  geom_line(color = "black", alpha = 0.8) +
+  geom_smooth(aes(color = Group), method = "lm", se = F, formula = formula) +
+  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., "x", ..rr.label.., sep = "~~~"),
+                            color = Group),
+               formula = formula, 
+               rr.digits = 3, 
+               coef.digits = 4,
+               parse = TRUE,
+               label.x = "middle", label.y = "middle") +
+  scale_color_manual(values = c(col(3))) +
+  scale_x_time(labels = time_format("%H:%M:%S")) +
+  scale_y_log10() +
+  labs(x = "Time", y = "log(Distance)", color = "Distance")
+```
+
+Looking at all the world records I develop a quadratic-log model ($y = \beta_0log(x)+\beta_1log(x)^2 + \mu$) that predicts for each 1% increase in time there is an expected 0.00393 meter increase in distance, and an expected intercept of .01102 meters at 0, i.e. for any speed. This model - using times from shorter races - indicates that the marathon world record, and half marathon world record have some room for improvement still.
+
+```{r}
+formula = y ~ log(x) + log(x)^2
+mens_world_records_seconds %>%
+  slice(1:20) %>%
+  slice(-11, -14, -15, -16, -18, -19, -13) %>%
+  mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195),
+         Perf = as.numeric(Perf)) %>%
+  ggplot(aes(x = Perf, y = Distance)) +
+  geom_point(color = "deepskyblue4", alpha = 0.3) +
+  geom_line(color = "black", alpha = 0.8) +
+  geom_smooth(method = "lm", se = F, formula = formula, color = col(1)) +
+  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~")),
+               formula = formula, 
+               rr.digits = 3, 
+               coef.digits = 4,
+               parse = TRUE,
+               label.x = "middle", label.y = "middle") +
+  scale_color_manual(values = c(col(1))) +
+  scale_x_time(labels = time_format("%H:%M:%S")) +
+  scale_y_log10() +
+  labs(x = "Time", y = "log(Distance)", color = "Distance")
+test <- mens_world_records_seconds %>%
+  slice(1:20) %>%
+  slice(-11, -14, -15, -16, -18, -19, -13) %>%
+  mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195),
+         Perf = as.numeric(Perf))
+quadlog <- lm(Distance ~ log10(Perf) + I(log10(Perf))^2, data = test)
+# summary(quadlog)
 ```
 
 
@@ -351,21 +453,19 @@ world_record_100_clean %>%
 ```{r fig.width = 10}
 world_record_100_clean %>%
   mutate(Record = factor(Record, levels = c("Ratified", "Ratified but later Rescinded", "Not Ratified"))) %>%
+  dplyr::filter(Record == "Ratified") %>%
   ggplot(aes(x = Date, y = Time, fill = Wind)) +
-  geom_line() + 
-  geom_point() +
+  geom_line(color = "deepskyblue3", linetype = "dashed") + 
+  geom_point(color = "deepskyblue3", alpha = 0.4) +
   scale_fill_distiller(palette = "Blues") +
-  ggrepel::geom_label_repel(aes(label = ifelse(Record == "Ratified but later Rescinded" |
-                                 Record == "Not Ratified", 
-                                 Athlete, 
-                                 "")), fill = "white", size = 1) +
-  ggrepel::geom_label_repel(aes(label = ifelse(Record == "Ratified" & Wind > 0,
+  geom_label(aes(label = ifelse(Record == "Ratified" & Wind > 0,
                                                paste("Wind Speed:", Wind),
                                                ""),
-                                fill = Wind), size = 3, max.overlaps = 20) +
+                                fill = -0.5*Wind), size = 3) +
   scale_x_date(breaks = scales::breaks_pretty(n = 10)) +
-  facet_wrap( ~ Record) +
-  labs(x = "Date", title = "World Records in the 100 Meters") +
+  scale_y_continuous(breaks = scales::breaks_pretty(n = 10)) +
+  labs(x = "Date", title = "World Records in the 100 Meters",
+       subtitle = "Most World Records Have Occurred in Favorable Conditions") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 90),
         legend.position = "none")
@@ -387,6 +487,7 @@ record_improve <- world_record_100_clean %>%
   dplyr::filter(`Record` == "Ratified") %>%
   arrange(desc(Date)) %>%
   mutate(Time_diff = 1-(Time/lead(Time)))
+record_improve$Time_diff[68] <- 0
 ggplot(record_improve, aes(x = Date, y = Time, fill = Time_diff)) +
   geom_line(linetype = "dashed", color = "deepskyblue4") +
   geom_point(color = "deepskyblue4") +
@@ -410,15 +511,34 @@ ggplot(record_improve, aes(x = Date, y = Time, fill = Time_diff)) +
 
 ```{r fig.width = 10}
 record_improve_graph <- ggplot(record_improve, aes(x = Date, y = Time)) +
-  geom_label(aes(label = Athlete), fill = "deepskyblue4", size = 3) +
+  ggrepel::geom_label_repel(aes(label = ifelse(Time_diff > 0,
+                                paste0(Athlete,
+                                       " (",
+                                       year(Date),
+                                       ")",
+                                       "\n Improvement: ",
+                                       (100*round(Time_diff, 4)), 
+                                       "%"), 
+                                ""),
+                                fill = -Time_diff,
+                 group = seq_along(Date)), size = 3) +
+  scale_fill_distiller(palette = "Blues") +
+  geom_line(aes(group = 1), color = "#5295C0", alpha = 0.5) +
+  geom_point(aes(group = seq_along(Date)), color = "#5295C0", alpha = 0.4) +
   scale_x_date(breaks = scales::breaks_pretty(n = 10)) +
+  scale_y_continuous(breaks = scales::breaks_pretty(n = 10)) +
   labs(x = "Date", title = "Ratified World Records in the 100 Meters") +
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 90),
         legend.position = "none") +
-  transition_time(Date) +
-  ease_aes('linear')
-record_improve_graph
+  transition_reveal(Date) +
+  ease_aes(default = 'linear')
+animate(record_improve_graph,
+        nframes = 34,
+        fps = 2,
+        end_pause = 5,
+        height = 750,
+        width = 750)
 ```
 
 
@@ -426,13 +546,11 @@ record_improve_graph
 
 
 ```{r fig.width = 16, fig.height = 16}
-runningrecords <- read_rds(here("Data/RunningRecordsOverTime.rds"))
+runningrecords <- readr::read_rds(here("Data/RunningRecordsOverTime.rds"))
 
 records_label <- runningrecords %>% 
   group_by(Distance) %>%
   slice(which.min(Time))
-
-col = grDevices::colorRampPalette(c("skyblue", "dodgerblue4"))
 
 ggplot(runningrecords, aes(x = Date, y = Time, color = factor(Distance))) +
   geom_line() +
@@ -494,10 +612,12 @@ runningrecords %>%
 
 ## Which Records Have Improved the Most Since their Inception?
 
-The Marathon has improved the most by far, but based on the nationality of its competitors that could just be due to initially limited international competition, the story of the 1904 St. Louis Marathon in which only 32 athletes from 4 nations competed, and two South Africans being chased a mile out of the race by dogs was not even the craziest thing to happen (Google this one trust me). I would love to get more data on things like the 200 meter record but I just can't seem to find any, I'm sure Usain Bolt's record would be far greater if the data went further back like with other records.
+The Marathon has improved the most by far, but based on the nationality of its competitors that could just be due to initially limited international competition, the story of the 1904 St. Louis Marathon in which only 32 athletes from 4 nations competed, and two South Africans being chased a mile out of the race by dogs was not even the craziest thing to happen (Google this one trust me). I would love to get more data on things like the 200 meter record but I just can't seem to find any, I'm sure Usain Bolt's record would be far greater if the data went further back like with other records. Despite the arbitratiness of a "starting record" it is clear athletes have gotten far, far better with time, in every distance the original record holder would not even qualify given the time disparities. 
 
 ```{r}
-runningrecords %>%
+runningrecords_gt <- runningrecords %>%
+  mutate(Flag = countrycode(Nationality, 'country.name', 'unicode.symbol'))
+runningrecords_gt %>%
   group_by(Distance) %>%
   slice(which.min(Time), which.max(Time)) %>%
   mutate(Improvement = ifelse(Date > "1990-01-01", 1/ (Time / lead(Time)), (Time / lag(Time))),
@@ -532,12 +652,17 @@ runningrecords %>%
               columns = vars(Athlete, Date, Time, Improvement,
                              `Time Since First Record (Years)`)) %>%
   tab_spanner(label = "Athlete Information",
-              columns = vars(Location, Nationality)) %>%
+              columns = vars(Location, Nationality, Flag)) %>%
   data_color(columns = vars(Improvement),
              colors = scales::col_numeric(palette = "Blues",
                                           domain = NULL)) %>%
   fmt_percent(columns = vars(Improvement),
-              decimals = 2)
+              decimals = 2) %>%
+  tab_options(
+    heading.background.color = "#1D5C95",
+    row_group.background.color = "#3778AB",
+    column_labels.background.color = "#4486B5"
+  )
   # tab_style(style = list(cell_fill(color = "skyblue3")),
   #           locations = cells_body(
   #             rows = Improvement != 0
@@ -548,30 +673,37 @@ runningrecords %>%
 
 ```{r}
 anim_records <- runningrecords %>%
-  arrange(Distance, Date) %>%
+  mutate(Distance = factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon"))) %>%
   group_by(Distance) %>%
-  mutate(Improvement = 100*(1-(Time / lag(Time)))) %>%
-  mutate()
+  arrange(Date, .by_group = T) %>%
+  dplyr::mutate(Improvement = (-1 * (Time / dplyr::lag(Time, n = 1, order_by = Date) - 1) * 100)) %>%
+  mutate(Improvement = replace_na(Improvement, 0))
   
 
-anim <- ggplot(anim_records, aes(x = Date, y = Time, color = factor(Distance))) +
-  geom_line(aes(group = 1)) +
-  geom_point(aes(group = 1), size = 2) +
+  anim <- ggplot(anim_records, aes(x = Date, y = Time, color = factor(Distance))) +
+  geom_line(aes(group = 1), alpha = 0.6) +
+  geom_point(aes(group = seq_along(Date)), alpha = 0.7) +
   geom_label(aes(label = paste0(round(Improvement, 2), "%"))) +
   facet_wrap( ~ factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon")), scales = "free_y") +
   scale_color_manual(values = col(13)) +
-  ggtitle("All Records Over Time") +
-  scale_y_time(breaks = scales::breaks_pretty(n = 2)) +
+  ggtitle("All Running World Records Over Time") +
+  scale_y_time(breaks = scales::breaks_pretty(n = 6)) +
   scale_x_date(breaks = scales::breaks_pretty(n = 6)) +
   theme_minimal() +
-  labs(subtitle = "Label is Improvement on Previous Record") +
+  labs(subtitle = "Label Represents Marginal Improvement on Previous Record", 
+       x = "Year", y = "Time (Hours, Minutes, Seconds)") +
   theme(legend.position = "none",
-        axis.text.y = element_text(size = 6, angle = 90, face = "bold"),
+        axis.text.y = element_text(size = 6, face = "bold"),
         axis.text.x = element_text(angle = 90, face = "bold"),
-        plot.title = element_text(hjust = "center")) +
+        plot.title = element_text(hjust = "center"),
+        panel.grid = element_blank(),
+        plot.subtitle = element_text(hjust = "center")) +
   transition_reveal(Date) +
   ease_aes('linear')
-anim
+animate(anim,
+        nframes = 200,
+        fps = 10,
+        end_pause = 5)
 ```
 
 

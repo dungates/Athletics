@@ -1,0 +1,475 @@
+Athlete,Date,Time,Location,Distance,Nationality
+Ted Meredith,1912-07-08,111.9,"Stockholm, Sweden",800 Meters,United States
+Otto Peltzer,1926-07-03,111.6,"London, United Kingdom",800 Meters,Germany
+Sera Martin,1928-07-14,110.6,"Paris, France",800 Meters,France
+Tommy Hampson,1932-08-02,109.8,"Los Angeles, United States",800 Meters,United Kingdom
+Ben Eastman,1934-06-16,109.8,"Princeton, United States",800 Meters,United States
+Glenn Cunningham,1936-08-20,109.7,"Stockholm, Sweden",800 Meters,United States
+Elroy Robinson,1937-07-11,109.6,"New York, United States",800 Meters,United States
+Sydney Wooderson,1938-08-20,108.4,"London, United Kingdom",800 Meters,United Kingdom
+Rudolf Harbig,1939-07-15,106.6,"Milan, Italy",800 Meters,Germany
+Roger Moens,1955-08-03,105.7,"Oslo, Norway",800 Meters,Belgium
+Peter Snell,1962-02-02,104.3,"Christchurch, New Zealand",800 Meters,New Zealand
+Ralph Doubell,1968-10-15,104.3,"Mexico City, Mexico",800 Meters,Australia
+Dave Wottle,1972-07-01,104.3,"Eugene, United States",800 Meters,United States
+Marcello Fiasconaro,1973-06-27,103.7,"Milan, Italy",800 Meters,Italy
+Alberto Juantorena,1976-07-25,103.5,"Montreal, Canada",800 Meters,Cuba
+Alberto Juantorena,1977-08-21,103.4,"Sofia, Bulgaria",800 Meters,Cuba
+Sebastian Coe,1979-07-05,102.4,"Oslo, Norway",800 Meters,United Kingdom
+Sebastian Coe,1981-06-10,101.72999999999999,"Florence, Italy",800 Meters,United Kingdom
+Wilson Kipketer,1997-07-07,101.72999999999999,"Stockholm, Sweden",800 Meters,Denmark
+Wilson Kipketer,1997-08-13,101.24000000000001,"Zürich, Switzerland",800 Meters,Denmark
+Wilson Kipketer,1997-08-24,101.11,"Cologne, Germany",800 Meters,Denmark
+David Rudisha,2010-08-22,101.09,"Berlin, Germany",800 Meters,Kenya
+David Rudisha,2010-08-29,101.00999999999999,"Rieti, Italy",800 Meters,Kenya
+David Rudisha,2012-08-09,100.91,"London, United Kingdom",800 Meters,Kenya
+Lee Evans,1968-10-18,43.86,"Mexico City, Mexico",400 Meters,United States
+Butch Reynolds,1988-08-17,43.29,"Zürich, Switzerland",400 Meters,United States
+Michael Johnson,1999-08-26,43.18,"Seville, Spain",400 Meters,United States
+Wayde van Niekerk,2016-08-14,43.03,"Rio de Janeiro, Brazil",400 Meters,South Africa
+Maxie Long,1900-09-29,47.8,"New York, USA",400 Meters,United States
+Charles Reidpath,1912-07-13,48.2,"Stockholm, Sweden",400 Meters,United States
+Ted Meredith,1916-05-27,47.4,"Cambridge, USA",400 Meters,United States
+Eric Liddell,1924-07-11,47.6,"Paris, France",400 Meters,United Kingdom
+Emerson Spencer,1928-05-12,47,"Palo Alto, USA",400 Meters,United States
+Ben Eastman,1932-03-26,46.4,"Palo Alto, California, USA",400 Meters,United States
+Bill Carr,1932-08-05,46.2,"Los Angeles, USA",400 Meters,United States
+Archie Williams,1936-06-19,46.1,"Chicago, USA",400 Meters,United States
+Rudolf Harbig,1939-08-12,46,"Frankfurt am Main, Germany",400 Meters,Germany
+Grover Klemmer,1941-06-06,46,"Philadelphia, USA",400 Meters,United States
+Herb McKenley,1948-06-05,46,"Berkeley, USA",400 Meters,Jamaica
+Herb McKenley,1948-07-02,45.9,"Milwaukee, USA",400 Meters,Jamaica
+George Rhoden,1950-08-22,45.8,"Eskilstuna, Sweden",400 Meters,Jamaica
+Lou Jones,1955-03-18,45.4,"Mexico City, Mexico",400 Meters,United States
+Lou Jones,1956-06-30,45.2,"Los Angeles, USA",400 Meters,United States
+Otis Davis,1960-09-06,44.9,"Rome, Italy",400 Meters,United States
+Carl Kaufmann,1960-09-06,44.9,"Rome, Italy",400 Meters,Germany
+Adolph Plummer,1963-05-25,44.9,"Tempe, USA",400 Meters,United States
+Mike Larrabee,1964-09-12,44.9,"Los Angeles, USA",400 Meters,United States
+Tommie Smith,1967-05-20,44.5,"San Jose, USA",400 Meters,United States
+Larry James,1968-09-14,44.1,"Echo Summit, USA",400 Meters,United States
+Lee Evans,1968-10-18,43.8,"Mexico City, Mexico",400 Meters,United States
+Willie Williams,1956-08-03,10.1,"Berlin, Germany",100 Meters,United States
+Usain Bolt,2008-05-31,9.72,"New York, USA",100 Meters,Jamaica
+Usain Bolt,2008-08-16,9.69,"Beijing, China",100 Meters,Jamaica
+Usain Bolt,2009-08-16,9.58,"Berlin, Germany",100 Meters,Jamaica
+Tim Montgomery,2002-09-14,9.78,"Paris, France",100 Meters,United States
+Takayoshi Yoshioka,1935-06-15,10.3,"Tokyo, Japan",100 Meters,Japan
+Steve Williams,1975-07-16,9.9,"Siena, Italy",100 Meters,United States
+Steve Williams,1974-06-21,9.9,"Los Angeles, USA",100 Meters,United States
+Steve Williams,1976-03-27,9.9,"Gainesville, USA",100 Meters,United States
+Steve Williams,1975-08-22,9.9,"Berlin, Germany",100 Meters,United States
+Silvio Leonard,1975-06-05,9.9,"Ostrava, Czechoslovakia",100 Meters,Cuba
+Ronnie Ray Smith,1968-06-20,9.9,"Sacramento, USA",100 Meters,United States
+Roger Bambuck,1968-06-20,10,"Sacramento, USA",100 Meters,France
+Rey Robinson,1972-07-01,9.9,"Eugene, USA",100 Meters,United States
+Ray Norton,1959-04-18,10.1,"San Jose, USA",100 Meters,United States
+Ralph Metcalfe,1934-09-15,10.3,"Osaka, Japan",100 Meters,United States
+Ralph Metcalfe,1934-09-23,10.3,"Dairen, China",100 Meters,United States
+Ralph Metcalfe,1933-08-12,10.3,"Budapest, Hungary",100 Meters,United States
+Ralph Metcalfe,1932-08-01,10.3,"Los Angeles, USA",100 Meters,United States
+Percy Williams,1930-08-09,10.3,"Toronto, Canada",100 Meters,Canada
+Paul Nash,1968-04-02,10,"Krugersdorp, South Africa",100 Meters,South Africa
+Oliver Ford,1968-05-31,10,"Albuquerque, USA",100 Meters,United States
+McDonald Bailey,1951-08-25,10.2,"Belgrade, Yugoslavia",100 Meters,Great Britain
+Maurice Greene,1999-06-16,9.79,"Athens, Greece",100 Meters,United States
+Lloyd LaBeach,1948-05-15,10.2,"Fresno, USA",100 Meters,Panama
+Leroy Burrell,1991-06-14,9.9,"New York, USA",100 Meters,United States
+Leroy Burrell,1994-07-06,9.85,"Lausanne, Switzerland",100 Meters,United States
+Leamon King,1956-10-27,10.1,"Santa Ana, USA",100 Meters,United States
+Leamon King,1956-10-20,10.1,"Ontario, USA",100 Meters,United States
+Justin Gatlin,2006-05-12,9.77,"Doha, Qatar",100 Meters,United States
+Jim Hines,1968-05-20,10.03,"Sacramento, USA",100 Meters,United States
+Jim Hines,1968-10-14,9.95,"Mexico City, Mexico",100 Meters,United States
+Jim Hines,1967-05-27,10,"Modesto, USA",100 Meters,United States
+Jim Hines,1968-06-20,9.9,"Sacramento, USA",100 Meters,United States
+Jim Hines,1968-10-14,9.9,"Mexico City, Mexico",100 Meters,United States
+Jesse Owens,1936-06-20,10.2,"Chicago, USA",100 Meters,United States
+Jackson Scholz,1920-09-16,10.6,"Stockholm, Sweden",100 Meters,United States
+Ira Murchison,1956-06-29,10.2,"Los Angeles, USA",100 Meters,United States
+Ira Murchison,1956-06-01,10.2,"Compton, USA",100 Meters,United States
+Ira Murchison,1956-08-04,10.1,"Berlin, Germany",100 Meters,United States
+Horacio Esteves,1964-08-15,10,"Caracas, Venezuela",100 Meters,Venezuela
+Heinz Fütterer,1954-10-31,10.2,"Yokohama, Japan",100 Meters,West Germany
+Harvey Glance,1976-04-03,9.9,"Columbia, USA",100 Meters,United States
+Harvey Glance,1976-05-01,9.9,"Baton Rouge, USA",100 Meters,United States
+Harry Jerome,1960-07-15,10,"Saskatoon, Canada",100 Meters,Canada
+Harold Davis,1941-06-06,10.2,"Compton, USA",100 Meters,United States
+Eulace Peacock,1934-08-06,10.3,"Oslo, Norway",100 Meters,United States
+Enrique Figuerola,1967-06-17,10,"Budapest, Hungary",100 Meters,Cuba
+Eddie Tolan,1929-08-08,10.4,"Stockholm, Sweden",100 Meters,United States
+Eddie Tolan,1929-08-25,10.4,"Copenhagen, Denmark",100 Meters,United States
+Eddie Tolan,1932-08-01,10.3,"Los Angeles, USA",100 Meters,United States
+Eddie Hart,1972-07-01,9.9,"Eugene, USA",100 Meters,United States
+Donovan Bailey,1996-07-27,9.84,"Atlanta, USA",100 Meters,Canada
+Donald Lippincott,1912-07-06,10.6,"Stockholm, Sweden",100 Meters,United States
+Don Quarrie,1976-05-22,9.9,"Modesto, USA",100 Meters,Jamaica
+Chris Berger,1934-08-26,10.3,"Amsterdam, Netherlands",100 Meters,Netherlands
+Charlie Paddock,1921-04-23,10.4,"Redlands, USA",100 Meters,United States
+Charles Greene,1968-10-13,10.02,"Mexico City, Mexico",100 Meters,United States
+Charles Greene,1968-06-20,10,"Sacramento, USA",100 Meters,United States
+Charles Greene,1968-06-20,9.9,"Sacramento, USA",100 Meters,United States
+Carl Lewis,1988-08-17,9.93,"Zürich, Switzerland",100 Meters,United States
+Carl Lewis,1991-08-25,9.86,"Tokyo, Japan",100 Meters,United States
+Carl Lewis,1988-09-24,9.92,"Seoul, South Korea",100 Meters,United States
+Carl Lewis,1987-08-30,9.93,"Rome, Italy",100 Meters,United States
+Calvin Smith,1983-07-03,9.93,"Colorado Springs, USA",100 Meters,United States
+Bobby Morrow,1956-06-29,10.2,"Los Angeles, USA",100 Meters,United States
+Bobby Morrow,1956-05-19,10.2,"Houston, USA",100 Meters,United States
+Bobby Morrow,1956-06-22,10.2,"Bakersfield, USA",100 Meters,United States
+Bob Hayes,1964-10-15,10.06,"Tokyo, Japan",100 Meters,United States
+Bob Hayes,1964-10-15,10,"Tokyo, Japan",100 Meters,United States
+Ben Johnson,1987-08-30,9.83,"Rome, Italy",100 Meters,Canada
+Barney Ewell,1948-07-09,10.2,"Evanston, United States",100 Meters,United States
+Asafa Powell,2007-09-09,9.74,"Rieti, Italy",100 Meters,Jamaica
+Asafa Powell,2005-06-14,9.77,"Athens, Greece",100 Meters,Jamaica
+Asafa Powell,2006-06-11,9.77,"Gateshead, England",100 Meters,Jamaica
+Asafa Powell,2006-08-18,9.77,"Zürich, Switzerland",100 Meters,Jamaica
+Arthur Jonath,1932-07-05,10.3,"Bochum, Germany",100 Meters,Germany
+Armin Hary,1960-06-21,10,"Zürich, Switzerland",100 Meters,West Germany
+Andy Stanfield,1951-05-26,20.6,"Philadelphia, United States",200 Meters,United States
+Andy Stanfield,1952-06-28,20.6,"Los Angeles, United States",200 Meters,United States
+Thane Baker,1956-06-23,20.6,"Bakersfield, United States",200 Meters,United States
+Bobby Morrow,1956-11-27,20.6,"Melbourne, Australia",200 Meters,United States
+Manfred Germar,1958-10-01,20.6,"Wuppertal, Germany",200 Meters,West Germany
+Ray Norton,1960-03-19,20.6,"Berkeley, United States",200 Meters,United States
+Ray Norton,1960-04-30,20.6,"Philadelphia, United States",200 Meters,United States
+Peter Radford,1960-05-28,20.5,"Wolverhampton, United Kingdom",200 Meters,United Kingdom
+Stone Johnson,1960-07-02,20.5,"Stanford, United States",200 Meters,United States
+Ray Norton,1960-07-02,20.5,"Stanford, United States",200 Meters,United States
+Livio Berruti,1960-09-03,20.5,"Rome, Italy",200 Meters,Italy
+Livio Berruti,1960-09-03,20.5,"Rome, Italy",200 Meters,Italy
+Paul Drayton,1962-06-23,20.5,"Walnut, United States",200 Meters,United States
+Henry Carr,1963-03-23,20.3,"Tempe, United States",200 Meters,United States
+Henry Carr,1964-04-04,20.2,"Tempe, United States",200 Meters,United States
+Tommie Smith,1966-06-11,20,"Sacramento, United States",200 Meters,United States
+Tommie Smith,1968-10-16,19.8,"Mexico City, Mexico",200 Meters,United States
+Don Quarrie,1971-08-03,19.8,"Cali, Colombia",200 Meters,Jamaica
+Don Quarrie,1975-06-07,19.8,"Eugene, United States",200 Meters,Jamaica
+Tommie Smith,1968-10-16,19.83,"Mexico City, Mexico",200 Meters,United States
+Pietro Mennea,1979-09-12,19.72,"Mexico City, Mexico",200 Meters,Italy
+Michael Johnson,1996-06-23,19.66,"Atlanta, United States",200 Meters,United States
+Michael Johnson,1996-08-01,19.32,"Atlanta, United States",200 Meters,United States
+Usain Bolt,2008-08-20,19.3,"Beijing, China",200 Meters,Jamaica
+Usain Bolt,2009-08-20,19.19,"Berlin, Germany",200 Meters,Jamaica
+Georg Mickler,1913-06-22,152.3,Hanover,1000 Meters,Germany
+Anatole Bolin,1918-09-22,149.1,Stockholm,1000 Meters,Sweden
+Sven Lundgren,1922-09-27,148.6,Stockholm,1000 Meters,Sweden
+Séra Martin,1926-09-30,146.8,Colombes,1000 Meters,France
+Otto Peltzer,1927-09-18,145.8,Colombes,1000 Meters,Germany
+Jules Ladoumègue,1930-10-19,143.6,Paris,1000 Meters,France
+Rudolf Harbig,1941-05-24,141.5,Dresden,1000 Meters,Germany
+Rune Gustafsson,1946-09-04,141.4,Borås,1000 Meters,Sweden
+Marcel Hansenne,1948-08-27,141.4,Gothenburg,1000 Meters,France
+Olle Åberg,1952-08-10,141.3,Copenhagen,1000 Meters,Sweden
+Stanislav Jungwirth,1952-10-27,141.2,Stará Boleslav,1000 Meters,Czechoslovakia
+Mal Whitfield,1953-08-16,140.8,Eskilstuna,1000 Meters,United States
+Audun Boysen,1953-09-17,140.4,Oslo,1000 Meters,Norway
+Audun Boysen,1954-08-18,139.5,Gävle,1000 Meters,Norway
+Audun Boysen,1955-08-30,139,Gothenburg,1000 Meters,Norway
+István Rózsavölgyi,1955-09-21,139,Tata,1000 Meters,Hungary
+Dan Waern,1958-09-19,138.1,Turku,1000 Meters,Sweden
+Dan Waern,1959-08-21,137.8,Karlstad,1000 Meters,Sweden
+Siegfried Valentin,1960-07-19,136.7,Potsdam,1000 Meters,East Germany
+Peter Snell,1964-11-12,136.6,Auckland,1000 Meters,New Zealand
+Jürgen May,1965-07-20,136.2,Erfurt,1000 Meters,East Germany
+Franz-Josef Kemper,1966-09-21,136.2,Hanover,1000 Meters,West Germany
+Danie Malan,1973-06-24,136,Munich,1000 Meters,South Africa
+Rick Wohlhuter,1974-07-30,133.9,Oslo,1000 Meters,United States
+Sebastian Coe,1980-07-01,133.4,Oslo,1000 Meters,Great Britain
+Sebastian Coe,1981-07-11,132.18,Oslo,1000 Meters,Great Britain
+Noah Ngeny,1999-09-05,131.96,Rieti,1000 Meters,Kenya
+Abel Kiviat,1912-06-08,235.8,"Cambridge, Massachusetts, United States",1500 Meters,United States
+John Zander,1917-08-05,234.7,"Stockholm, Sweden",1500 Meters,Sweden
+Paavo Nurmi,1924-06-19,232.6,"Helsinki, Finland",1500 Meters,Finland
+Otto Peltzer,1926-09-11,231,"Berlin, Germany",1500 Meters,Germany
+Jules Ladoumegue,1930-10-05,229.2,"Paris, France",1500 Meters,France
+Luigi Beccali,1933-09-09,229.2,"Turin, Italy",1500 Meters,Italy
+Luigi Beccali,1933-09-17,229,"Milan, Italy",1500 Meters,Italy
+Bill Bonthron,1934-06-30,228.8,"Milwaukee, United States",1500 Meters,United States
+Jack Lovelock,1936-08-06,227.8,"Berlin, Germany",1500 Meters,New Zealand
+Gunder Hägg,1941-08-10,227.6,"Stockholm, Sweden",1500 Meters,Sweden
+Gunder Hägg,1942-07-17,225.8,"Stockholm, Sweden",1500 Meters,Sweden
+Arne Andersson,1943-08-17,225,"Gothenburg, Sweden",1500 Meters,Sweden
+Gunder Hägg,1944-07-07,223,"Gothenburg, Sweden",1500 Meters,Sweden
+Lennart Strand,1947-07-15,223,"Malmö, Sweden",1500 Meters,Sweden
+Werner Lueg,1952-06-29,223,"Berlin, Germany",1500 Meters,East Germany
+Wes Santee,1954-06-04,222.8,"Compton, United States",1500 Meters,United States
+John Landy,1954-06-21,221.8,"Turku, Finland",1500 Meters,Australia
+Sándor Iharos,1955-07-28,220.8,"Helsinki, Finland",1500 Meters,Hungary
+László Tábori,1955-09-06,220.8,"Oslo, Norway",1500 Meters,Hungary
+Gunnar Nielsen,1955-09-06,220.8,"Oslo, Norway",1500 Meters,Denmark
+István Rózsavölgyi,1956-08-03,220.6,"Tata, Hungary",1500 Meters,Hungary
+Olavi Salsola,1957-07-11,220.2,"Turku, Finland",1500 Meters,Finland
+Olavi Salonen,1957-07-11,220.2,"Turku, Finland",1500 Meters,Finland
+Stanislav Jungwirth,1957-07-12,218.1,"Stará Boleslav, Czechoslovakia",1500 Meters,Czechoslovakia
+Herb Elliott,1958-08-28,216,"Gothenburg, Sweden",1500 Meters,Australia
+Herb Elliott,1960-09-06,215.6,"Rome, Italy",1500 Meters,Australia
+Jim Ryun,1967-07-08,213.1,"Los Angeles, United States",1500 Meters,United States
+Filbert Bayi,1974-02-02,212.2,"Christchurch, New Zealand",1500 Meters,Tanzania
+Sebastian Coe,1979-08-15,212.1,"Zürich, Switzerland",1500 Meters,United Kingdom
+Steve Ovett,1980-07-15,212.1,"Oslo, Norway",1500 Meters,United Kingdom
+Steve Ovett,1980-08-27,211.4,"Koblenz, West Germany",1500 Meters,United Kingdom
+Sydney Maree,1983-08-28,211.24,"Cologne, West Germany",1500 Meters,United States
+Steve Ovett,1983-09-04,210.77,"Rieti, Italy",1500 Meters,United Kingdom
+Steve Cram,1985-07-16,209.67000000000002,"Nice, France",1500 Meters,United Kingdom
+Saïd Aouita,1985-08-23,209.46,"Berlin, Germany",1500 Meters,Morocco
+Noureddine Morceli,1992-09-06,208.86,"Rieti, Italy",1500 Meters,Algeria
+Noureddine Morceli,1995-07-12,207.37,"Nice, France",1500 Meters,Algeria
+Hicham El Guerrouj,1998-07-14,206,"Rome, Italy",1500 Meters,Morocco
+John Paul Jones,1913-05-31,254.4,"Allston, Mass.",One Mile,United States
+Norman Taber,1915-07-16,252.6,"Allston, Mass.",One Mile,United States
+Paavo Nurmi,1923-08-23,250.4,Stockholm,One Mile,Finland
+Jules Ladoumègue,1931-10-04,249.2,Paris,One Mile,France
+Jack Lovelock,1933-07-15,247.6,"Princeton, N.J.",One Mile,New Zealand
+Glenn Cunningham,1934-06-16,246.8,"Princeton, N.J.",One Mile,United States
+Sydney Wooderson,1937-08-28,246.4,Motspur Park,One Mile,United Kingdom
+Gunder Hägg,1942-07-01,246.2,Gothenburg,One Mile,Sweden
+Arne Andersson,1942-07-10,246.2,Stockholm,One Mile,Sweden
+Gunder Hägg,1942-09-04,244.6,Stockholm,One Mile,Sweden
+Arne Andersson,1943-07-01,242.6,Gothenburg,One Mile,Sweden
+Arne Andersson,1944-07-18,241.6,Malmö,One Mile,Sweden
+Gunder Hägg,1945-07-17,241.4,Malmö,One Mile,Sweden
+Roger Bannister,1954-05-06,239.4,Oxford,One Mile,United Kingdom
+John Landy,1954-06-21,238,Turku,One Mile,Australia
+Derek Ibbotson,1957-07-19,237.2,London,One Mile,United Kingdom
+Herb Elliott,1958-08-06,234.5,Dublin,One Mile,Australia
+Peter Snell,1962-01-27,234.4,Wanganui,One Mile,New Zealand
+Peter Snell,1964-11-17,234.1,Auckland,One Mile,New Zealand
+Michel Jazy,1965-06-09,233.6,Rennes,One Mile,France
+Jim Ryun,1966-07-17,231.3,"Berkeley, Cal.",One Mile,United States
+Jim Ryun,1967-06-23,231.1,"Bakersfield, Cal.",One Mile,United States
+Filbert Bayi,1975-05-17,231,Kingston,One Mile,Tanzania
+John Walker,1975-08-12,229.4,Gothenburg,One Mile,New Zealand
+Sebastian Coe,1979-07-17,229,Oslo,One Mile,United Kingdom
+Steve Ovett,1980-07-01,228.8,Oslo,One Mile,United Kingdom
+Sebastian Coe,1981-08-19,228.53,Zürich,One Mile,United Kingdom
+Steve Ovett,1981-08-26,228.4,Koblenz,One Mile,United Kingdom
+Sebastian Coe,1981-08-28,227.32999999999998,Brussels,One Mile,United Kingdom
+Steve Cram,1985-07-27,226.32,Oslo,One Mile,United Kingdom
+Noureddine Morceli,1993-09-05,224.39,Rieti,One Mile,Algeria
+Hicham El Guerrouj,1999-07-07,223.13,Rome,One Mile,Morocco
+Hannes Kolehmainen,1912-07-12,516.8,"Stockholm, Sweden",3000 Meters,Finland
+John Zander,1918-08-07,513.2,"Stockholm, Sweden",3000 Meters,Sweden
+Paavo Nurmi,1922-08-27,508.6,"Turku, Finland",3000 Meters,Finland
+Edvin Wide,1925-06-07,507.6,"Halmstad, Sweden",3000 Meters,Sweden
+Paavo Nurmi,1926-05-24,505.4,"Berlin, Germany",3000 Meters,Finland
+Paavo Nurmi,1926-07-13,500.4,"Stockholm, Sweden",3000 Meters,Finland
+Janusz Kusociński,1932-06-19,498.8,"Antwerp, Belgium",3000 Meters,Poland
+Henry Nielsen,1934-07-24,498.4,"Stockholm, Sweden",3000 Meters,Denmark
+Gunnar Höckert,1936-09-16,494.8,"Stockholm, Sweden",3000 Meters,Finland
+Henry Kälarne,1940-08-14,489,"Stockholm, Sweden",3000 Meters,Sweden
+Gunder Hägg,1942-08-28,481.2,"Stockholm, Sweden",3000 Meters,Sweden
+Gaston Reiff,1949-08-12,478.8,"Gävle, Sweden",3000 Meters,Belgium
+Sándor Iharos,1955-05-14,475.6,"Budapest, Hungary",3000 Meters,Hungary
+Gordon Pirie,1956-06-22,475.6,"Trondheim, Norway",3000 Meters,Great Britain
+Gordon Pirie,1956-09-04,472.8,"Malmö, Sweden",3000 Meters,Great Britain
+Michel Jazy,1962-06-27,469.2,"Saint-Maur-des-Fossés, France",3000 Meters,France
+Michel Jazy,1965-06-23,469,"Melun, France",3000 Meters,France
+Siegfried Herrmann,1965-08-05,466,"Erfurt, East Germany",3000 Meters,East Germany
+Kipchoge Keino,1965-08-27,459.6,"Helsingborg, Sweden",3000 Meters,Kenya
+Emiel Puttemans,1972-09-14,457.6,"Aarhus, Denmark",3000 Meters,Belgium
+Brendan Foster,1974-08-03,455.2,"Gateshead, England",3000 Meters,United Kingdom
+Henry Rono,1978-06-27,452.1,"Oslo, Norway",3000 Meters,Kenya
+Saïd Aouita,1989-08-20,449.45,"Cologne, West Germany",3000 Meters,Morocco
+Moses Kiptanui,1992-08-16,448.96,"Cologne, Germany",3000 Meters,Kenya
+Noureddine Morceli,1994-08-02,445.11,"Monte Carlo, Monaco",3000 Meters,Algeria
+Daniel Komen,1996-09-01,440.67,"Rieti, Italy",3000 Meters,Kenya
+Alfred Shrubb,1903-09-12,557,"Ilford, England",Two Mile,United Kingdom
+Alfred Shrubb,1904-06-11,548.4,"Ilford, England",Two Mile,United Kingdom
+Edvin Wide,1925-06-23,548.4,NA,Two Mile,Sweden
+Edvin Wide,1926-09-12,541.4,NA,Two Mile,Sweden
+Paavo Nurmi,1931-06-24,539.6,NA,Two Mile,Finland
+Don Lash,1936-06-13,538.4,NA,Two Mile,United States
+Gunnar Höckert,1936-09-24,537.4,NA,Two Mile,Finland
+Miklós Szabó,1937-09-30,536,NA,Two Mile,Hungary
+Taisto Mäki,1939-06-07,533.2,NA,Two Mile,Finland
+Gunder Hägg,1942-06-03,527.8,NA,Two Mile,Sweden
+Gunder Hägg,1944-06-25,526.4,NA,Two Mile,Sweden
+Gunder Hägg,1944-08-04,522.8,NA,Two Mile,Sweden
+Gaston Reiff,1952-08-26,520.4,NA,Two Mile,Belgium
+Sándor Iharos,1955-05-30,513.4,NA,Two Mile,Hungary
+Albie Thomas,1958-08-07,512,NA,Two Mile,Australia
+Murray Halberg,1961-06-07,510,NA,Two Mile,New Zealand
+Jim Beatty,1962-06-08,509.8,NA,Two Mile,United States
+Michel Jazy,1963-06-06,509.6,NA,Two Mile,France
+Bob Schul,1964-08-29,506.4,NA,Two Mile,United States
+Michel Jazy,1965-06-23,502.6,NA,Two Mile,France
+Ron Clarke,1967-07-27,499.8,NA,Two Mile,Australia
+Ron Clarke,1968-08-24,499.6,NA,Two Mile,Australia
+Emiel Puttemans,1971-08-21,497.8,NA,Two Mile,Belgium
+Lasse Virén,1972-08-14,494,NA,Two Mile,Finland
+Brendan Foster,1973-08-27,493.8,NA,Two Mile,United Kingdom
+Steve Ovett,1978-09-15,493.51,NA,Two Mile,United Kingdom
+Saïd Aouita,1987-05-28,493.45,NA,Two Mile,Morocco
+Khalid Skah,1993-06-30,492.17,NA,Two Mile,Morocco
+Moses Kiptanui,1994-06-30,489.01,NA,Two Mile,Kenya
+Haile Gebrselassie,1995-05-27,487.46,NA,Two Mile,Ethiopia
+Daniel Komen,1996-07-14,483.54,"Lappeenranta, Finaland",Two Mile,Kenya
+Haile Gebrselassie,1997-05-31,481.1,NA,Two Mile,Ethiopia
+Daniel Komen,1997-07-19,478.61,"Brussels, Belgium",Two Mile,Kenya
+Hannes Kolehmainen,1912-07-10,876.6,"Stockholm, Sweden",5000 Meters,Finland
+Paavo Nurmi,1922-09-12,875.4,"Stockholm, Sweden",5000 Meters,Finland
+Paavo Nurmi,1924-06-19,868.2,"Helsinki, Finland",5000 Meters,Finland
+Lauri Lehtinen,1932-06-19,857,"Helsinki, Finland",5000 Meters,Finland
+Taisto Mäki,1939-06-16,848.8,"Helsinki, Finland",5000 Meters,Finland
+Gunder Hägg,1942-09-20,838.2,"Gothenburg, Sweden",5000 Meters,Sweden
+Emil Zátopek,1954-05-30,837.2,"Paris, France",5000 Meters,Czechoslovakia
+Vladimir Kuts,1954-08-29,836.6,"Bern, Switzerland",5000 Meters,Soviet Union
+Chris Chataway,1954-10-13,831.6,"London, United Kingdom",5000 Meters,United Kingdom
+Vladimir Kuts,1954-10-23,831.2,"Prague, Czechoslovakia",5000 Meters,Soviet Union
+Sandor Iharos,1955-09-10,830.8,"Budapest, Hungary",5000 Meters,Hungary
+Vladimir Kuts,1955-09-18,826.8,"Belgrad, Yugoslavia",5000 Meters,Soviet Union
+Sandor Iharos,1955-10-23,820.6,"Budapest, Hungary",5000 Meters,Hungary
+Gordon Pirie,1956-06-19,816.8,"Bergen, Norway",5000 Meters,United Kingdom
+Vladimir Kuts,1957-10-13,815,"Rome, Italy",5000 Meters,Soviet Union
+Ron Clarke,1965-01-16,814.8,"Hobart, Australia",5000 Meters,Australia
+Ron Clarke,1965-02-01,813.6,"Auckland, New Zealand",5000 Meters,Australia
+Ron Clarke,1965-06-04,805.8,"Compton, USA",5000 Meters,Australia
+Kipchoge Keino,1965-11-30,804.2,"Auckland, New Zealand",5000 Meters,Kenya
+Ron Clarke,1966-07-05,796.6,"Stockholm, Sweden",5000 Meters,Australia
+Lasse Virén,1972-09-14,796.4,"Helsinki, Finland",5000 Meters,Finland
+Emiel Puttemans,1972-09-20,793,"Brussels, Belgium",5000 Meters,Belgium
+Dick Quax,1977-07-05,792.9,"Stockholm, Sweden",5000 Meters,New Zealand
+Henry Rono,1978-04-08,788.4,"Berkeley, California, USA",5000 Meters,Kenya
+Henry Rono,1981-09-13,786.2,"Knarvik, Norway",5000 Meters,Kenya
+David Moorcroft,1982-07-07,780.41,"Oslo, Norway",5000 Meters,United Kingdom
+Saïd Aouita,1985-07-22,780.4,"Oslo, Norway",5000 Meters,Morocco
+Saïd Aouita,1987-07-27,778.39,"Rome, Italy",5000 Meters,Morocco
+Haile Gebrselassie,1994-06-04,776.96,"Hengelo, Netherlands",5000 Meters,Ethiopia
+Moses Kiptanui,1995-06-08,775.3,"Rome, Italy",5000 Meters,Kenya
+Haile Gebrselassie,1995-08-16,764.39,"Zürich, Switzerland",5000 Meters,Ethiopia
+Haile Gebrselassie,1997-08-13,761.86,"Zürich, Switzerland",5000 Meters,Ethiopia
+Daniel Komen,1997-08-22,759.74,"Brussels, Belgium",5000 Meters,Kenya
+Haile Gebrselassie,1998-06-13,759.36,"Helsinki, Finland",5000 Meters,Ethiopia
+Kenenisa Bekele,2004-05-31,757.35,"Hengelo, Netherlands",5000 Meters,Ethiopia
+Joshua Cheptegei,2020-08-14,755.36,Monaco,5000 Meters,Uganda
+Jean Bouin,1911-11-16,1858.8,"Paris, France",10000 Meters,France
+Paavo Nurmi,1921-06-22,1840.2,"Stockholm, Sweden",10000 Meters,Finland
+Ville Ritola,1924-05-25,1835.4,"Helsinki, Finland",10000 Meters,Finland
+Ville Ritola,1924-07-06,1823.2,"Paris, France",10000 Meters,Finland
+Paavo Nurmi,1924-08-31,1806.2,"Kuopio, Finland",10000 Meters,Finland
+Ilmari Salminen,1937-07-18,1805.6,"Kouvola, Finland",10000 Meters,Finland
+Taisto Mäki,1938-09-29,1802,"Tampere, Finland",10000 Meters,Finland
+Taisto Mäki,1939-09-17,1792.6,"Helsinki, Finland",10000 Meters,Finland
+Viljo Heino,1944-08-25,1775.4,"Helsinki, Finland",10000 Meters,Finland
+Emil Zátopek,1949-06-11,1768.2,"Ostrava, Czech Republic",10000 Meters,Czechia
+Viljo Heino,1949-09-01,1767.2,"Kouvola, Finland",10000 Meters,Finland
+Emil Zátopek,1949-10-22,1761.2,"Ostrava, Czech Republic",10000 Meters,Czechia
+Emil Zátopek,1950-08-04,1742.6,"Turku, Finland",10000 Meters,Czechia
+Emil Zátopek,1953-11-01,1741.6,"Stara Boleslav, Czech Republic",10000 Meters,Czechia
+Emil Zátopek,1954-06-01,1734.2,"Brussels, Belgium",10000 Meters,Czechia
+Sandor Iharos,1956-07-15,1722.8,"Budapest, Hungary",10000 Meters,Hungary
+Vladimir Kuts,1956-09-11,1710.4,"Moscow, Soviet Union",10000 Meters,Soviet Union
+Pyotr Bolotnikov,1960-10-15,1698.8,"Kiev, Soviet Union",10000 Meters,Soviet Union
+Pyotr Bolotnikov,1962-08-11,1698.2,"Moscow, Soviet Union",10000 Meters,Soviet Union
+Ron Clarke,1963-12-18,1695.6,"Melbourne, Australia",10000 Meters,Australia
+Ron Clarke,1965-07-14,1659.4,"Oslo, Norway",10000 Meters,Australia
+Lasse Virén,1972-09-03,1658.4,"Munich, Germany",10000 Meters,Finland
+David Bedford,1973-07-13,1650.8,"London, United Kingdom",10000 Meters,United Kingdom
+Samson Kimobwa,1977-06-30,1650.5,"Helsinki, Finland",10000 Meters,Kenya
+Henry Rono,1978-06-11,1642.4,"Vienna, Austria",10000 Meters,Kenya
+Fernando Mamede,1984-07-02,1633.81,"Stockholm, Sweden",10000 Meters,Portugal
+Arturo Barrios,1989-08-18,1628.23,"Berlin, Germany",10000 Meters,Mexico
+Richard Chelimo,1993-07-05,1627.91,"Stockholm, Sweden",10000 Meters,Kenya
+Yobes Ondieki,1993-07-10,1618.38,"Oslo, Norway",10000 Meters,Kenya
+William Sigei,1994-07-22,1612.23,"Oslo, Norway",10000 Meters,Kenya
+Haile Gebrselassie,1995-06-05,1603.53,"Hengelo, Netherlands",10000 Meters,Ethiopia
+Salah Hissou,1996-08-23,1598.08,"Brussels, Belgium",10000 Meters,Morocco
+Haile Gebrselassie,1997-07-04,1591.32,"Oslo, Norway",10000 Meters,Ethiopia
+Paul Tergat,1997-08-22,1587.85,"Brussels, Belgium",10000 Meters,Kenya
+Haile Gebrselassie,1998-06-01,1582.75,"Hengelo, Netherlands",10000 Meters,Ethiopia
+Kenenisa Bekele,2004-06-08,1580.31,"Ostrava, Czech Republic",10000 Meters,Ethiopia
+Kenenisa Bekele,2005-08-26,1577.53,"Brussels, Belgium",10000 Meters,Ethiopia
+Joshua Cheptegei,2020-10-07,1571,"Valencia, Spain",10000 Meters,Uganda
+Steve Moneghetti,1993-01-24,3606,Tokyo,Half Marathon,Australia
+Matthews Temane,1987-07-25,3610,East London,Half Marathon,South Africa
+Paul Tergat,1993-04-15,3613,Milan,Half Marathon,Kenya
+Benson Masya,1993-04-03,3624,The Hague,Half Marathon,Kenya
+Michael Musyoki,1986-06-08,3643,South Shields,Half Marathon,Kenya
+Dionicio Cerón,1990-09-16,3646,Philadelphia,Half Marathon,Mexico
+Mark Curp,1985-09-15,3655,Philadelphia,Half Marathon,United States
+Steve Jones,1985-08-11,3674,Birmingham,Half Marathon,United Kingdom
+Paul Cummings,1983-09-25,3692,Dayton,Half Marathon,United States
+Michael Musyoki,1982-09-19,3696,Philadelphia,Half Marathon,Kenya
+Herb Lindsay,1981-09-20,3707,"Manchester, Vermont",Half Marathon,United States
+Stan Mavis,1980-01-27,3736,New Orleans,Half Marathon,United States
+Kirk Pfeffer,1979-12-07,3752,Las Vegas,Half Marathon,United States
+Nick Rose,1979-10-14,3756,Dayton,Half Marathon,United Kingdom
+Toshihiro Matsumoto,1977-02-06,3757,"Beppu, Ōita",Half Marathon,Japan
+Tony Simmons,1978-06-24,3767,Welwyn Garden City,Half Marathon,United Kingdom
+Miruts Yifter,1977-02-06,3777,Coamo,Half Marathon,Ethiopia
+Derek Clayton,1967-12-03,3802,Fukuoka Marathon,Half Marathon,Australia
+Juan Rafael Angel Perez,1976-02-08,3826,Coamo,Half Marathon,Costa Rica
+Jose Reveyn,1976-03-27,3826,The Hague,Half Marathon,Belgium
+Derek Graham,1970-05-02,3833,Belfast,Half Marathon,United Kingdom
+Abebe Bikila,1964-10-21,3868,Tokyo,Half Marathon,Ethiopia
+Ron Hill,1969-06-21,3885,Freckleton,Half Marathon,United Kingdom
+Pete Ravald,1966-06-18,3942,Freckleton,Half Marathon,United Kingdom
+Ron Hill,1965-06-19,3944,Freckleton,Half Marathon,United Kingdom
+Brian Hill-Cottingham,1960-04-09,4021,Romford,Half Marathon,United Kingdom
+Kibiwott Kandie,2020-12-06,3452,Valencia,Half Marathon,Kenya
+Geoffrey Kamworor,2019-09-15,3481,Copenhagen,Half Marathon,Kenya
+Abraham Kiptum,2018-10-28,3498,Valencia,Half Marathon,Kenya
+Zersenay Tadese,2010-03-21,3503,Lisbon,Half Marathon,Eritrea
+Samuel Wanjiru,2007-03-17,3513,The Hague,Half Marathon,Kenya
+Samuel Wanjiru,2007-02-09,3533,Ras al-Khaimah,Half Marathon,Kenya
+Haile Gebrselassie,2006-01-15,3535,Tempe,Half Marathon,Ethiopia
+Zersenay Tadese,2005-09-18,3545,South Shields,Half Marathon,Eritrea
+Paul Tergat,2000-03-26,3546,Lisbon,Half Marathon,Kenya
+Paul Malakwen Kosgei,2006-04-02,3547,Berlin,Half Marathon,Kenya
+Samuel Wanjiru,2005-09-11,3556,Rotterdam,Half Marathon,Kenya
+Paul Tergat,1998-04-04,3557,Milan,Half Marathon,Kenya
+António Pinto,1998-03-15,3583,Lisbon,Half Marathon,Portugal
+Moses Tanui,1993-04-03,3624,Milan,Half Marathon,Kenya
+Shem Kororia,1997-10-04,3596,Košice,Half Marathon,Kenya
+Eliud Kipchoge,2018-09-16,7299,Berlin Marathon,Marathon,Kenya
+Dennis Kimetto,2014-09-28,7377,Berlin Marathon,Marathon,Kenya
+Wilson Kipsang,2013-09-29,7403,Berlin Marathon,Marathon,Kenya
+Patrick Makau,2011-09-25,7418,Berlin Marathon,Marathon,Kenya
+Haile Gebrselassie,2008-09-28,7439,Berlin Marathon,Marathon,Ethiopia
+Haile Gebrselassie,2007-09-30,7466,Berlin Marathon,Marathon,Ethiopia
+Paul Tergat,2003-09-28,7495,Berlin Marathon,Marathon,Kenya
+Khalid Khannouchi,2002-04-14,7538,London Marathon,Marathon,United States
+Khalid Khannouchi,1999-10-24,7542,Chicago Marathon,Marathon,Morocco
+Ronaldo da Costa,1998-09-20,7565,Berlin Marathon,Marathon,Brazil
+Belayneh Dinsamo,1988-04-17,7610,Rotterdam Marathon,Marathon,Ethiopia
+Carlos Lopes,1985-04-20,7632,Rotterdam Marathon,Marathon,Portugal
+Steve Jones,1984-10-21,7685,Chicago Marathon,Marathon,United Kingdom
+Robert De Castella,1981-12-06,7698,Fukuoka Marathon,Marathon,Australia
+Derek Clayton,1969-05-30,7713.6,"Antwerp, Belgium",Marathon,Australia
+Gerard Nijboer,1980-04-26,7741,Amsterdam Marathon,Marathon,Netherlands
+Shigeru So,1978-02-05,7745.6,Beppu-Ōita Marathon,Marathon,Japan
+Ian Thompson,1974-01-31,7752,"Christchurch, New Zealand",Marathon,United Kingdom
+Ron Hill,1970-07-23,7768.8,"Edinburgh, Scotland",Marathon,United Kingdom
+Derek Clayton,1967-12-03,7776.4,Fukuoka Marathon,Marathon,Australia
+Morio Shigematsu,1965-06-12,7920,Polytechnic Marathon,Marathon,Japan
+Abebe Bikila,1964-10-21,7931.2,"Tokyo, Japan",Marathon,Ethiopia
+Basil Heatley,1964-06-13,8035,Polytechnic Marathon,Marathon,United Kingdom
+Leonard Edelen,1963-06-15,8068,Polytechnic Marathon,Marathon,United States
+Brian Kilby,1963-07-06,8083,"Port Talbot, Wales",Marathon,United Kingdom
+Toru Terasawa,1963-02-17,8115.8,Beppu-Ōita Marathon,Marathon,Japan
+Abebe Bikila,1960-09-10,8116.2,"Rome, Italy",Marathon,Ethiopia
+Sergei Popov,1958-08-24,8117,"Stockholm, Sweden",Marathon,Soviet Union
+Jim Peters,1954-06-26,8259.4,Polytechnic Marathon,Marathon,United Kingdom
+Paavo Kotila,1956-08-12,8284.8,"Pieksämäki, Finland",Marathon,Finland
+Jim Peters,1953-10-04,8314.8,Turku Marathon,Marathon,United Kingdom
+Jim Peters,1953-06-13,8320.4,Polytechnic Marathon,Marathon,United Kingdom
+Jim Peters,1952-06-14,8442.2,Polytechnic Marathon,Marathon,United Kingdom
+Suh Yun-bok,1947-04-19,8739,Boston Marathon,Marathon,Korea
+Sohn Kee-chung,1935-03-21,8774,"Tokyo, Japan",Marathon,Japanese Korea
+Sohn Kee-chung,1935-11-03,8802,"Tokyo, Japan",Marathon,Japanese Korea
+Yasuo Ikenaka,1935-04-03,8804,"Tokyo, Japan",Marathon,Japan
+Fusashige Suzuki,1935-03-31,8869,"Tokyo, Japan",Marathon,Japan
+Albert Michelsen,1925-10-12,8941.8,"Port Chester, United States",Marathon,United States
+Harry Payne,1929-07-05,9057.6,London,Marathon,United Kingdom
+Hannes Kolehmainen,1920-08-22,9155.8,"Antwerp, Belgium",Marathon,Finland
+Alexis Ahlgren,1913-05-31,9366.6,Polytechnic Marathon,Marathon,Sweden
+Umberto Blasi,1914-11-29,9480.8,"Legnano, Italy",Marathon,Italy
+Harry Green,1913-05-12,9496.2,Polytechnic Marathon,Marathon,United Kingdom
+Thure Johansson,1909-08-31,9634.2,"Stockholm, Sweden",Marathon,Sweden
+Henry Barrett,1909-05-26,9751,"Polytechnic Marathon, London, United Kingdom",Marathon,United Kingdom
+Albert Raines,1909-05-08,9964.6,"New York City, United States",Marathon,United States
+James Clark,1909-02-12,10012.8,"New York City, United States",Marathon,United States
+Robert Fowler,1909-01-01,10365.4,United States,Marathon,United States
+Johnny Hayes,1908-07-24,10518.4,"London, United Kingdom",Marathon,United States

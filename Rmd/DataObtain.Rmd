@@ -19,9 +19,9 @@ knitr::opts_chunk$set(message = F, warning = F)
 library(rvest)
 library(xml2)
 library(tidyverse)
-library(hrbrthemes)
 library(here)
 library(lubridate)
+library(countrycode)
 ```
 
 ## Initial Data Scrape with rvest
@@ -425,7 +425,75 @@ marathon_clean <- marathon %>%
          Distance = "Marathon")
 thirteentot_clean <- twelvetot_clean %>%
   bind_rows(marathon_clean)
-# write_csv(thirteentot_clean, here("Data/RunningRecordsOverTime.rds"))
-# write_rds(thirteentot_clean, here("Data/RunningRecordsOverTime.rds"))
+```
+
+## Final Data Cleanup
+
+I missed a few things so I do some final specific data cleaning, and then fill in missing nationality by using substr on the Athlete Column to find country codes. I use countrycode to get most of the countries read in, but have to do some explicitly as there is a lot of variation across wikipedia tables.
+
+```{r}
+thirteentot_clean <- read_rds(here("Data/RunningRecordsOverTime.rds"))
+final_df <- thirteentot_clean %>%
+  mutate(Location = str_remove(Location, "\\[2\\]"),
+         Location = str_remove(Location, "\\[3\\]"),
+         Location = str_remove(Location,"Yonkers,\\[nb 5\\]")) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(") == T, 
+                                      str_extract(Athlete, "\\s*\\([^\\)]+\\)"), 
+                                      Nationality)) %>%
+  mutate(Nationality = str_remove(Nationality, "\\("),
+         Nationality = str_remove(Nationality, "\\)"),
+         Nationality = str_trim(Nationality, "both"),
+         Nationality = ifelse(str_count(Nationality) == 3, 
+                       countrycode(Nationality, origin = "iso3c", destination = "country.name"),
+                       Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(ALG\\)") == T,
+                       "Algeria",
+                       Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(DEN\\)") == T,
+                       "Denmark",
+                       Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(POR\\)") == T,
+               "Portugal",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(ENG\\)") == T,
+               "Great Britain",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(URS\\)") == T,
+               "Soviet Union",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(GDR\\)") == T,
+               "East Germany",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(GER\\)") == T & Date > "1945-01-01" | 
+                              str_detect(Athlete, "\\(GER\\)") == T & Date < "1989-11-09",
+               "East Germany",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(GER\\)") == T & Date < "1945-01-01" | 
+                              str_detect(Athlete, "\\(GER\\)") == T & Date > "1989-11-09",
+               "Germany",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(TCH\\)") == T,
+               "Czechoslovakia",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(TAN\\)") == T,
+               "Tanzania",
+               Nationality)) %>%
+  mutate(Nationality = ifelse(str_detect(Athlete, "\\(FRG\\)") == T,
+               "East Germany",
+               Nationality)) %>%
+  mutate(Athlete = gsub("\\s*\\([^\\)]+\\)", "", Athlete)) %>%
+  mutate(Location = ifelse(Athlete == "Daniel Komen" & Date == "1996-07-14",
+                           "Lappeenranta, Finaland",
+                           Location),
+         Location = ifelse(Athlete == "Daniel Komen" & Date == "1997-07-19",
+                           "Brussels, Belgium",
+                           Location),
+         Location = ifelse(Athlete == "Alfred Shrubb",
+                           "Ilford, England",
+                           Location))
+  
+# readr::write_csv(final_df, here("Data/RunningRecordsOverTime.csv"))
+# write_rds(final_df, here("Data/RunningRecordsOverTime.rds"))
+# Potential scrape to be done here https://www.arrs.run/RecProg/RP_wwT.htm
 ```
 
