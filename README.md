@@ -8,7 +8,7 @@ Long term plan is to include statistics on many different types of physical exer
 
 to identify which world records have improved the most and why. These sports are best to work with as they are almost entirely individual (some drafting is of course possible), and are time based giving a simple statistic to track improvement on. Some work samples from Running World Records are below:
 
-[](Images/MensWomensRecordPace.png)
+[](/Users/dunk/Projects/Athletics/Images/MensWomensRecordPace.png)
 
-[](Images/AllRecordsOverTime.png)
+[](/Users/dunk/Projects/Athletics/Images/AllRecordsOverTime.png)
 
