@@ -34,6 +34,7 @@ library(lubridate)
 library(scales)
 library(gt)
 library(countrycode)
+library(gtsummary)
 
 ## Global options
 options(max.print="75")
@@ -274,11 +275,11 @@ mens_world_records_seconds %>%
         axis.text.x = element_text(size = 6))
 ```
 
-Decomposing each of these distances into the three groups allows us to autocorrelate from an intercept of 0 and see the rate of time trend increase. I filter out Moses and Gebrselassie's record since they are clearly ready to be beaten, they just haven't been attempted at that distance yet. We see that at longer distances the rate of increase is actually lesser, which is to be expected since it takes less effort to maintain lower paces. To have any real meaning to this data a lot more would be needed as can be seen from the ridiculously high R^2 values. The formula by each group here is $y = 0 + \beta_1*log(x) + \mu$, and the listed correlation coefficient therefore corresponds each 1% increase in Time to a y% increase in distance.
+Decomposing each of these distances into the three groups allows us to autocorrelate from an intercept of 0 and see the rate of time trend increase. I filter out Moses and Gebrselassie's record since they are clearly ready to be beaten, they just haven't been attempted at that distance yet. We see that at longer distances the rate of increase is actually lesser, which is to be expected since it takes less effort to maintain lower paces. To have any real meaning to this data a lot more would be needed as can be seen from the ridiculously high R^2 values. The formula by each group here is $y = \beta_1*log(x) + \mu$, and the listed correlation coefficient therefore corresponds each 1% increase in distance to a y% increase in time. In the table of the model each one percent increase in distance by distance (short, middle, and long) results in a corresponding .007 minute, .065, and 0.66 minute increases. Significance isn't really an issue here since the data for world records is necessarily limited to one per point, if there were more data on each line it would obviously be significant and since world record runners run at fairly even paces for every distance but the 100 meter if I added more data using similar times from similar distances and similar athletes, it would just fall along the already existing line. The long distance group predicts that a 1:55:22.9 marathon is possible, while the lower distance based models predict sub one hour marathons so those should definitely be entirely disregarded for longer distances.
 
 
 ```{r}
-formula = y ~ 0 + log(x)
+formula = y ~ log(x)
 mens_world_records_seconds %>%
   slice(1:20) %>%
   slice(-11, -14, -15, -16, -18, -19, -13) %>%
@@ -287,11 +288,11 @@ mens_world_records_seconds %>%
   mutate(Group = case_when(Distance < 1000 ~ "Short Distance",
                            Distance >= 1000 & Distance < 10000 ~ "Middle Distance",
                            Distance >= 10000 ~ "Long Distance")) %>%
-  ggplot(aes(x = Perf, y = Distance)) +
+  ggplot(aes(x = Distance, y = Perf)) +
   geom_point(color = "deepskyblue4", alpha = 0.3) +
   geom_line(color = "black", alpha = 0.8) +
   geom_smooth(aes(color = Group), method = "lm", se = F, formula = formula) +
-  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., "x", ..rr.label.., sep = "~~~"),
+  ggpmisc::stat_poly_eq(aes(label = paste(..eq.label.., ..rr.label.., sep = "~~~"),
                             color = Group),
                formula = formula, 
                rr.digits = 3, 
@@ -299,21 +300,39 @@ mens_world_records_seconds %>%
                parse = TRUE,
                label.x = "middle", label.y = "middle") +
   scale_color_manual(values = c(col(3))) +
-  scale_x_time(labels = time_format("%H:%M:%S")) +
+  scale_x_comma() +
   scale_y_log10() +
-  labs(x = "Time", y = "log(Distance)", color = "Distance")
-```
-
-Looking at all the world records I develop a quadratic-log model ($y = \beta_0log(x)+\beta_1log(x)^2 + \mu$) that predicts for each 1% increase in time there is an expected 0.00393 meter increase in distance, and an expected intercept of .01102 meters at 0, i.e. for any speed. This model - using times from shorter races - indicates that the marathon world record, and half marathon world record have some room for improvement still.
-
-```{r}
-formula = y ~ log(x) + log(x)^2
-mens_world_records_seconds %>%
+  labs(y = "log(Time) in Seconds", x = "Distance", color = "Distance (Meters)")
+test <- mens_world_records_seconds %>% # Remaking the above model as a table
   slice(1:20) %>%
   slice(-11, -14, -15, -16, -18, -19, -13) %>%
   mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195),
+         Perf = as.numeric(Perf)/60) %>%
+  mutate(Group = case_when(Distance < 1000 ~ "Short Distance",
+                           Distance >= 1000 & Distance < 10000 ~ "Middle Distance",
+                           Distance >= 10000 ~ "Long Distance"))
+lmdata1 <- dplyr::filter(test, Group == "Short Distance")
+lmdata2 <- dplyr::filter(test, Group == "Middle Distance")
+lmdata3 <- dplyr::filter(test, Group == "Long Distance")
+logmod1 <- tbl_regression(lm(Perf ~ log(Distance), data = lmdata1), exponentiate = T)
+logmod2 <- tbl_regression(lm(Perf ~ log(Distance), data = lmdata2), exponentiate = T)
+logmod3 <- tbl_regression(lm(Perf ~ log(Distance), data = lmdata3), exponentiate = T)
+
+tbl_merge(tbls = list(logmod1, logmod2, logmod3),
+          tab_spanner = c("**Short Distance**", "**Middle Distance**", "**Long Distance**"))
+  
+```
+
+Looking at all the world records I develop a quadratic-log-log model ($y = \beta_0log(x)+\beta_1log(x)^2 + \mu$) that predicts for each 1% increase in distance there is an expected 1.3% increase in time, and for each additional 1% there is a .013% decrease. This model indicates that the marathon world record, and half marathon world record have some room for improvement still as well, although it only predicts a 1:58:10.88 marathon.
+
+```{r}
+formula = y ~ log(x) + I(log(x)^2)
+mens_world_records_seconds %>%
+  slice(1:21) %>%
+  slice(-11, -14, -15, -16, -18, -19, -13) %>%
+  mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195, 100000),
          Perf = as.numeric(Perf)) %>%
-  ggplot(aes(x = Perf, y = Distance)) +
+  ggplot(aes(x = Distance, y = Perf)) +
   geom_point(color = "deepskyblue4", alpha = 0.3) +
   geom_line(color = "black", alpha = 0.8) +
   geom_smooth(method = "lm", se = F, formula = formula, color = col(1)) +
@@ -324,16 +343,17 @@ mens_world_records_seconds %>%
                parse = TRUE,
                label.x = "middle", label.y = "middle") +
   scale_color_manual(values = c(col(1))) +
-  scale_x_time(labels = time_format("%H:%M:%S")) +
+  scale_x_comma() +
   scale_y_log10() +
-  labs(x = "Time", y = "log(Distance)", color = "Distance")
-test <- mens_world_records_seconds %>%
-  slice(1:20) %>%
-  slice(-11, -14, -15, -16, -18, -19, -13) %>%
-  mutate(Distance = c(100, 200, 400, 800, 1000, 1500, 1609.34, 2000, 3000, 5000, 10000, 21097.5, 42195),
-         Perf = as.numeric(Perf))
-quadlog <- lm(Distance ~ log10(Perf) + I(log10(Perf))^2, data = test)
-# summary(quadlog)
+  labs(y = "log(Time) in Seconds", x = "Distance (Meters)", color = "Distance")
+quadlog <- lm(log(Perf) ~ log(Distance) + I(log(Distance)^2), data = test)
+quadlog %>%
+  gtsummary::tbl_regression(exponentiate = T) %>%
+  # modify_header(update = list(`I(log(Distance)^2)` ~ "Time")) %>%
+  gtsummary::bold_labels()
+
+# newdata <- tibble(Distance = c(100,200,400,800,1000,1500,1609.344, 2000, 3000, 5000, 10000, 21097.5, 42195, 100000))
+# predict(quadlog, newdata = newdata, interval = "confidence")
 ```
 
 
@@ -686,24 +706,26 @@ anim_records <- runningrecords %>%
   geom_label(aes(label = paste0(round(Improvement, 2), "%"))) +
   facet_wrap( ~ factor(Distance, levels = c("100 Meters","200 Meters","400 Meters","800 Meters","1000 Meters","1500 Meters", "One Mile","2000 Meters","3000 Meters", "Two Mile", "5000 Meters", "10000 Meters", "Half Marathon","Marathon")), scales = "free_y") +
   scale_color_manual(values = col(13)) +
+  theme_ipsum_pub() +
   ggtitle("All Running World Records Over Time") +
   scale_y_time(breaks = scales::breaks_pretty(n = 6)) +
   scale_x_date(breaks = scales::breaks_pretty(n = 6)) +
-  theme_minimal() +
   labs(subtitle = "Label Represents Marginal Improvement on Previous Record", 
        x = "Year", y = "Time (Hours, Minutes, Seconds)") +
   theme(legend.position = "none",
-        axis.text.y = element_text(size = 6, face = "bold"),
-        axis.text.x = element_text(angle = 90, face = "bold"),
-        plot.title = element_text(hjust = "center"),
-        panel.grid = element_blank(),
-        plot.subtitle = element_text(hjust = "center")) +
+        axis.text.y = element_text(size = 6),
+        axis.text.x = element_text(angle = 90),
+        plot.title = element_text(hjust = 0.5),
+        panel.margin = unit(c(-0.5,0-0.5,0), "lines"),
+        plot.subtitle = element_text(hjust = 0.5)) +
   transition_reveal(Date) +
   ease_aes('linear')
 animate(anim,
         nframes = 200,
         fps = 10,
-        end_pause = 5)
+        end_pause = 5,
+        height = 850,
+        width = 900)
 ```
 
 
