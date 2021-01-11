@@ -24,8 +24,6 @@ h1 {
 library(gganimate)
 library(transformr)
 library(ggtext)
-library(rvest)
-library(xml2)
 library(tidyverse)
 library(hrbrthemes)
 library(here)
@@ -411,6 +409,7 @@ ggplot(data = faceted_records, aes(x = Discipline, y = Perf, color = Gender, gro
   theme(axis.text.x = element_text(size = 5),
         plot.title = element_markdown(hjust = 0.5),
         legend.position = "none")
+# ggsave("/Users/dunk/Projects/NewWebsite.io/img/portfolio/MensWomensRecordsPace.png", width = 14, height = 14, dpi = 300)
 ```
 
 ## Percent Difference At Each Distance
