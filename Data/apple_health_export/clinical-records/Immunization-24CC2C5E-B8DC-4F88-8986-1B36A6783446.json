@@ -1,0 +1,55 @@
+{
+  "id" : "TM26PI9Jon.GRKmfcBDP4oAB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2014-08-22",
+  "performer" : {
+    "display" : "Robert A. Rochette, RN",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TIryIw3WiJd03R7iG256O9QB"
+  },
+  "date" : "2012-03-28",
+  "lotNumber" : "1495AA",
+  "manufacturer" : {
+    "display" : "Merck and Co., Inc."
+  },
+  "route" : {
+    "text" : "Intramuscular",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Intramuscular",
+        "code" : "IM"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "HPV4 (Human papillomavirus, quadrivalent)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "HPV4 (HUMAN PAPILLOMAVIRUS, QUADRIVALENT)",
+        "code" : "62"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "LEFT DELTOID",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4040.657370.50115014",
+        "display" : "LEFT DELTOID",
+        "code" : "LA"
+      }
+    ]
+  },
+  "requester" : {
+    "display" : "May Wang, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TSUQwGCxu-WmZLcyKGbzIHQB"
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

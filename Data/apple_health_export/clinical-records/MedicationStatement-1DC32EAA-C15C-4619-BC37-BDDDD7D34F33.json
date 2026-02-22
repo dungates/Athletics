@@ -1,0 +1,67 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "text" : "CS1T D 'FOR CHILDREN GREATER THAN 6 YEARS OLD.'",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2006-08-01",
+            "end" : "2007-08-01"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TzyLy1rZZ8PwyKyPvdV6nzJ7LwJ8SY0UrPCF0PrLeVnwB",
+  "effectivePeriod" : {
+    "start" : "2006-08-01",
+    "end" : "2007-08-01"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Sodium Fluoride 1 mg (2.2 mg sod. fluoride) Chew tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Sodium Fluoride 1 mg (2.2 mg sod. fluoride) Chew tab",
+        "code" : "315213"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "101644337"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "101644337:1344574917"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Robert W. Peterson, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TzMiOhUXrEeUPE0ASoiaX0wB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

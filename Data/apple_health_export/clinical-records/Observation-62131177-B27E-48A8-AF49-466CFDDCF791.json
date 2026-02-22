@@ -1,0 +1,45 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2011-02-20T01:55:00Z",
+  "id" : "Tfk34uadg4h3SXUUUiCQS4DG44-Y-NpCa3YlmXRXxei4B",
+  "code" : {
+    "text" : "SPECIFIC GRAVITY, UA",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "SPECIFIC GRAVITY, UA",
+        "code" : "5811-5"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "value" : 1.017
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "low" : {
+        "value" : 1.003
+      },
+      "high" : {
+        "value" : 1.03
+      },
+      "text" : "1.003 - 1.030"
+    }
+  ],
+  "effectiveDateTime" : "2011-02-20T01:38:00Z",
+  "resourceType" : "Observation"
+}

@@ -1,0 +1,51 @@
+{
+  "id" : "T7.to6J1sI37ULBCRv8j7mwB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2015-05-31",
+  "performer" : {
+    "display" : "Nedra L. Davis, MA",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/Tg.6KqWj5L-EHDEoBbAetBQB"
+  },
+  "date" : "2014-10-31",
+  "lotNumber" : "146505",
+  "manufacturer" : {
+    "display" : "Novartis Pharmaceutical Corporation"
+  },
+  "route" : {
+    "text" : "Intramuscular",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Intramuscular",
+        "code" : "IM"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "INFs pres free 4yrs-adult (FLUVIRIN) (Influenza)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "INFS PRES FREE 4YRS-ADULT (FLUVIRIN) (INFLUENZA)",
+        "code" : "140"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "LEFT DELTOID",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4040.657370.50115014",
+        "display" : "LEFT DELTOID",
+        "code" : "LA"
+      }
+    ]
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

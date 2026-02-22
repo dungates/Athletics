@@ -1,0 +1,47 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Vital Signs",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Vital Signs",
+        "code" : "vital-signs"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "/min",
+    "value" : 12,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "/min"
+  },
+  "id" : "TnwUWuH7xR4cHQ21jS61I3p.86HBxxFe4D63enq0EjPdqOVqflN0fgK1DXaGL-1UYB",
+  "code" : {
+    "text" : "Respirations",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "Vital signs",
+        "code" : "8716-3"
+      },
+      {
+        "system" : "http://loinc.org",
+        "display" : "Respiratory rate",
+        "code" : "9279-1"
+      }
+    ]
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "performer" : [
+    {
+      "display" : "Savannah Lucas, MA",
+      "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/Tw9HQT1eH1y..hteR4OsIxgB"
+    }
+  ],
+  "effectiveDateTime" : "2013-11-25T16:45:00Z",
+  "resourceType" : "Observation"
+}

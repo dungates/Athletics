@@ -1,0 +1,103 @@
+{
+  "id" : "Td.vsv-Bo0uqu.9dN8eE8sDLlWA-40g5bOlgcpUak69kB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "ONDANSETRON 4 MG ORAL RAP DIS TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "ONDANSETRON 4 MG ORAL RAP DIS TAB",
+            "code" : "104894"
+          }
+        ]
+      },
+      "id" : "TFGIaGP1jzkdIKrVx0hE1nAB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet, Rapid Dissolve",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet, Rapid Dissolve",
+              "code" : "322"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2017-08-21",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "330936233"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "330936233:0491109972"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2017-08-21",
+      "end" : "2017-08-23"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "Place 1 tablet on tongue every 8 hours as needed for nausea or vomiting",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2017-08-21",
+            "end" : "2017-08-23"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "Ondansetron 4 mg Rap dis tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TFGIaGP1jzkdIKrVx0hE1nAB"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "id" : "Tc74mvllfBZYUoR9HLjt5FScTt59ptHHqgOZnZu7xcOkB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "AEROCHAMBER Z-STAT PLUS-FLW SG MISC SPACER",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "AEROCHAMBER Z-STAT PLUS-FLW SG MISC SPACER",
+            "code" : "1086493"
+          }
+        ]
+      },
+      "id" : "TmryC.fuAvpa1VQxmMHkIEwB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Spacer",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Spacer",
+              "code" : "512"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2016-12-13",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "311088980"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "311088980:3184396976"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2016-12-13",
+      "end" : "2016-12-15"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Miscell. (Med.Supl.;Non-Drugs)",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Miscell. (Med.Supl.;Non-Drugs)",
+            "code" : "83"
+          }
+        ]
+      },
+      "text" : "Use with metered dose inhaler as directed by healthcare provider",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2016-12-13",
+            "end" : "2016-12-15"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Rebecca Kennedy, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TzyvUwBS400zfCjkbtFs5OwB"
+  },
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "AeroChamber Z STAT Plus Flow Signal Inhaler Spacer Spacer",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TmryC.fuAvpa1VQxmMHkIEwB"
+  }
+}

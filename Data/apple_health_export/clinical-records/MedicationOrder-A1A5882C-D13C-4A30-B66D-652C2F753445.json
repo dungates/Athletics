@@ -1,0 +1,103 @@
+{
+  "id" : "TAEW0O6kk1juSLJkSsO0geX1oJWTfiq0a8S5Jpzoy0BYB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+            "code" : "1091157"
+          }
+        ]
+      },
+      "id" : "Tfi8NIkdl857n3l8zqnfJ2gB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet Extended Rel 24 hr (2)",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet Extended Rel 24 hr (2)",
+              "code" : "480"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2010-06-28",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "157067859"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "157067859:1427614720"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2010-06-28",
+      "end" : "2010-08-31"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "1T PO 'EVERY MORNING AFTER BREAKFAST FOR ATTENTION ISSUES'",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2010-06-28",
+            "end" : "2010-08-31"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "stopped",
+  "medicationReference" : {
+    "display" : "Concerta 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/Tfi8NIkdl857n3l8zqnfJ2gB"
+  }
+}

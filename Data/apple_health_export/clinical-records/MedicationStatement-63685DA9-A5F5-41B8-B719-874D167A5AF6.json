@@ -1,0 +1,77 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "Take 1 tablet by mouth every morning after breakfast",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2017-08-29",
+            "end" : "2018-01-18"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TXUEJD0rgAvU3sGIERJZ-DzjP2NUcw.Yc7byK28r2GiAB",
+  "effectivePeriod" : {
+    "start" : "2017-08-29",
+    "end" : "2018-01-18"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Concerta 18 mg Tr24 sr tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Concerta 18 mg Tr24 sr tab",
+        "code" : "1091157"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "331623386"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "331623386:2502537865"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

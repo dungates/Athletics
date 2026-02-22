@@ -1,0 +1,124 @@
+{
+  "id" : "T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB",
+  "birthDate" : "1999-04-14",
+  "resourceType" : "Patient",
+  "active" : true,
+  "telecom" : [
+    {
+      "system" : "phone",
+      "value" : "503-493-2673",
+      "use" : "home"
+    },
+    {
+      "system" : "phone",
+      "value" : "503-777-7560",
+      "use" : "work"
+    },
+    {
+      "system" : "phone",
+      "value" : "971-413-3852",
+      "use" : "mobile"
+    },
+    {
+      "system" : "email",
+      "value" : "duncan.gates123@gmail.com"
+    }
+  ],
+  "careProvider" : [
+    {
+      "display" : " PCMOB,EIN G",
+      "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T5Hw125pSgZ1YXNVzz4v0UAB"
+    },
+    {
+      "display" : " DOR-GRD",
+      "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TRZ9md8X.aqF-wCXk7qBtQAB"
+    }
+  ],
+  "deceasedBoolean" : false,
+  "maritalStatus" : {
+    "text" : "Single/Never Married"
+  },
+  "address" : [
+    {
+      "use" : "home",
+      "city" : "PORTLAND",
+      "country" : "USA",
+      "postalCode" : "97213",
+      "period" : {
+        "start" : "2011-02-28T00:00:00Z"
+      },
+      "line" : [
+        "2955 NE 58TH AVE"
+      ],
+      "state" : "OR"
+    }
+  ],
+  "communication" : [
+    {
+      "language" : {
+        "text" : "English",
+        "coding" : [
+          {
+            "system" : "urn:oid:2.16.840.1.113883.6.99",
+            "display" : "English",
+            "code" : "en"
+          }
+        ]
+      }
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/us-core-race",
+      "valueCodeableConcept" : {
+        "text" : "White",
+        "coding" : [
+          {
+            "system" : "urn:oid:2.16.840.1.113883.5.104",
+            "display" : "White",
+            "code" : "2106-3"
+          }
+        ]
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/us-core-ethnicity",
+      "valueCodeableConcept" : {
+        "text" : "Not Hispanic or Latino",
+        "coding" : [
+          {
+            "system" : "urn:oid:2.16.840.1.113883.5.50",
+            "display" : "Not Hispanic or Latino",
+            "code" : "2186-5"
+          }
+        ]
+      }
+    },
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/us-core-birth-sex",
+      "valueCodeableConcept" : {
+        "text" : "Male",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/v3/AdministrativeGender",
+            "display" : "Male",
+            "code" : "M"
+          }
+        ]
+      }
+    }
+  ],
+  "name" : [
+    {
+      "use" : "usual",
+      "text" : "Duncan Gates",
+      "family" : [
+        "Gates"
+      ],
+      "given" : [
+        "Duncan"
+      ]
+    }
+  ],
+  "gender" : "male"
+}

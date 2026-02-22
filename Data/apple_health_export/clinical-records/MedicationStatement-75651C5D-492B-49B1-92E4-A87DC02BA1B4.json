@@ -1,0 +1,67 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "text" : "1-2T PO 'AT BEDTIME FOR BED WETTING'",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2012-08-21",
+            "end" : "2014-08-21"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TKlLudvOBIKHTna62MJBxzH84bcOQcPg7lxHYYZQALs4B",
+  "effectivePeriod" : {
+    "start" : "2012-08-21",
+    "end" : "2014-08-21"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Desmopressin 0.1 mg Tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Desmopressin 0.1 mg Tab",
+        "code" : "849515"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "197106766"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "197106766:2570048985"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

@@ -1,0 +1,24 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "id" : "TC8evdQvJKChBJxd033aMx4-5nyPa7l2GUsWW6mE5q9sB",
+  "code" : {
+    "text" : "Narrative"
+  },
+  "valueString" : "\r\n\r\n        RLB (Airport Way Lab)\r\n        Kaiser Permanente NW\r\n        13705 NE Airport Way\r\n        Portland,  OR  97230",
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "effectiveDateTime" : "2010-06-28T21:58:00Z",
+  "resourceType" : "Observation"
+}

@@ -1,0 +1,58 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Vital Signs",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Vital Signs",
+        "code" : "vital-signs"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "Cel",
+    "value" : 36.6,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "Cel"
+  },
+  "id" : "TnwUWuH7xR4cHQ21jS61I3nbiUQd5vgzPwUroLPhX-0c3WgE6DLAYNgxDQm23VqZqB",
+  "code" : {
+    "text" : "Temperature",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "Body temperature",
+        "code" : "8310-5"
+      },
+      {
+        "system" : "http://loinc.org",
+        "display" : "Vital signs",
+        "code" : "8716-3"
+      }
+    ]
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "performer" : [
+    {
+      "display" : "Brandee-ann Hathaway, MA",
+      "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TryJB93s2jWgC-HQkuFl0DwB"
+    }
+  ],
+  "effectiveDateTime" : "2009-06-30T16:41:00Z",
+  "extension" : [
+    {
+      "url" : "http://open.epic.com/FHIR/STU3/StructureDefinition/temperature-in-fahrenheit",
+      "valueQuantity" : {
+        "code" : "[degF]",
+        "value" : 97.8,
+        "system" : "http://unitsofmeasure.org",
+        "unit" : "[degF]"
+      }
+    }
+  ],
+  "resourceType" : "Observation"
+}

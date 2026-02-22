@@ -1,0 +1,55 @@
+{
+  "id" : "T85BXuYads90Tfjw1mqmHhAB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2010-10-27",
+  "performer" : {
+    "display" : "Chantelle X. Page, MA",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T.FIA1mIMOYUhCja3QXbfxQB"
+  },
+  "date" : "2010-04-15",
+  "lotNumber" : "U3075AA",
+  "manufacturer" : {
+    "display" : "Sanofi Pasteur"
+  },
+  "route" : {
+    "text" : "Intramuscular",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Intramuscular",
+        "code" : "IM"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "MENcn-ACYW (Meningococcal conjugate, groups ACYW-135)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "MENCN-ACYW (MENINGOCOCCAL CONJUGATE, GROUPS ACYW-135)",
+        "code" : "114"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "LEFT DELTOID",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4040.657370.50115014",
+        "display" : "LEFT DELTOID",
+        "code" : "LA"
+      }
+    ]
+  },
+  "requester" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

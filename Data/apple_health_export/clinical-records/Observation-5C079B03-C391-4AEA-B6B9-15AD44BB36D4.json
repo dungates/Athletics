@@ -1,0 +1,34 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2020-05-12T21:26:41Z",
+  "id" : "T0.PQvCC9x9MKE4QdyC2vUY-wvnYi5970r0f.nU2XMtgB",
+  "code" : {
+    "text" : "HTT GENE ALLELE 2",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "HTT GENE ALLELE 2",
+        "code" : "49638-0"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "value" : 15
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "effectiveDateTime" : "2020-05-05T21:15:00Z",
+  "resourceType" : "Observation"
+}

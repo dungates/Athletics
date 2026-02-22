@@ -1,0 +1,61 @@
+{
+  "asserter" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "dateRecorded" : "2016-10-06",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TgePMDc.ThEb66HqanOPSFAB",
+  "code" : {
+    "text" : "MAJOR DEPRESSIVE DISORDER, RECURRENT EPISODE",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/icd-9-cm/diagnosis",
+        "display" : "MAJOR DEPRESSIVE DISORDER, RECURRENT EPISODE",
+        "code" : "296.30"
+      },
+      {
+        "system" : "urn:oid:2.16.840.1.113883.6.90",
+        "display" : "MAJOR DEPRESSIVE DISORDER, RECURRENT EPISODE",
+        "code" : "F33.9"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "Recurrent major depression (disorder)",
+        "code" : "66344007"
+      }
+    ]
+  },
+  "category" : {
+    "text" : "Diagnosis",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "Diagnosis",
+        "code" : "29308-4"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "Diagnosis",
+        "code" : "439401001"
+      },
+      {
+        "system" : "http://hl7.org/fhir/condition-category",
+        "display" : "Diagnosis",
+        "code" : "diagnosis"
+      },
+      {
+        "system" : "http://argonautwiki.hl7.org/extension-codes",
+        "display" : "Problem",
+        "code" : "problem"
+      }
+    ]
+  },
+  "clinicalStatus" : "active",
+  "verificationStatus" : "confirmed",
+  "onsetDateTime" : "2016-10-06",
+  "resourceType" : "Condition"
+}

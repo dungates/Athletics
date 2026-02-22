@@ -1,0 +1,77 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "1 after school prn attention issues",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2014-07-24",
+            "end" : "2014-09-22"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T6e.KEQ7qPSf-DUzz1efxu6Pw0jFtyjKhC-zu519QZNQB",
+  "effectivePeriod" : {
+    "start" : "2014-07-24",
+    "end" : "2014-09-22"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Methylphenidate 10 mg Tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Methylphenidate 10 mg Tab",
+        "code" : "1091150"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "245549552"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "245549552OID47"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

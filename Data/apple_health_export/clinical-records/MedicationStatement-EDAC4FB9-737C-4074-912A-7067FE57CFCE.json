@@ -1,0 +1,67 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "text" : "1T PO EVERY 'MORNING AFTER BREAKFAST'",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2011-08-24",
+            "end" : "2011-11-23"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TQbWyZJoaZsTsa19W9Rc6YdJptKzqdM7T.NBnRr2vLPcB",
+  "effectivePeriod" : {
+    "start" : "2011-08-24",
+    "end" : "2011-11-23"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Methylphenidate 18 mg Tr24 sr tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Methylphenidate 18 mg Tr24 sr tab",
+        "code" : "2001564"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "178172031"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "178172031:1956383230"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Fern G. Russak, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TRocjcZvYevIKW3G9nC35eQB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

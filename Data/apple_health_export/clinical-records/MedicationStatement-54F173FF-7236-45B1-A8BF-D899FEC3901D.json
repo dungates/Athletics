@@ -1,0 +1,77 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "Take 1 tablet by mouth every morning after breakfast",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2014-12-31",
+            "end" : "2015-04-01"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TXohbOT9BFnHehOmGlNlE3XFUyJAJf..wGMgVo1aTtTgB",
+  "effectivePeriod" : {
+    "start" : "2014-12-31",
+    "end" : "2015-04-01"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Methylphenidate 18 mg Tr24 sr tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Methylphenidate 18 mg Tr24 sr tab",
+        "code" : "2001564"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "257196516"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "257196516OID47"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

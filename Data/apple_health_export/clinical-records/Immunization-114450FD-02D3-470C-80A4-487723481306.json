@@ -1,0 +1,22 @@
+{
+  "status" : "completed",
+  "wasNotGiven" : false,
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T8NLv38NlKt5LcO2AFz54KQB",
+  "vaccineCode" : {
+    "text" : "POL-IPV (Polio, Inactivated virus)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "POL-IPV (POLIO, INACTIVATED VIRUS)",
+        "code" : "10"
+      }
+    ]
+  },
+  "date" : "Z",
+  "reported" : true,
+  "resourceType" : "Immunization"
+}

@@ -1,0 +1,159 @@
+{
+  "id" : "TsDiEYAcasYRJhZXq6gMBAD6HUk7N50IS7MjJ7LjyvE4B",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "medicationReference" : {
+    "display" : "Concerta 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/Tfi8NIkdl857n3l8zqnfJ2gB"
+  },
+  "resourceType" : "MedicationOrder",
+  "dateWritten" : "2018-01-18",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+            "code" : "1091157"
+          }
+        ]
+      },
+      "id" : "Tfi8NIkdl857n3l8zqnfJ2gB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet Extended Rel 24 hr (2)",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet Extended Rel 24 hr (2)",
+              "code" : "480"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "343389134"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "343389134:1099662582"
+    }
+  ],
+  "reasonEnded" : {
+    "text" : "Continue Therapy",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.798268.7074",
+        "display" : "Continue Therapy",
+        "code" : "10"
+      }
+    ]
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dosageInstruction" : [
+    {
+      "asNeededBoolean" : false,
+      "timing" : {
+        "code" : {
+          "text" : "every morning"
+        },
+        "repeat" : {
+          "frequency" : 1,
+          "period" : 1,
+          "periodUnits" : "d",
+          "boundsPeriod" : {
+            "start" : "2018-01-18",
+            "end" : "2019-01-03"
+          }
+        }
+      },
+      "doseQuantity" : {
+        "value" : 1,
+        "unit" : "tablet"
+      },
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "extension" : [
+        {
+          "url" : "https://open.epic.com/fhir/extensions/ordered-dose",
+          "valueQuantity" : {
+            "value" : 1,
+            "unit" : "tablet"
+          }
+        }
+      ],
+      "text" : "Take 1 tablet by mouth every morning after breakfast"
+    }
+  ],
+  "dispenseRequest" : {
+    "quantity" : {
+      "value" : 90,
+      "unit" : "tablet"
+    },
+    "expectedSupplyDuration" : {
+      "code" : "d",
+      "value" : 90,
+      "system" : "http://unitsofmeasure.org",
+      "unit" : "days"
+    },
+    "validityPeriod" : {
+      "start" : "2018-01-18",
+      "end" : "2019-01-03"
+    },
+    "numberOfRepeatsAllowed" : 0
+  },
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "priorPrescription" : {
+    "display" : "Concerta 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/MedicationOrder/TXUEJD0rgAvU3sGIERJZ-DzjP2NUcw.Yc7byK28r2GiAB"
+  },
+  "status" : "stopped",
+  "substitution" : {
+    "type" : {
+      "text" : "none",
+      "coding" : [
+        {
+          "system" : "http://hl7.org/fhir/v3/substanceAdminSubstitution",
+          "display" : "none",
+          "code" : "N"
+        }
+      ]
+    }
+  }
+}

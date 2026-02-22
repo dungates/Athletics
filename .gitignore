@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# Large Apple Health export files
+Data/apple_health_export/export.xml
+Data/apple_health_export/export_cda.xml

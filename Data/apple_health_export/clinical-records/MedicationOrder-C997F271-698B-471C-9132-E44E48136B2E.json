@@ -1,0 +1,129 @@
+{
+  "id" : "TgBx614H20XfOCUdmR3L6zanHGbjBfhw1P1RPa1tJhhQB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "medicationReference" : {
+    "display" : "Methylphenidate 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TTRXuT9BtKFoHb9h82MMAxQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "dateWritten" : "2015-10-20",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "METHYLPHENIDATE HCL  18 MG ORAL TR24 SR TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "METHYLPHENIDATE HCL  18 MG ORAL TR24 SR TAB",
+            "code" : "2001564"
+          }
+        ]
+      },
+      "id" : "TTRXuT9BtKFoHb9h82MMAxQB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet Extended Rel 24 hr (2)",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet Extended Rel 24 hr (2)",
+              "code" : "480"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "279246765"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "279246765OID47"
+    }
+  ],
+  "reasonEnded" : {
+    "text" : "Continue Therapy",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.798268.7074",
+        "display" : "Continue Therapy",
+        "code" : "10"
+      }
+    ]
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "Take 1 tablet by mouth every morning after breakfast",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2015-10-20",
+            "end" : "2016-01-28"
+          }
+        }
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2015-10-20",
+      "end" : "2016-01-28"
+    }
+  },
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "priorPrescription" : {
+    "display" : "Methylphenidate 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/MedicationOrder/T.4rEvQRPB98LgWL5oknBeOAMpuShqFv83-beiK3fxmYB"
+  },
+  "status" : "stopped",
+  "substitution" : {
+    "type" : {
+      "text" : "none",
+      "coding" : [
+        {
+          "system" : "http://hl7.org/fhir/v3/substanceAdminSubstitution",
+          "display" : "none",
+          "code" : "N"
+        }
+      ]
+    }
+  }
+}

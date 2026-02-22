@@ -1,0 +1,46 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "interpretation" : {
+    "text" : "Abnormal",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/ValueSet/observation-interpretation",
+        "display" : "Abnormal",
+        "code" : "A"
+      }
+    ]
+  },
+  "id" : "TA-eBrkWJL0MadLTyFH1Htgi-7rrNyG1ia0JC9nUbGSIB",
+  "code" : {
+    "text" : "EPITHELIAL CELLS, URINE, HPF",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "EPITHELIAL CELLS, URINE, HPF",
+        "code" : "5787-7"
+      }
+    ]
+  },
+  "valueString" : "Many",
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "text" : "None/Few"
+    }
+  ],
+  "effectiveDateTime" : "2010-04-06T23:00:00Z",
+  "resourceType" : "Observation"
+}

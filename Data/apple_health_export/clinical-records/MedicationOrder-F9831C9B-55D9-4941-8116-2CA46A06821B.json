@@ -1,0 +1,93 @@
+{
+  "id" : "T-6ZqQLn9VQ38M1jT-ht1CQB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "AMOXICILLIN 250 MG/5 ML ORAL RECON SUSP",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "AMOXICILLIN 250 MG/5 ML ORAL RECON SUSP",
+            "code" : "239191"
+          }
+        ]
+      },
+      "id" : "TOik0CsGLnE3sP57lFj2dkAB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Suspension for Reconstitution",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Suspension for Reconstitution",
+              "code" : "263"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2003-04-14",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "67748459"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "67748459:3821692378"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2003-04-14",
+      "end" : "2003-04-21"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "text" : "2TSP PO BID X7D INFE DUP ",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2003-04-14",
+            "end" : "2003-04-21"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Michael S. Salinsky, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T1lkJyD5KFyF9QnVGwGPhvgB"
+  },
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "Amoxicillin 250 mg/5 mL Recon susp",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TOik0CsGLnE3sP57lFj2dkAB"
+  }
+}

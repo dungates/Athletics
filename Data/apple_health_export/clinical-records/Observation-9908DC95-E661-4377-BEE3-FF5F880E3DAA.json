@@ -1,0 +1,36 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "id" : "TY0NPft9BhV6-obEWmVmfldoA2lV.1bt4T3IIeIRHhloB",
+  "code" : {
+    "text" : "PROTEIN, URINE, QL",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "PROTEIN, URINE, QL",
+        "code" : "2887-8"
+      }
+    ]
+  },
+  "valueString" : "Neg",
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "text" : "Negative"
+    }
+  ],
+  "effectiveDateTime" : "2010-04-15T22:31:00Z",
+  "resourceType" : "Observation"
+}

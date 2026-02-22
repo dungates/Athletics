@@ -1,0 +1,61 @@
+{
+  "asserter" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "dateRecorded" : "2011-03-01",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T9E3IVLFtdB0Cw1svt5cQwwB",
+  "code" : {
+    "text" : "HISTORY OF URINARY SYSTEM DISEASE",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/icd-9-cm/diagnosis",
+        "display" : "HX OF URINARY SYSTEM DISEASE",
+        "code" : "V13.00"
+      },
+      {
+        "system" : "urn:oid:2.16.840.1.113883.6.90",
+        "display" : "HX OF URINARY SYSTEM DISEASE",
+        "code" : "Z87.448"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "History of urinary disease (situation)",
+        "code" : "267002001"
+      }
+    ]
+  },
+  "category" : {
+    "text" : "Diagnosis",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "Diagnosis",
+        "code" : "29308-4"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "Diagnosis",
+        "code" : "439401001"
+      },
+      {
+        "system" : "http://hl7.org/fhir/condition-category",
+        "display" : "Diagnosis",
+        "code" : "diagnosis"
+      },
+      {
+        "system" : "http://argonautwiki.hl7.org/extension-codes",
+        "display" : "Problem",
+        "code" : "problem"
+      }
+    ]
+  },
+  "clinicalStatus" : "active",
+  "verificationStatus" : "confirmed",
+  "onsetDateTime" : "2011-03-01",
+  "resourceType" : "Condition"
+}

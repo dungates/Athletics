@@ -1,0 +1,150 @@
+---
+title: "Data and Stuff"
+author: "Duncan Gates"
+navlink: "[More Data Stuff](http://duncangates.me/)"
+og:
+  type: "article"
+  title: "opengraph title"
+  url: "optional opengraph url"
+  image: "optional opengraph image link"
+footer:
+  - content: '[Shiny Apps](http://shinyapps.duncangates.me/) • [Github](http://www.github.com/dungates/)<br/>'
+  - content: 'Copyright © Duncan Gates, 2021'
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: DGThemes::skeleton
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = F, warning = F, fig.width = 10, fig.height = 10)
+library(tidyverse)
+library(DGThemes)
+theme_set(theme_duncan())
+library(rvest)
+library(xml2)
+library(here)
+library(lubridate)
+library(countrycode)
+```
+
+## Data Obtain
+
+Scrape the data from the [worldathletics.org](https://www.worldathletics.org/records/by-category/world-records) website
+
+```{r eval = F}
+url <- "https://www.worldathletics.org/records/by-category/world-records"
+mens_world_records <- url %>%
+  read_html() %>%
+  html_nodes(xpath = '//*[@id="menoutdoor"]/table') %>%
+  html_table()
+mens_world_records <- mens_world_records[[1]]
+
+womens_world_records <- url %>%
+  read_html() %>%
+  html_nodes(xpath = '//*[@id="womenoutdoor"]/table') %>%
+  html_table()
+womens_world_records <- womens_world_records[[1]]
+```
+
+Then do a bit of cleaning to get the ideal data format for plotting
+
+```{r}
+mens_world_records_clean <- mens_world_records %>%
+  select(Discipline, Perf, Competitor, DOB, Country, Date) %>% # Select relevant data
+  mutate(
+    DOB = lubridate::dmy(DOB), # Use lubridate for dates
+    Date = lubridate::dmy(Date)
+  ) %>%
+  mutate(
+    Perf = gsub("h #", "", Perf), # Some regex I wrote years ago that probably doesn't even work
+    Perf = str_remove(Perf, "h"),
+    Perf = str_remove(Perf, "   *"),
+    Perf = str_remove(Perf, "\\*"),
+    Perf = str_remove_all(Perf, "   \\(i\\)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  ) %>%
+  mutate( # More lubirdate cleaning on performance to make everything seconds
+    Perf = ifelse(str_detect(Perf, ":[[:digit:]][[:digit:]]:"),
+      lubridate::period_to_seconds(lubridate::hms(Perf)),
+      Perf
+    ),
+    Perf = ifelse(str_detect(Perf, ":"),
+      lubridate::period_to_seconds(lubridate::ms(Perf)),
+      Perf
+    ), # Fix discipline naming to differentiate between road races and normal races
+    Discipline = str_replace_all(Discipline, c(
+      "5 Kilometres" = "5000 Metres\n(Road)",
+      "10 Kilometres" = "10 Kilometres\n(Road)"
+    )),
+    Discipline = ifelse(Discipline == "50 Kilometres" & Perf > lag(Perf),
+      "50 Kilometres (Road)",
+      Discipline
+    )
+  ) %>%
+  rename_with( ~ paste0(.x, " (Men)")) %>%
+  rename(Discipline = 1) %>%
+  mutate(Type = case_when(str_detect(Discipline, "Metres|Mile|Marathon|Hour|Kilometres") ~ "Running Solo",
+                          str_detect(Discipline, "Relay") ~ "Running Relay",
+                          str_detect(Discipline, "Jump|Vault") ~ "Jumping",
+                          str_detect(Discipline, "Shot|Throw") ~ "Throwing")) %>%
+  relocate(Type, .before = Discipline)
+
+# Code is pretty much the same for women
+womens_world_records_clean <- womens_world_records %>%
+  select(Discipline, Perf, Competitor, DOB, Country, Date) %>%
+  mutate(
+    DOB = lubridate::dmy(DOB),
+    Date = lubridate::dmy(Date)
+  ) %>%
+  filter(!str_detect(Perf, "\\*")) %>%
+  mutate(
+    Perf = gsub("h #", "", Perf),
+    Perf = gsub(" #", "", Perf),
+    Perf = str_remove(Perf, "h"),
+    Perf = str_remove(Perf, "Wo   *"),
+    Perf = str_remove(Perf, "Wo"),
+    Perf = str_remove(Perf, " Mx"),
+    Perf = str_remove(Perf, "\\*"),
+    Perf = str_remove_all(Perf, "   \\(i\\)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  ) %>%
+  mutate(
+    Perf = ifelse(str_detect(Perf, ":[[:digit:]][[:digit:]]:"),
+      lubridate::period_to_seconds(lubridate::hms(Perf)),
+      Perf
+    ),
+    Perf = ifelse(str_detect(Perf, ":"),
+      lubridate::period_to_seconds(lubridate::ms(Perf)),
+      Perf
+    ),
+    Discipline = ifelse(Discipline == lead(Discipline) & Perf > lead(Perf),
+      paste0(Discipline, " (Road)"),
+      as.character(Discipline)
+    ),
+    Discipline = replace_na(Discipline, "Distance Medley Relay")
+  ) %>%
+  rename_with( ~ paste0(.x, " (Women)")) %>%
+  rename(Discipline = 1)
+
+# Join the data
+mens_and_womens_world_records <- mens_world_records_clean %>%
+  left_join(womens_world_records_clean)
+```
+
+
+## Visualizing with gt
+
+```{r}
+library(gt)
+
+### Note to make time h:m:s, and make countries have flags as well
+mens_and_womens_world_records |>
+  group_by(Type) |>
+  gt::gt() |>
+  gt::tab_header(gt::md("**2023 World Records**")) |>
+  gt::tab_source_note("Table created by: Duncan Gates @gates_duncan with {gt} •  Data: worldathletics.org") |>
+  gt::sub_missing(missing_text = "---") |>
+  DGThemes::gt_theme_duncan()
+
+```

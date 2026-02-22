@@ -1,0 +1,42 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2014-07-24T20:00:33Z",
+  "id" : "TSly10lJle8qnjr68pwKzDn.mPj7WzPu.Ua.M0y61RSwB",
+  "code" : {
+    "text" : "TRIGLYCERIDE",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "TRIGLYCERIDE",
+        "code" : "2571-8"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "mg/dL",
+    "value" : 68,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "mg/dL"
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "text" : "<=499"
+    }
+  ],
+  "effectiveDateTime" : "2014-07-24T16:04:00Z",
+  "resourceType" : "Observation"
+}

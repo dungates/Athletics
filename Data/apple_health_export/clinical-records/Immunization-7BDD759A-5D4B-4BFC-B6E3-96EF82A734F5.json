@@ -1,0 +1,48 @@
+{
+  "id" : "TrvRsW65-9q4bG8ZQRQILDgB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2012-11-25",
+  "performer" : {
+    "display" : "Chantelle X. Page, MA",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T.FIA1mIMOYUhCja3QXbfxQB"
+  },
+  "date" : "2012-08-28",
+  "lotNumber" : "AH2108",
+  "manufacturer" : {
+    "display" : "MedImmune"
+  },
+  "route" : {
+    "text" : "Intranasal",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Intranasal",
+        "code" : "NASINHL"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "INFan (Influenza attenuated virus, intranasal)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "INFAN (INFLUENZA ATTENUATED VIRUS, INTRANASAL)",
+        "code" : "111"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "BILATERAL NOSTRILS"
+  },
+  "requester" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

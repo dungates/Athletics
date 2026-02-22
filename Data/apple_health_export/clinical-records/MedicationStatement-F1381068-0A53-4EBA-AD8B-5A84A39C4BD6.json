@@ -1,0 +1,77 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "TK 10ML PO BID X10D",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2011-02-15",
+            "end" : "2011-02-25"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "Tdp6tVWvxYhXca3bRbSeR072aAPAz1rOYEdXfdfzCtJwB",
+  "effectivePeriod" : {
+    "start" : "2011-02-15",
+    "end" : "2011-02-25"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Amoxicillin-Pot Clavulanate 400-57 mg/5 mL Recon susp",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Amoxicillin-Pot Clavulanate 400-57 mg/5 mL Recon susp",
+        "code" : "617430"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "168205861"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "168205861:2911262127"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Hani Darwich, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/Tf0gcVneCXV0YkFJKnfCunAB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

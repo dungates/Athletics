@@ -1,0 +1,117 @@
+{
+  "id" : "TDFjqFW2IjMEF6C0tdJliMsveBTtOwTjqI4hmLrhrVb4B",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "medicationReference" : {
+    "display" : "Concerta 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/Tfi8NIkdl857n3l8zqnfJ2gB"
+  },
+  "resourceType" : "MedicationOrder",
+  "dateWritten" : "2019-01-04",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "CONCERTA 18 MG ORAL TR24 SR TAB",
+            "code" : "1091157"
+          }
+        ]
+      },
+      "id" : "Tfi8NIkdl857n3l8zqnfJ2gB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet Extended Rel 24 hr (2)",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet Extended Rel 24 hr (2)",
+              "code" : "480"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "374110517"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "374110517:3201293039"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dosageInstruction" : [
+    {
+      "text" : "Take 1 tablet by mouth every morning after breakfast. Please make an appointment (in office or telephone) with Dr. Hoffman before future refills.",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2019-01-04"
+          }
+        }
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "quantity" : {
+      "value" : 90,
+      "unit" : "tablet"
+    },
+    "expectedSupplyDuration" : {
+      "code" : "d",
+      "value" : 96,
+      "system" : "http://unitsofmeasure.org",
+      "unit" : "days"
+    },
+    "validityPeriod" : {
+      "start" : "2019-01-04"
+    },
+    "numberOfRepeatsAllowed" : 0
+  },
+  "prescriber" : {
+    "display" : "Ian P. Hoffman, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T08aMwZeW2n0kUW-2ZZt9WQB"
+  },
+  "priorPrescription" : {
+    "display" : "Concerta 18 mg Tr24 sr tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/MedicationOrder/TsDiEYAcasYRJhZXq6gMBAD6HUk7N50IS7MjJ7LjyvE4B"
+  },
+  "status" : "active",
+  "substitution" : {
+    "type" : {
+      "text" : "none",
+      "coding" : [
+        {
+          "system" : "http://hl7.org/fhir/v3/substanceAdminSubstitution",
+          "display" : "none",
+          "code" : "N"
+        }
+      ]
+    }
+  }
+}

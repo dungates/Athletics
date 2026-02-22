@@ -1,0 +1,22 @@
+{
+  "status" : "completed",
+  "wasNotGiven" : false,
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "Tbfi5xEohqNWL4XnILQnZJAB",
+  "vaccineCode" : {
+    "text" : "DTaP (Diphtheria, Tetanus, acellular Pertussis)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "DTAP (DIPHTHERIA, TETANUS, ACELLULAR PERTUSSIS)",
+        "code" : "20"
+      }
+    ]
+  },
+  "date" : "1841-01-01T01:02:58Z",
+  "reported" : true,
+  "resourceType" : "Immunization"
+}

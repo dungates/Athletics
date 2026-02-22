@@ -1,0 +1,37 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2011-02-16T03:16:00Z",
+  "id" : "T5LCA8MNqfoXlpq7YDv0QfkYybrtXDhRD0Dix9z5It3kB",
+  "code" : {
+    "text" : "EOSINOPHILS %",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "EOSINOPHILS %",
+        "code" : "26450-7"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "%",
+    "value" : 0.9,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "%"
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "effectiveDateTime" : "2011-02-16T03:00:00Z",
+  "resourceType" : "Observation"
+}

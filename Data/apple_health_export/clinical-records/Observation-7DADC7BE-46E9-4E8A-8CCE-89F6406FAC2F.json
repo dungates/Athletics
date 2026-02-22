@@ -1,0 +1,54 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2011-02-16T03:16:00Z",
+  "id" : "T5LCA8MNqfoXlpq7YDv0QfnvAuGf0L188b6hNaDKoUtUB",
+  "code" : {
+    "text" : "MCV",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "MCV",
+        "code" : "787-2"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "fL",
+    "value" : 83.8,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "fL"
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "low" : {
+        "code" : "fL",
+        "value" : 72,
+        "system" : "http://unitsofmeasure.org",
+        "unit" : "fL"
+      },
+      "high" : {
+        "code" : "fL",
+        "value" : 93,
+        "system" : "http://unitsofmeasure.org",
+        "unit" : "fL"
+      },
+      "text" : "72.0 - 93.0 fL"
+    }
+  ],
+  "effectiveDateTime" : "2011-02-16T03:00:00Z",
+  "resourceType" : "Observation"
+}

@@ -1,0 +1,96 @@
+{
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "Wart Remover 17 % Liqd",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/T-bMCHifPE6TrF4AgoEGFcAB"
+  },
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "TLZlNSD8lHUJGgwYbxBQjXQgn54L8rheXTJEVx8UEhm8B",
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "contained" : [
+    {
+      "code" : {
+        "text" : "WART REMOVER 17 % TOP LIQD",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "WART REMOVER 17 % TOP LIQD",
+            "code" : "312881"
+          }
+        ]
+      },
+      "id" : "T-bMCHifPE6TrF4AgoEGFcAB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Liquid",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Liquid",
+              "code" : "230"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "277835461"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "277835461OID47"
+    }
+  ],
+  "dateWritten" : "2015-10-01",
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationOrder",
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Topical",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Topical",
+            "code" : "53"
+          }
+        ]
+      },
+      "text" : "Apply to wart and allow to dry 1 to 3 times a day for up to 12 weeks",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2015-10-01",
+            "end" : "2016-09-30"
+          }
+        }
+      }
+    }
+  ]
+}

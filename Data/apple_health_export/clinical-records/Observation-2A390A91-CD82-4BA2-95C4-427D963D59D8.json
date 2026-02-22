@@ -1,0 +1,54 @@
+{
+  "status" : "final",
+  "category" : {
+    "text" : "Laboratory",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/observation-category",
+        "display" : "Laboratory",
+        "code" : "laboratory"
+      }
+    ]
+  },
+  "issued" : "2010-06-29T02:24:00Z",
+  "id" : "T1pzmetOGjNjN9RJVcNvTXTjktttvHkV0.5n23PuCMCIB",
+  "code" : {
+    "text" : "POTASSIUM",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "POTASSIUM",
+        "code" : "2823-3"
+      }
+    ]
+  },
+  "valueQuantity" : {
+    "code" : "mmol/L",
+    "value" : 4,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "mmol/L"
+  },
+  "subject" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "referenceRange" : [
+    {
+      "low" : {
+        "code" : "mmol/L",
+        "value" : 3.5,
+        "system" : "http://unitsofmeasure.org",
+        "unit" : "mmol/L"
+      },
+      "high" : {
+        "code" : "mmol/L",
+        "value" : 5.1,
+        "system" : "http://unitsofmeasure.org",
+        "unit" : "mmol/L"
+      },
+      "text" : "3.5 - 5.1 mmol/L"
+    }
+  ],
+  "effectiveDateTime" : "2010-06-28T21:58:00Z",
+  "resourceType" : "Observation"
+}

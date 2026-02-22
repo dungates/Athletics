@@ -1,0 +1,93 @@
+{
+  "id" : "T8cnMsNLMlrXb0AwtlOTq9gB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "PENICILLIN V POTASSIUM 250 MG/5 ML ORAL RECON SOLN",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "PENICILLIN V POTASSIUM 250 MG/5 ML ORAL RECON SOLN",
+            "code" : "834040"
+          }
+        ]
+      },
+      "id" : "TDyMF2SLN1Bb.YRYXryVgYwB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Recon Soln",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Recon Soln",
+              "code" : "256"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2004-12-04",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "83157975"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "83157975:1136878755"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2004-12-04",
+      "end" : "2004-12-14"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "text" : "1.5TSP PO BID X10D FOR 'STREP INFECTION' DUP ",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2004-12-04",
+            "end" : "2004-12-14"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Edward Mann, NP",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TrdQRgkIy-e9-nK6gyFcc4AB"
+  },
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "Penicillin V Potassium 250 mg/5 mL Recon soln",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TDyMF2SLN1Bb.YRYXryVgYwB"
+  }
+}

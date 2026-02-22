@@ -1,0 +1,62 @@
+{
+  "asserter" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "dateRecorded" : "2010-04-06",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T3b6jBkyXqFgfzWKEwWWo.wB",
+  "code" : {
+    "text" : "NOCTURNAL ENURESIS (BEDWETTING)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/icd-9-cm/diagnosis",
+        "display" : "NOCTURNAL ENURESIS",
+        "code" : "788.36"
+      },
+      {
+        "system" : "urn:oid:2.16.840.1.113883.6.90",
+        "display" : "NOCTURNAL ENURESIS",
+        "code" : "N39.44"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "Nocturnal enuresis (finding)",
+        "code" : "8009008"
+      }
+    ]
+  },
+  "category" : {
+    "text" : "Diagnosis",
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "display" : "Diagnosis",
+        "code" : "29308-4"
+      },
+      {
+        "system" : "http://snomed.info/sct",
+        "display" : "Diagnosis",
+        "code" : "439401001"
+      },
+      {
+        "system" : "http://hl7.org/fhir/condition-category",
+        "display" : "Diagnosis",
+        "code" : "diagnosis"
+      },
+      {
+        "system" : "http://argonautwiki.hl7.org/extension-codes",
+        "display" : "Problem",
+        "code" : "problem"
+      }
+    ]
+  },
+  "clinicalStatus" : "resolved",
+  "verificationStatus" : "confirmed",
+  "abatementDateTime" : "2013-11-25",
+  "onsetDateTime" : "2010-04-06",
+  "resourceType" : "Condition"
+}

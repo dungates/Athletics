@@ -1,0 +1,103 @@
+{
+  "id" : "TzwQE8k8IPgciTnDB8xuzCu3Kq9lQGS4kVrIyJ6XsMiUB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "AMOXICILLIN 500 MG ORAL CAP",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "AMOXICILLIN 500 MG ORAL CAP",
+            "code" : "308191"
+          }
+        ]
+      },
+      "id" : "TVyk.IqHMZiQ99-9szJBqtAB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Capsule",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Capsule",
+              "code" : "193"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "dateWritten" : "2013-04-01",
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "211467637"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "211467637OID47"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2013-04-01",
+      "end" : "2013-05-01"
+    }
+  },
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "TAKE 1 CAPSULE BY MOUTH 2 TIMES A DAY FOR 7 DAYS FOR INFECTION",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2013-04-01",
+            "end" : "2013-05-01"
+          }
+        }
+      }
+    }
+  ],
+  "prescriber" : {
+    "display" : "Liisa O. Carden, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T39j.rHupKVVZq2DIupx-xwB"
+  },
+  "status" : "completed",
+  "medicationReference" : {
+    "display" : "Amoxicillin 500 mg Cap",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TVyk.IqHMZiQ99-9szJBqtAB"
+  }
+}

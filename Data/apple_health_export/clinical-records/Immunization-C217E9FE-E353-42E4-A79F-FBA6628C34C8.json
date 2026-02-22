@@ -1,0 +1,54 @@
+{
+  "id" : "TOH-UMZfQFguhjENeSLLcvQB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2016-01-12",
+  "performer" : {
+    "display" : "Chantelle X. Page, MA",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/T.FIA1mIMOYUhCja3QXbfxQB"
+  },
+  "date" : "2015-10-01",
+  "lotNumber" : "FJ2145",
+  "manufacturer" : {
+    "display" : "MedImmune"
+  },
+  "route" : {
+    "text" : "Intranasal",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Intranasal",
+        "code" : "NASINHL"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "infan 2-49yrs (flumist quadrivalent) (influenza attenuated virus, live, intranasal)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "INFAN 2-49YRS (FLUMIST QUADRIVALENT) (INFLUENZA ATTENUATED VIRUS, LIVE, INTRANASAL)",
+        "code" : "149"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "BILATERAL NOSTRILS"
+  },
+  "requester" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "doseQuantity" : {
+    "code" : "mL",
+    "value" : 0.2,
+    "system" : "http://unitsofmeasure.org",
+    "unit" : "mL"
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

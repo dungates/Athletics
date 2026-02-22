@@ -1,0 +1,67 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "text" : "1FL 3-6YRS ",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2004-06-11",
+            "end" : "2005-04-29"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T.Z9hwpRRDVHJ-s03zIVFLwB",
+  "effectivePeriod" : {
+    "start" : "2004-06-11",
+    "end" : "2005-04-29"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Sodium Fluoride 0.5 mg (1.1 mg sodium fluorid) Chew tab",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Sodium Fluoride 0.5 mg (1.1 mg sodium fluorid) Chew tab",
+        "code" : "313036"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "78612025"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "78612025:0342176333"
+    }
+  ],
+  "informationSource" : {
+    "display" : "Susan E S Dierauf, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TvOAog3RWtSERH2gxtHDmfwB"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

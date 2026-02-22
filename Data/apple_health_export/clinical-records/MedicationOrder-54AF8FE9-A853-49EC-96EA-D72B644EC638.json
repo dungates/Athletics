@@ -1,0 +1,113 @@
+{
+  "id" : "T9yKmvJ14l7Qyi8AloQLHEcb2apoibQs7VQDznyJA7gUB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "dateWritten" : "2013-03-30",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "ANTIPYRINE-BENZOCAINE 5.4-1.4 % OTIC DROP",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "ANTIPYRINE-BENZOCAINE 5.4-1.4 % OTIC DROP",
+            "code" : "244309"
+          }
+        ]
+      },
+      "id" : "TadSr.xu6TU8suL61NwnGWwB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Drops",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Drops",
+              "code" : "286"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "211442405"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "211442405OID47"
+    }
+  ],
+  "reasonEnded" : {
+    "text" : "Continue Therapy",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.798268.7074",
+        "display" : "Continue Therapy",
+        "code" : "10"
+      }
+    ]
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Otic",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Otic",
+            "code" : "73"
+          }
+        ]
+      },
+      "text" : "Instill 4 drops into affected ear(s) 4 times a day",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2013-03-30",
+            "end" : "2013-03-30"
+          }
+        }
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2013-03-30",
+      "end" : "2013-03-30"
+    }
+  },
+  "prescriber" : {
+    "display" : "Donna L. Linvog, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TbbrOj5dD.eaf6is8P.fmagB"
+  },
+  "status" : "stopped",
+  "medicationReference" : {
+    "display" : "Antipyrine-Benzocaine 5.4-1.4 % Drop",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TadSr.xu6TU8suL61NwnGWwB"
+  }
+}

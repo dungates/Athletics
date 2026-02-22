@@ -1,0 +1,55 @@
+{
+  "id" : "T14V53rIzna-uceXx7b9EkAB",
+  "wasNotGiven" : false,
+  "resourceType" : "Immunization",
+  "reported" : false,
+  "expirationDate" : "2011-03-13",
+  "performer" : {
+    "display" : "Margaret C. Johnson, LPN",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TwsgXGwTYBU4aUzfxqdNeHAB"
+  },
+  "date" : "2009-06-30",
+  "lotNumber" : "0339Y",
+  "manufacturer" : {
+    "display" : "Merck and Co., Inc."
+  },
+  "route" : {
+    "text" : "Subcutaneous",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4030.657370.50115015",
+        "display" : "Subcutaneous",
+        "code" : "IM"
+      }
+    ]
+  },
+  "vaccineCode" : {
+    "text" : "VAR (Varicella, chickenpox)",
+    "coding" : [
+      {
+        "system" : "http://hl7.org/fhir/sid/cvx",
+        "display" : "VAR (VARICELLA, CHICKENPOX)",
+        "code" : "21"
+      }
+    ]
+  },
+  "site" : {
+    "text" : "RIGHT ARM",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.10.768076.4040.657370.50115014",
+        "display" : "RIGHT ARM",
+        "code" : "RA"
+      }
+    ]
+  },
+  "requester" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "completed",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "status" : "completed",
+  "dosage" : [
+    {
+      "text" : "2TSP PO BID X7D INFE DUP ",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2003-04-14",
+            "end" : "2003-04-21"
+          }
+        }
+      }
+    }
+  ],
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "id" : "T-6ZqQLn9VQ38M1jT-ht1CQB",
+  "effectivePeriod" : {
+    "start" : "2003-04-14",
+    "end" : "2003-04-21"
+  },
+  "medicationCodeableConcept" : {
+    "text" : "Amoxicillin 250 mg/5 mL Recon susp",
+    "coding" : [
+      {
+        "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "display" : "Amoxicillin 250 mg/5 mL Recon susp",
+        "code" : "239191"
+      }
+    ]
+  },
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "67748459"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "67748459:3821692378"
+    }
+  ],
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationStatement.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-statement-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "resourceType" : "MedicationStatement"
+}

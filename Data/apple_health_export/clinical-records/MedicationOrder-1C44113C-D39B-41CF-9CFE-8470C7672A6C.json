@@ -1,0 +1,113 @@
+{
+  "id" : "T6e.KEQ7qPSf-DUzz1efxu6Pw0jFtyjKhC-zu519QZNQB",
+  "patient" : {
+    "display" : "Duncan Gates",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Patient/T8LRrl9tjBBDsF3waOsCwGEDptEgkQFGmS2MgM2EkzcQB"
+  },
+  "resourceType" : "MedicationOrder",
+  "dateWritten" : "2014-07-24",
+  "contained" : [
+    {
+      "code" : {
+        "text" : "METHYLPHENIDATE HCL  10 MG ORAL TAB",
+        "coding" : [
+          {
+            "system" : "http://www.nlm.nih.gov/research/umls/rxnorm",
+            "display" : "METHYLPHENIDATE HCL  10 MG ORAL TAB",
+            "code" : "1091150"
+          }
+        ]
+      },
+      "id" : "TbmB4zUNZglknkUJoY8FSSQB",
+      "resourceType" : "Medication",
+      "product" : {
+        "form" : {
+          "text" : "Tablet",
+          "coding" : [
+            {
+              "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.310",
+              "display" : "Tablet",
+              "code" : "266"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "identifier" : [
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.2.798268",
+      "value" : "245549552"
+    },
+    {
+      "use" : "usual",
+      "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.3.798268.801",
+      "value" : "245549552OID47"
+    }
+  ],
+  "reasonEnded" : {
+    "text" : "Expired Prescription",
+    "coding" : [
+      {
+        "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.798268.7074",
+        "display" : "Expired Prescription",
+        "code" : "154"
+      }
+    ]
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/3.0/StructureDefinition/extension-MedicationRequest.category",
+      "valueCodeableConcept" : {
+        "text" : "Community",
+        "coding" : [
+          {
+            "system" : "http://hl7.org/fhir/medication-request-category",
+            "display" : "Community",
+            "code" : "community"
+          }
+        ]
+      }
+    }
+  ],
+  "dosageInstruction" : [
+    {
+      "route" : {
+        "text" : "Oral",
+        "coding" : [
+          {
+            "system" : "urn:oid:1.2.840.114350.1.13.47.2.7.4.698288.330",
+            "display" : "Oral",
+            "code" : "72"
+          }
+        ]
+      },
+      "text" : "1 after school prn attention issues",
+      "timing" : {
+        "repeat" : {
+          "boundsPeriod" : {
+            "start" : "2014-07-24",
+            "end" : "2014-09-22"
+          }
+        }
+      }
+    }
+  ],
+  "dispenseRequest" : {
+    "numberOfRepeatsAllowed" : 0,
+    "validityPeriod" : {
+      "start" : "2014-07-24",
+      "end" : "2014-09-22"
+    }
+  },
+  "prescriber" : {
+    "display" : "Richard C. Cohen, MD",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Practitioner/TlNxUMstkTgylnKjBuIJhwwB"
+  },
+  "status" : "stopped",
+  "medicationReference" : {
+    "display" : "Methylphenidate 10 mg Tab",
+    "reference" : "https://kpx-service-bus.kp.org/service/kpx/v1/api/FHIR/DSTU2/Medication/TbmB4zUNZglknkUJoY8FSSQB"
+  }
+}
