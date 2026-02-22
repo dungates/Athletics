@@ -1,0 +1,111 @@
+---
+title: "Personal Data"
+author: "Duncan Gates"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    highlight-style: kate
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(here)
+library(xml2)
+library(data.table)
+library(ggtext)
+library(scales)
+library(cowplot)
+
+theme_fitness <- function() {
+  ggplot2::theme_bw() %+replace%
+    ggplot2::theme(
+      text = ggplot2::element_text(family = "Montserrat"),
+      plot.background = ggplot2::element_rect(fill = "black"),
+      panel.background = ggplot2::element_rect(fill = "black"),
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.minor.x = ggplot2::element_blank(),
+      plot.title = ggplot2::element_text(color = "white", hjust = 0.5)
+    )
+}
+```
+
+## Data Structure
+
+```{r}
+fs::dir_tree(here::here("data/raw/apple_health_export/"))
+```
+
+
+## Data Import
+
+```{r import}
+records <- xml2::read_xml(here::here("data/raw/apple_health_export/export.xml"))
+```
+
+## Data Clean
+
+```{r clean}
+records2 <- xml2::xml_find_all(
+  records,
+  xpath = "
+  .//Record[
+         @type = 'HKQuantityTypeIdentifierHeartRate' and
+         (starts-with(@endDate, '2019') or
+          starts-with(@endDate, '2020') or
+          starts-with(@endDate, '2021'))
+      ]"
+)
+
+records_tibble <- tibble::tibble(
+  ts = records2 |>
+    xml2::xml_attr("endDate") |>
+    as.POSIXct(format = "%Y-%m-%d %H:%M:%S %z"),
+  rate = records2 |>
+    xml2::xml_attr("value") |>
+    as.integer()
+) |>
+  dplyr::mutate(date_only = lubridate::date(ts)) |>
+  dplyr::group_by(date_only) |>
+  dplyr::mutate(mean_rate = mean(rate))
+```
+
+## Plots and Stuff
+
+```{r plot1}
+p <- records_tibble |>
+  ggplot2::ggplot(ggplot2::aes(x = ts, y = mean_rate)) +
+  ggplot2::geom_jitter(alpha = 0.08, ggplot2::aes(y = rate), color = "#E3242B") +
+  ggplot2::geom_line(color = "#7c0000", linewidth = 1.85) +
+  ggplot2::geom_smooth(color = "red", linewidth = 3, method = "gam") +
+  ggplot2::scale_x_datetime(breaks = scales::pretty_breaks(n = 10)) +
+  ggplot2::scale_y_continuous(breaks = scales::pretty_breaks(n = 8)) +
+  ggplot2::labs(title = "Heart Rate over Time") +
+  ggplot2::theme(
+    text = ggplot2::element_text(family = "Montserrat"),
+    plot.background = ggplot2::element_rect(fill = "black"),
+    panel.background = ggplot2::element_rect(fill = "black"),
+    panel.grid.major.x = ggplot2::element_blank(),
+    panel.grid.minor.x = ggplot2::element_blank(),
+    plot.title = ggplot2::element_text(color = "white", hjust = 0.5)
+  )
+cowplot::ggdraw(p) +
+  ggplot2::geom_text(x = 0.05, y = 0.41, ggplot2::aes(label = "GAM Model\n Predictions"), family = "Montserrat", color = "red", size = 2.5) +
+  ggplot2::geom_text(x = 0.05, y = 0.583, ggplot2::aes(label = "Daily Mean\nHeart Rate"), family = "Montserrat", color = "#7c0000", size = 2.5)
+ggplot2::ggsave(here::here("outputs/images/heart_rate.png"), bg = "black", width = 16, height = 9)
+```
+
+## Saving Data for Later
+
+```{r}
+readr::write_rds(records_tibble, here::here("data/processed/heart_rate.rds"))
+```

@@ -1,0 +1,87 @@
+---
+title: "All-Time Athletics"
+author: "Duncan Gates"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    highlight-style: kate
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+```
+
+## Web Scraping
+
+From [this website](http://www.alltime-athletics.com/men.htm) we compile a dataframe of the track & field event and link to the events best times. I change around some of the naming for later purposes and delete events that don't particularly matter like the Javelin throw with old specs when the javelin was lighter. I also get rid of all the extra links for non-legal marks since those are completely irrelevant.
+
+```{r}
+site <- "http://www.alltime-athletics.com/men.htm"
+site_html <- rvest::read_html(site)
+
+titles <- site_html |>
+  rvest::html_elements("a") |>
+  rvest::html_text()
+
+links <- site_html |>
+  rvest::html_elements("a") |>
+  rvest::html_attr("href")
+
+athletics_df <- dplyr::bind_cols(event = titles, link = links) |>
+  dplyr::slice(-c(1:2)) |>
+  dplyr::mutate(link = paste0("http://www.alltime-athletics.com/", link)) |>
+  dplyr::filter(event != "Old specs") |>
+  dplyr::filter(!stringr::str_detect(link, "no")) |>
+  dplyr::mutate(event = dplyr::if_else(stringr::str_detect(event, "100 metres|200 metres"), stringr::str_replace_all(event, "metres", "meters"), event)) |>
+  dplyr::mutate(event = stringr::str_replace_all(event, "10000 meters track walk", "10000 metres track walk"))
+```
+
+Then we can loop over this list to get a nested dataframe in which each column has the all time men's best performances in each area. The regex here is absolutely filthy and I at first attempted to write a regex that would encapsulate the separation in one go before I realized this could be broken down into parts making it much easier. First I separate out as much as I can using spaces followed by numbers, plus, minus, plus and minus, and a series of three capital letters. The athlete and city name strings were much tougher to deal with since they are variable lengths with different patterns of capitalization and numerics, but after separation it becomes as easy as separating when there is a digit preceded by a space, or a capital letter preceded by a space.
+
+```{r}
+column_configs <- list(
+  list(pattern = "meters|110m hurdles",
+       cols = c("Rank", "Time", "Wind", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date")),
+  list(pattern = "Mile|steeplechase|walk|400m hurdles|metres",
+       cols = c("Rank", "Time", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date")),
+  list(pattern = "Long jump|Triple jump",
+       cols = c("Rank", "Distance", "Wind", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date")),
+  list(pattern = "put|throw",
+       cols = c("Rank", "Distance", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date")),
+  list(pattern = "High jump|Pole vault",
+       cols = c("Rank", "Height", "Wind", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date")),
+  list(pattern = "Decathlon",
+       cols = c("Rank", "Score", "Athlete First", "Athlete Last", "Nation", "DoB", "Event Rank", "Location", "Date"))
+)
+
+read_event <- function(link, title) {
+  columns <- purrr::detect(column_configs, \(x) stringr::str_detect(title, x$pattern))$cols
+  rvest::read_html(link) |>
+    rvest::html_elements("pre") |>
+    magrittr::extract(1) |>
+    rvest::html_text2() |>
+    stringr::str_split(pattern = "\\n") |>
+    unlist() |>
+    tibble::as_tibble() |>
+    dplyr::slice(c(-1)) |>
+    dplyr::mutate(value = stringr::str_squish(value)) |>
+    tidyr::separate(value, into = columns, sep = " ")
+}
+```
+
+
+## Analysis
+
+```{r}
+
+```

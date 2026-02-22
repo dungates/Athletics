@@ -1,0 +1,754 @@
+---
+title: "Scraping and Cleaning Running World Record Data"
+author: "Duncan Gates"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    highlight-style: kate
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Initial Data Obtain
+
+```{r}
+library(rvest)
+library(xml2)
+library(tidyverse)
+library(here)
+library(lubridate)
+library(countrycode)
+library(polite)
+
+parse_perf <- function(x) {
+  dplyr::case_when(
+    stringr::str_detect(x, ":[[:digit:]][[:digit:]]:") ~
+      lubridate::period_to_seconds(lubridate::hms(x)),
+    stringr::str_detect(x, ":") ~
+      lubridate::period_to_seconds(lubridate::ms(x)),
+    .default = as.numeric(x)
+  )
+}
+
+wikipedia_scrape <- function(
+  url,
+  xpath = NULL,
+  table_xpath = '//*[@id="mw-content-text"]//table[contains(@class,"wikitable")]',
+  table_index = 1
+) {
+  session <- polite::bow(
+    url,
+    user_agent = "Athletics research project"
+  )
+
+  Sys.sleep(1)
+
+  page <- polite::scrape(session)
+
+  if (!is.null(xpath)) {
+    table_node <- page |>
+      rvest::html_elements(xpath = xpath)
+
+    if (length(table_node) == 0) {
+      stop("No table found for supplied xpath")
+    }
+
+    return(table_node[[1]] |> rvest::html_table(fill = TRUE, convert = FALSE))
+  }
+
+  table_nodes <- page |>
+    rvest::html_elements(xpath = table_xpath)
+
+  if (length(table_nodes) == 0) {
+    stop("No tables found")
+  }
+
+  if (table_index > length(table_nodes)) {
+    stop("table_index exceeds number of tables found")
+  }
+
+  table_nodes[[table_index]] |> rvest::html_table(fill = TRUE, convert = FALSE)
+}
+
+wac_world_records <- function(
+  gender = c("men", "women", "mixed"),
+  url = "https://www.worldathletics.org/records/by-category/world-records",
+  wait_seconds = 8
+) {
+  gender <- match.arg(gender)
+
+  live <- rvest::read_html_live(url)
+  Sys.sleep(wait_seconds)
+
+  nav_lis <- live |> rvest::html_elements("li.RecordsByCategory_navItem__2OW0N")
+  nav_text <- nav_lis |>
+    rvest::html_element("button") |>
+    rvest::html_text2() |>
+    tolower()
+
+  gender_i <- which(nav_text == gender)[1]
+  if (is.na(gender_i)) {
+    stop("Could not find gender tab in nav; available: ", paste(unique(nav_text), collapse = ", "))
+  }
+
+  active_class <- rvest::html_attr(nav_lis, "class")
+  is_active <- grepl("RecordsByCategory_active__", active_class)
+
+  if (!is_active[gender_i]) {
+    live$click(paste0(
+      "li.RecordsByCategory_navItem__2OW0N:nth-child(", gender_i, ") > button"
+    ))
+    Sys.sleep(1)
+  }
+
+  n_rows <- live |>
+    rvest::html_elements("table tbody tr") |>
+    length()
+  if (n_rows == 0L) {
+    live$scroll_to(top = 1500)
+    Sys.sleep(1)
+    live$scroll_to(top = 3500)
+    Sys.sleep(1)
+    live$scroll_to(top = 6500)
+    Sys.sleep(2)
+  }
+
+  mens_world_records <- live |>
+    rvest::html_element("table") |>
+    rvest::html_table(fill = TRUE)
+
+  mens_world_records
+}
+```
+
+## Initial Data Scrape with rvest
+
+Men's world records scrape.
+
+```{r}
+#| echo: true
+
+mens_world_records <- wac_world_records(gender = "men")
+
+mens_world_records <- mens_world_records |>
+  dplyr::rename(Country = 7)
+```
+
+Women's world records scrape.
+
+```{r}
+#| echo: true
+womens_world_records <- wac_world_records(gender = "women")
+
+womens_world_records <- womens_world_records |>
+  dplyr::rename(Country = 7)
+# mixed_world_records <- wac_world_records(gender = "mixed")
+```
+
+<https://en.wikipedia.org/wiki/Athletics_record_progressions> for later bigger data obtain on each event.
+
+## Men's and Women's Current World Records Data Cleaning
+
+```{r}
+#| echo: true
+mens_world_records_clean <- mens_world_records |>
+  dplyr::select(Discipline, Perf, Competitor, DOB, Country, Date) |>
+  dplyr::mutate(
+    DOB = lubridate::dmy(DOB),
+    Date = lubridate::dmy(Date)
+  ) |>
+  dplyr::mutate(
+    Perf = gsub("h #", "", Perf),
+    Perf = stringr::str_remove(Perf, "h"),
+    Perf = stringr::str_remove(Perf, "   *"),
+    Perf = stringr::str_remove(Perf, "\\*"),
+    Perf = stringr::str_remove(Perf, "   (i)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  )
+
+womens_world_records_clean <- womens_world_records |>
+  dplyr::select(Discipline, Perf, Competitor, DOB, Country, Date) |>
+  dplyr::mutate(
+    DOB = lubridate::dmy(DOB),
+    Date = lubridate::dmy(Date)
+  ) |>
+  dplyr::mutate(
+    Perf = gsub("h #", "", Perf),
+    Perf = gsub(" #", "", Perf),
+    Perf = stringr::str_remove(Perf, "h"),
+    Perf = stringr::str_remove(Perf, "Wo   *"),
+    Perf = stringr::str_remove(Perf, "Wo"),
+    Perf = stringr::str_remove(Perf, " Mx"),
+    Perf = stringr::str_remove(Perf, "\\*"),
+    Perf = stringr::str_remove(Perf, "   \\(i\\)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  )
+```
+
+
+## All Current Running Records
+
+```{r}
+#| fig-width: 10
+mens_world_records_seconds <- mens_world_records_clean |>
+  dplyr::mutate(Perf = parse_perf(Perf))
+
+womens_world_records_seconds <- womens_world_records_clean |>
+  dplyr::mutate(Perf = parse_perf(Perf))
+
+womens_world_records_seconds_join <- womens_world_records_seconds |>
+  # dplyr::slice(1:25) |>
+  dplyr::mutate(Gender = "Women")
+mens_world_records_seconds_join <- mens_world_records_seconds |>
+  # dplyr::slice(1:21) |>
+  dplyr::mutate(Gender = "Men")
+mens_womens_records <- dplyr::full_join(womens_world_records_seconds_join, mens_world_records_seconds_join)
+
+readr::write_rds(mens_world_records_seconds, here("data/processed/mens_world_records_seconds.rds"))
+readr::write_rds(womens_world_records_seconds, here("data/processed/womens_world_records_seconds.rds"))
+readr::write_rds(mens_womens_records, here("data/processed/mens_womens_current_records.rds"))
+```
+
+
+## Progression of the 100 meter world record
+
+Source: Wikipedia — IAAF automatic timing era records (table 3).
+Columns: Time, Wind, Auto, Athlete, Nationality, Location of race, Date, Notes, Duration of record.
+Record status is derived from footnote annotations: [note 3] = Ben Johnson (doping),
+[note 5] = Tim Montgomery (doping), [note 6] = Justin Gatlin (doping).
+
+```{r}
+onehundred_records_1912_1976 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_100_metres_world_record_progression",
+  xpath = '//*[@id="Records_1912–1976"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+onehundred_records_since_1977 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_100_metres_world_record_progression",
+  xpath = '//*[@id="Records_since_1977"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+world_record_100_raw <- dplyr::bind_rows(onehundred_records_1912_1976, onehundred_records_since_1977) |>
+  dplyr::select(-Ref)
+
+world_record_100_clean <- world_record_100_raw |>
+  purrr::set_names(c(
+    "Time", "Wind", "Auto", "Athlete", "Nationality",
+    "Location of race", "Date", "Notes", "Duration"
+  )) |>
+  # Drop continuation rows that lack a full year or an athlete name
+  dplyr::filter(
+    stringr::str_detect(Date, "[0-9]{4}"),
+    !is.na(Athlete),
+    Athlete != ""
+  ) |>
+  dplyr::mutate(
+    # Strip footnote annotations from Wind (e.g. "1.2[a]" → 1.2)
+    Wind = suppressWarnings(as.numeric(stringr::str_extract(Wind, "-?[0-9]+\\.?[0-9]*"))),
+    # Prefer fully-electronic Auto time; fall back to official Time
+    Time = dplyr::coalesce(
+      suppressWarnings(as.numeric(Auto)),
+      suppressWarnings(as.numeric(Time))
+    ),
+    Date = lubridate::dmy(Date),
+    # Classify rescinded records by athlete and footnote
+    Record = dplyr::case_when(
+      Athlete %in% c("Ben Johnson", "Tim Montgomery", "Justin Gatlin") &
+        stringr::str_detect(Notes, "note [356]") ~ "Ratified but later Rescinded",
+      .default = "Ratified"
+    ),
+    Athlete = stringr::str_squish(Athlete),
+    Nationality = stringr::str_squish(Nationality),
+    `Location of race` = stringr::str_squish(`Location of race`)
+  ) |>
+  dplyr::select(Athlete, Nationality, `Location of race`, Record, Time, Wind, Date)
+
+onehundred_progression <- world_record_100_clean |>
+  dplyr::relocate(Date, .before = Athlete)
+
+readr::write_rds(onehundred_progression, here("data/processed/onehundred_progression.rds"))
+```
+
+
+# Getting Data From Wikipedia
+
+## 200m Data Obtain
+
+```{r}
+twohundred_records_1951_1976 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_200_metres_world_record_progression",
+  xpath = '//*[@id="Records_1951–1976"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+twohundred_records_post_1977 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_200_metres_world_record_progression",
+  xpath = '//*[@id="Records_post-1977"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+twohundred_progression <- dplyr::bind_rows(
+  twohundred_records_1951_1976 |>
+    dplyr::mutate(section = "Records 1951–1976", .before = 1),
+  twohundred_records_post_1977 |>
+    dplyr::mutate(section = "Records post-1977", .before = 1)
+)
+```
+
+
+## 400m Data Obtain
+
+```{r}
+fourhundred_records_1912_1976 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_400_metres_world_record_progression",
+  xpath = '//*[@id="Records_1912–1976"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+fourhundred_records_post_1976 <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_400_metres_world_record_progression",
+  xpath = '//*[@id="Records_post-1976"]/following::table[contains(@class,"wikitable")][1]'
+)
+
+fourhundred_progression <- dplyr::bind_rows(
+  fourhundred_records_1912_1976 |>
+    dplyr::mutate(section = "Records 1912–1976", .before = 1),
+  fourhundred_records_post_1976 |>
+    dplyr::mutate(section = "Records post-1976", .before = 1)
+)
+```
+
+
+## 800m Data Obtain
+
+```{r}
+eighthundred_men_pre_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/800_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[3]'
+)
+
+eighthundred_men_post_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/800_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[4]'
+)
+
+eighthundred_progression <- dplyr::bind_rows(eighthundred_men_pre_iaaf, eighthundred_men_post_iaaf) |>
+  dplyr::mutate(Time = dplyr::coalesce(Time, Mark)) |>
+  dplyr::select(-Mark)
+```
+
+## 1000m Data Obtain
+
+```{r}
+thousand_progression <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/1000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+)
+```
+
+
+## 1500m Data Obtain
+
+```{r}
+fifteenhundred_pre_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/1500_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+) |>
+  dplyr::mutate(Time = stringr::str_extract(Time, "\\d+:\\d+(?:\\+\\d+/\\d+)?"))
+
+fifteenhundred_post_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/1500_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[3]'
+)
+
+fifteenhundred_progression <- dplyr::bind_rows(
+  fifteenhundred_pre_iaaf,
+  fifteenhundred_post_iaaf
+)
+```
+
+
+## Mile Data Obtain
+
+Source: Wikipedia — IAAF/World Athletics era mile records (table 4).
+Columns: Time, Auto, Athlete, Nationality, Date, Venue.
+
+```{r}
+mile_progression_pre_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Mile_run_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+)
+
+mile_progression_post_iaaf <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Mile_run_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[5]'
+)
+
+mile_progression_raw <- dplyr::bind_rows(
+  mile_progression_pre_iaaf,
+  mile_progression_post_iaaf
+)
+
+normalize_fraction_seconds <- function(time_chr) {
+  time_chr |>
+    stringr::str_replace_all("\u2044", "/") |> # fraction slash → normal slash
+    stringr::str_replace(
+      "(\\d+):(\\d+)(\\d+)/(\\d+)",
+      \(m){
+        parts <- stringr::str_match(m, "(\\d+):(\\d+)(\\d+)/(\\d+)")
+        min <- as.numeric(parts[, 2])
+        sec <- as.numeric(parts[, 3])
+        num <- as.numeric(parts[, 4])
+        den <- as.numeric(parts[, 5])
+        sprintf("%d:%.2f", min, sec + num / den)
+      }
+    )
+}
+
+mile_progression_clean <- mile_progression_raw |>
+  # purrr::set_names(c("Time", "Auto", "Athlete", "Nationality", "Date", "Venue")) |>
+  dplyr::filter(stringr::str_detect(Date, "[0-9]{4}")) |>
+  dplyr::mutate(
+    Time = normalize_fraction_seconds(Time),
+    Time = stringr::str_remove_all(Time, "\\*|\\[.*?\\]"),
+    Date = stringr::str_remove_all(Date, "\\[.*?\\]"),
+    Date = lubridate::dmy(Date)
+  )
+```
+
+
+## 3000m Data Obtain
+
+```{r}
+threethousand_pre <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_3000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+)
+
+threethousand_post <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Men%27s_3000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[2]'
+)
+
+threethousand_progression <- dplyr::bind_rows(threethousand_pre, threethousand_post)
+```
+
+## 2 mile Data Obtain
+
+```{r}
+twomile <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Two_miles#World_Record_Progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[4]'
+)
+```
+
+
+## 5000m Data Obtain
+
+```{r}
+fivethousand_pre <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/5000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+)
+
+fivethousand_post <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/5000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[3]'
+)
+
+fivethousand_progression <- dplyr::bind_rows(fivethousand_pre, fivethousand_post)
+```
+
+
+## 10000m Data Obtain
+
+```{r}
+tenthousand_pre <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/10000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+) |>
+  dplyr::mutate(Time = stringr::str_extract(Time, "\\d+:\\d+(?:\\+\\d+/\\d+)?"))
+
+tenthousand_post<- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/10000_metres_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[2]'
+) |>
+  dplyr::select(-2) |>
+  dplyr::slice(-1)
+
+tenthousand_progression <- dplyr::bind_rows(tenthousand_pre, tenthousand_post)
+```
+
+
+## Half Marathon Data Obtain
+
+```{r}
+halfmarathon <- wikipedia_scrape(url = "https://en.wikipedia.org/wiki/Half_marathon_world_record_progression")
+```
+
+
+## Marathon Data Obtain
+
+```{r}
+marathon <- wikipedia_scrape(
+  url = "https://en.wikipedia.org/wiki/Marathon_world_record_progression",
+  xpath = '//*[@id="mw-content-text"]/div[2]/table[1]'
+)
+```
+
+
+# Data Combine and Clean
+
+Things get a little messy here but I maintain that this was the most efficient way to comb through the data, each dataset has similar parts that need to be cleaned but not exactly the same making it not worth the time to write a cleaning algorithm with extremely complicated regex. Additionally, there are different column names furthering the complexity of the issue, so instead I clean each dataset and bind it to the preceding one, adding to each bind as I go. Upon finishing data cleaning I add a column for distance before binding, the final dataframe is then written to the data as an rds, and a csv for kaggle.
+
+```{r}
+onehundred_progression_clean <- world_record_100_clean |>
+  dplyr::select(Athlete, Date, Nationality, Time, `Location of race`) |>
+  dplyr::rename(Location = `Location of race`) |>
+  dplyr::mutate(Distance = "100 Meters")
+
+twohundred_progression_clean_one <- twohundred_progression_one |>
+  dplyr::select(Athlete, Date, Nationality, Time, `Location of race`) |>
+  dplyr::mutate(
+    Date = stringr::str_remove(Date, "\\[2\\]"),
+    Date = stringr::str_remove(Date, "\\[3\\]"),
+    Date = stringr::str_remove_all(Date, "\\[[:digit:]\\]"),
+    Time = stringr::str_remove(Time, "y"),
+    Time = stringr::str_remove(Time, "A"),
+    Time = stringr::str_remove(Time, "\\+")
+  ) |>
+  dplyr::mutate(
+    Date = lubridate::dmy(Date),
+    Time = as.double(Time)
+  ) |>
+  dplyr::rename(Location = `Location of race`)
+
+twohundred_progression_clean_two <- twohundred_progression_two |>
+  dplyr::select(Athlete, Date, Nationality, Time, `Location of race`) |>
+  dplyr::mutate(
+    Date = stringr::str_remove_all(Date, "\\[[:digit:]\\]"),
+    Time = stringr::str_remove(Time, "y"),
+    Time = stringr::str_remove(Time, " A"),
+    Time = stringr::str_remove(Time, "\\+")
+  ) |>
+  dplyr::mutate(
+    Date = lubridate::dmy(Date),
+    Time = as.double(Time)
+  ) |>
+  dplyr::rename(Location = `Location of race`)
+
+two_hundred_final <- dplyr::bind_rows(twohundred_progression_clean_one, twohundred_progression_clean_two) |>
+  dplyr::mutate(Distance = "200 Meters")
+
+fourhundred_clean <- fourhundred_progression |>
+  dplyr::select(Athlete, Date, Nationality, Time, `Location of race`) |>
+  dplyr::mutate(
+    Date=stringr::str_remove_all(Date,"\\[[^\\]]+\\]"),
+    Date=stringr::str_remove(Date,"[:[:space:]]*49$"),
+    Date=stringr::str_squish(Date),
+    Time=stringr::str_remove_all(Time,"[yA\\+]"),
+    Time=stringr::str_trim(Time)
+  )
+
+fourhundred_clean_final <- fourhundred_clean_one |>
+  dplyr::rename(Location = `Location of race`) |>
+  dplyr::mutate(Distance = "400 Meters")
+
+eighthundred_clean <- eighthundred_progression |>
+  dplyr::select(Athlete, Date, Time, Location) |>
+  dplyr::mutate(
+    Location=stringr::str_remove_all(Location,"\\[\\d+\\]"),
+    Date=stringr::str_remove_all(Date,"\\[[^\\]]+\\]") |> stringr::str_squish(),
+    Date=dplyr::if_else(
+      stringr::str_detect(Date,"^\\d{4}$"),
+      paste0(Date,"-01-01"),
+      Date
+    ),
+    Date=lubridate::parse_date_time(Date,orders=c("ymd","dmy","d B Y")) |> as.Date(),
+    Time=stringr::str_remove_all(Time,"\\s*A|\\+|y") |> stringr::str_trim(),
+    Time=lubridate::ms(Time) |> lubridate::period_to_seconds() |> as.double(),
+    Distance="800 Meters"
+  )
+
+thousand_progression_clean <- thousand_progression |>
+  dplyr::mutate(
+    Date = stringr::str_remove(Date, "\\[1\\]"),
+    Date = lubridate::ymd(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "1000 Meters"
+  ) |>
+  dplyr::rename(Nationality = Country, Location = Venue)
+
+fifteenhundred_clean <- fifteenhundred_progression |>
+  dplyr::select(-Auto) |>
+  dplyr::rename(Location=Place) |>
+  dplyr::mutate(
+    Date=Date |> stringr::str_remove_all("\\[[^\\]]+\\]") |> stringr::str_squish() |> na_if(""),
+    Location=Location |> stringr::str_remove_all("\\[[^\\]]+\\]") |> stringr::str_squish() |> na_if(""),
+    Time=Time |> stringr::str_squish() |> na_if("") |> stringr::str_remove_all("\\+"),
+    Time = normalize_fraction_seconds(Time),
+    Time = stringr::str_extract(Time, "\\d+:\\d+(?:\\+\\d+/\\d+)?"),
+    # drop the CSS blob rows
+    Time=dplyr::if_else(stringr::str_detect(Time,"mw-parser-output"),NA_character_,Time),
+    # convert wikipedia "4:194/5" -> "4:19.8"
+    Time=stringr::str_replace(Time,"^([0-9]+):([0-9]{2})([0-9])/5$","\\1:\\2.\\3"),
+    Date = dplyr::if_else(Date == "1892", "01-01-1892", Date),
+    Date=lubridate::parse_date_time(Date,orders=c("ymd","dmy","mdy","d B Y","B d Y")) |> as.Date(),
+    Time_seconds=dplyr::case_when(
+      is.na(Time) ~ NA_real_,
+      stringr::str_detect(Time,"^[0-9]+(\\.[0-9]+)?$") ~ readr::parse_number(Time),
+      stringr::str_count(Time,":")==1 ~ lubridate::ms(Time) |> lubridate::period_to_seconds(),
+      stringr::str_count(Time,":")>=2 ~ lubridate::hms(Time) |> lubridate::period_to_seconds(),
+      TRUE ~ NA_real_
+    ) |> as.double(),
+    Distance="1500 Meters"
+  ) |>
+  dplyr::select(Time=Time_seconds, Athlete, Date, Location, Distance)
+
+mile_progression_final <- mile_progression_clean |>
+  dplyr::select(Time, Athlete, Nationality, Date, Venue) |>
+  dplyr::rename(Location = Venue) |>
+  dplyr::mutate(
+    Date = lubridate::ymd(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "One Mile"
+  )
+
+threethousand_clean <- threethousand_progression |>
+  dplyr::rename(Location = Place) |>
+  dplyr::mutate(
+    Date = stringr::str_remove(Date, "\\[1\\]"),
+    Date = lubridate::dmy(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "3000 Meters"
+  )
+
+twomile_clean <- twomile |>
+  dplyr::rename(Time = Result) |>
+  dplyr::mutate(
+    Date = lubridate::dmy(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "Two Mile"
+  )
+
+fivethousand_clean <- fivethousand_progression |>
+  dplyr::mutate(
+    Location = stringr::str_remove(Location, "\\[1\\]"),
+    Location = stringr::str_remove(Location, "\\[4\\]"),
+    Date = lubridate::ymd(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "5000 Meters"
+  )
+
+tenthousand_clean <- tenthousand_progression |>
+  dplyr::rename(Location = Place) |>
+  dplyr::mutate(
+    Location = stringr::str_remove(Location, "\\[1\\]"),
+    Date=lubridate::parse_date_time(
+      Date,
+      orders=c("ymd","dmy","mdy","d B Y","B d Y")
+    ) |>
+      as.Date(),
+    Time = as.double(lubridate::period_to_seconds(lubridate::ms(Time))),
+    Distance = "10000 Meters"
+  )
+
+halfmarathon_clean <- halfmarathon |>
+  dplyr::select(Time, Nationality, Date, Name, `Event/Place`) |>
+  dplyr::rename(Location=`Event/Place`, Athlete=Name) |>
+  dplyr::mutate(
+    Location=stringr::str_remove_all(Location,"\\[.*?\\]"),
+    Date=lubridate::dmy(Date),
+    Time=stringr::str_trim(Time),
+    Time=stringr::str_replace(Time,"^([0-9]{1,2}:[0-9]{2})$","0:\\1"),
+    Time=lubridate::hms(Time) |> lubridate::period_to_seconds() |> as.double(),
+    Distance="Half Marathon"
+  ) |>
+  dplyr::arrange(Time)
+
+marathon_clean <- marathon |>
+  dplyr::select(Time, Nationality, Date, Name, `Event/Place`) |>
+  dplyr::rename(Location = `Event/Place`, Athlete = Name) |>
+  dplyr::arrange(Time) |>
+  dplyr::mutate(
+    Date = stringr::str_remove(Date, "\\[nb 6\\]"),
+    Date = lubridate::mdy(Date),
+    Time = as.double(lubridate::period_to_seconds(lubridate::hms(Time))),
+    Distance = "Marathon"
+  )
+
+running_records_raw <- list(
+  onehundred_progression_clean,
+  two_hundred_final,
+  fourhundred_clean_final,
+  eighthundred_clean,
+  thousand_progression_clean,
+  fifteenhundred_clean,
+  mile_progression_final,
+  threethousand_clean,
+  twomile_clean,
+  fivethousand_clean,
+  tenthousand_clean,
+  halfmarathon_clean,
+  marathon_clean
+) |>
+  purrr::list_rbind()
+```
+
+## Final Data Cleanup
+
+I missed a few things so I do some final specific data cleaning, and then fill in missing nationality by using substr on the Athlete Column to find country codes. I use countrycode to get most of the countries read in, but have to do some explicitly as there is a lot of variation across wikipedia tables.
+
+```{r}
+running_records_raw <- readr::read_rds(here("data/processed/RunningRecordsOverTime.rds"))
+final_df <- running_records_raw |>
+  dplyr::mutate(
+    Location=stringr::str_remove_all(Location,"\\[[^\\]]+\\]"),
+    Location=stringr::str_remove(Location,"Yonkers,\\[nb 5\\]"),
+    Location=stringr::str_squish(Location)
+  ) |>
+  dplyr::mutate(
+    Nationality=dplyr::if_else(
+      stringr::str_detect(Athlete,"\\("),
+      stringr::str_match(Athlete,"\\(([^\\)]+)\\)")[,2],
+      Nationality
+    ),
+    Nationality=stringr::str_squish(Nationality),
+    Nationality=dplyr::if_else(
+      stringr::str_detect(Nationality,"^[A-Z]{3}$"),
+      countrycode::countrycode(Nationality,origin="ioc",destination="country.name"),
+      Nationality
+    )
+  ) |>
+  dplyr::mutate(
+    Nationality=dplyr::case_when(
+      stringr::str_detect(Athlete,"\\(URS\\)") ~ "Soviet Union",
+      stringr::str_detect(Athlete,"\\(GDR\\)") ~ "East Germany",
+      stringr::str_detect(Athlete,"\\(FRG\\)") ~ "West Germany",
+      stringr::str_detect(Athlete,"\\(TCH\\)") ~ "Czechoslovakia",
+      stringr::str_detect(Athlete,"\\(TAN\\)") ~ "Tanzania",
+      stringr::str_detect(Athlete,"\\(GER\\)") & Date > as.Date("1945-01-01") & Date < as.Date("1989-11-09") ~ "East Germany",
+      stringr::str_detect(Athlete,"\\(GER\\)") & (Date <= as.Date("1945-01-01") | Date >= as.Date("1989-11-09")) ~ "Germany",
+      .default=Nationality
+    ),
+    Athlete=stringr::str_remove(Athlete,"\\s*\\([^\\)]+\\)")
+  ) |>
+  dplyr::mutate(
+    Location=dplyr::case_when(
+      Athlete=="Daniel Komen" & Date==as.Date("1996-07-14") ~ "Lappeenranta, Finland",
+      Athlete=="Daniel Komen" & Date==as.Date("1997-07-19") ~ "Brussels, Belgium",
+      Athlete=="Alfred Shrubb" ~ "Ilford, England",
+      .default=Location
+    )
+  )
+
+readr::write_csv(final_df, here("data/processed/RunningRecordsOverTime.csv"))
+readr::write_rds(final_df, here("data/processed/RunningRecordsOverTime.rds"))
+# Potential future source for additional distances: https://www.arrs.run/RecProg/RP_wwT.htm
+```

@@ -1,22 +1,161 @@
-# Looking at Athletic Data in Various Sports
 
-As we move towards the mid-21st century the progress in world records in Athletics seems unstoppable, in fact at every point at which sports analysts, observers, and scientists alike have predicted an improvement to be impossible, a new unprecedented athlete has emerged <sup>[1](https://scholar.google.com/scholar_lookup?title=Linear%20models%20can%E2%80%99t%20keep%20up%20with%20sport%20gender%20gap&journal=Nature&volume=432&publication_year=2004&author=Reinboud%2CW)</sup>. The longest standing track and field record is currently held by Jarmila Kratochvílová in the 800m at 34 years (although controversy surrounds that record), in nearly every other event from the 100 meters to the marathon there has been consistent improvement. Most modern statistical models for this improvement use non-linear methods  <sup>[2](https://scholar.google.com/scholar_lookup?title=Lower%20bounds%20for%20athletic%20performance&pages=243-253&publication_year=1996&author=Blest%2CDC)</sup> <sup>[3](https://scholar.google.com/scholar_lookup?title=Limits%20to%20running%20speed%20in%20dogs%2C%20horses%20and%20humans&journal=J%20Exp%20Biol&volume=211&pages=3836-3849&publication_year=2008&author=Denny%2CMW)</sup> <sup>[4](https://scholar.google.com/scholar_lookup?title=Are%20there%20limits%20to%20running%20world%20records%3F&journal=Med%20Sci%20Sports%20Exerc&volume=37&pages=1785-1788&publication_year=2005&author=Nevill%2CAM&author=Whyte%2CG)</sup> <sup>[5](https://scholar.google.com/scholar_lookup?title=Are%20there%20limits%20to%20swimming%20world%20records%3F&journal=Int%20J%20Sports%20Med&volume=28&pages=1012-1017&publication_year=2007&author=Nevill%2CAM&author=Whyte%2CGP&author=Holder%2CRL)</sup>. The issue with most of these papers is that they attempt to do exactly what forecasting should never be used for, past performance to predict future performance in independent events (people). Instead using dependent events such as the rate of decrease in velocity between world records should be used, as it is impossible to say whether one events records will continue to improve based on the performances of people who could not have approached the levels of athleticism we see today.
+<!-- README.md is generated from README.Rmd. Do not edit README.md directly. -->
 
-Events like Breaking 2 perfectly exemplify why such analysis is foolish, with improved technology, methodology, and training slight marginal improvements should be possible for long times to come as those are rarely compiled into one event, and when they are large marginal improvements become possible. If we gifted Usain Bolt 10 tries over 10 days to set a 100 meter record in 2009 it is quite likely we would have seen a time slightly better than 9.58. The modelling literature on sprinting once again tries to look at this by comparing independent athletes, in [(Griffith, 2015)](https://scholarworks.gvsu.edu/cgi/viewcontent.cgi?article=1474&context=mcnair) <sup>6</sup> there are attempts to model the 100m world record with and without Usain Bolt's existence to see what is possible. This assumes that Usain Bolt is the limiting factor, which if it was done 20 years ago with whichever athlete was the record holder then would also decrease the maximum time! This type of analysis results in what I call line drawing - it's connect the dots for adults analysis that adds no value other than fancy math without purpose.
+# Athletics World Records
 
-So aside from variation in performance, and technological improvements, is there a literal limit that humans will reach in these performances? That is the question I investigate for several different sports here, track being the foremost as it is easiest to analyze, as well as the question of which records are the most impressive.
+Analysis of running world record progressions and current standings,
+asking: which records are most impressive, how fast has improvement
+been, and how do men’s and women’s records compare?
 
-The long term plan is to include statistics on many different types of physical exertion and make data sets that have not been looked at previously. Right now I am starting with just 
+------------------------------------------------------------------------
 
-- Running World Records
-- Swimming World Records
-- Cycling World Records
+## Pipeline — run scripts in this order
 
-to identify which world records have improved the most and why. These sports are best to work with as they are almost entirely individual (some drafting is of course possible), and are time based giving a simple statistic to track improvement on. Some work samples from Running World Records are below:
+Every script is self-contained Quarto document (`.qmd`) or R file
+rendered with `quarto render <file>` / `Rscript <file>`. Run them in the
+numbered order below; later steps depend on the processed data that
+earlier steps write to `data/processed/`.
 
-![](https://github.com/dungates/Athletics/blob/master/Rmd/Records_files/figure-html/unnamed-chunk-12-1.gif)
+### 1 · `pipeline/data_obtain.qmd`
 
-![](https://github.com/dungates/Athletics/blob/master/Images/MensWomensRecordPace)
+**Purpose:** Scrape all raw data from the web and write cleaned `.rds` /
+`.csv` files to `data/processed/`.
 
-![](https://github.com/dungates/Athletics/blob/master/Images/AllRecordsOverTime)
+| What it does | Source |
+|----|----|
+| Scrapes men’s & women’s current world records | [World Athletics](https://www.worldathletics.org/records/by-category/world-records) |
+| Scrapes 100 m record progression (IAAF automatic-timing era) | [Wikipedia — table 3](https://en.wikipedia.org/wiki/Men%27s_100_metres_world_record_progression) |
+| Scrapes record progressions for 200 m – marathon | [Wikipedia](https://en.wikipedia.org/wiki/Athletics_record_progressions) (one page per event) |
+| Scrapes mile record progression | [Wikipedia — table 4](https://en.wikipedia.org/wiki/Mile_run_world_record_progression) |
+| Cleans and standardises all time strings to seconds | via `parse_perf()` helper |
+| Resolves athlete nationalities via country codes | `countrycode` package |
 
+**Outputs written to `data/processed/`:**
+
+    mens_world_records_seconds.rds
+    womens_world_records_seconds.rds
+    mens_womens_current_records.rds
+    onehundred_progression.rds
+    RunningRecordsOverTime.rds
+    RunningRecordsOverTime.csv
+
+> **Note:** this script makes ~15 polite HTTP requests with a 1-second
+> delay between each. Allow a few minutes for it to run. Requires a live
+> internet connection.
+
+------------------------------------------------------------------------
+
+### 2 · `misc/apple_watch.qmd`
+
+**Purpose:** Parse the Apple Watch XML export and produce a processed
+heart-rate dataset.
+
+- Reads `data/raw/apple_health_export/export.xml` (~309 MB)
+- Filters `HKQuantityTypeIdentifierHeartRate` records
+- Writes `data/processed/heart_rate.rds`
+
+> Run this only if you have the Apple Health export available. The
+> processed `.rds` is checked in, so you can skip this step if you just
+> want to run the analyses.
+
+------------------------------------------------------------------------
+
+### 3 · `analysis/records.qmd`
+
+**Purpose:** Main analysis — “Which world record is most impressive?”
+
+Reads from `data/processed/`:
+
+- `mens_world_records_seconds.rds`
+- `womens_world_records_seconds.rds`
+- `mens_womens_current_records.rds`
+- `onehundred_progression.rds`
+- `RunningRecordsOverTime.rds`
+
+Produces:
+
+- Current records by distance and pace (short / middle / long)
+- Men’s vs women’s record comparison and gender gap
+- 100 m progression with wind speed and per-record improvement
+- Animated record progression (`gganimate`)
+- Log–distance regression models with `gtsummary` output tables
+
+------------------------------------------------------------------------
+
+### 4 · `analysis/standing_records.qmd`
+
+**Purpose:** Live table of current world records.
+
+Scrapes
+[worldathletics.org](https://www.worldathletics.org/records/by-category/world-records)
+at render time (requires internet), parses performance times with
+`parse_perf()`, and renders a `gt` table grouped by event type (running,
+relay, jumping, throwing).
+
+> Unlike the other analysis files this one hits the web at render time —
+> it always shows the latest records.
+
+------------------------------------------------------------------------
+
+### 5 · `analysis/all_time_athletics.qmd`
+
+**Purpose:** Scrape and display the all-time men’s best performances
+from [alltime-athletics.com](http://www.alltime-athletics.com/men.htm).
+
+- Reads the event index page to build a list of event links
+- Loops over events with `read_event()`, selecting the right column
+  schema per event type via a `column_configs` lookup list +
+  `purrr::detect()`
+- Parses pre-formatted ASCII tables with regex + `tidyr::separate()`
+
+------------------------------------------------------------------------
+
+### 6 · `shiny/app.R`
+
+**Purpose:** Interactive heart-rate dashboard.
+
+Reads `data/processed/heart_rate.rds` and serves a Shiny app with a
+date-range selector, heart-rate plot, and summary statistics table.
+
+Run with:
+
+``` r
+shiny::runApp("shiny/app.R")
+```
+
+------------------------------------------------------------------------
+
+## Dependency graph
+
+    worldathletics.org ──┐
+    Wikipedia (×12)  ────┤──► pipeline/data_obtain.qmd ──► data/processed/*.rds ──► analysis/records.qmd
+                         │                                                        └──► analysis/standing_records.qmd (also live)
+    apple_health_export ─┴──► misc/apple_watch.qmd ──► data/processed/heart_rate.rds ──► shiny/app.R
+
+    alltime-athletics.com ──► analysis/all_time_athletics.qmd
+
+------------------------------------------------------------------------
+
+## R packages required
+
+``` r
+install.packages(c(
+  "tidyverse", "here", "lubridate", "rvest", "xml2", "polite",
+  "countrycode", "readxl", "scales", "gt", "gtsummary",
+  "ggrepel", "ggtext", "ggpmisc", "gganimate", "transformr",
+  "shiny", "gentelellaShiny", "shinyWidgets", "magrittr"
+))
+```
+
+------------------------------------------------------------------------
+
+## Data sources
+
+| File | Source | Automated? |
+|----|----|----|
+| Current world records | [worldathletics.org](https://www.worldathletics.org/records/by-category/world-records) | ✅ scraped |
+| 100 m progression | [Wikipedia](https://en.wikipedia.org/wiki/Men%27s_100_metres_world_record_progression) | ✅ scraped |
+| 200 m – marathon progressions | Wikipedia (one page per event) | ✅ scraped |
+| Mile progression | [Wikipedia](https://en.wikipedia.org/wiki/Mile_run_world_record_progression) | ✅ scraped |
+| All-time best performances | [alltime-athletics.com](http://www.alltime-athletics.com/men.htm) | ✅ scraped |
+| Heart rate | Apple Watch (personal export) | manual export |

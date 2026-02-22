@@ -1,0 +1,146 @@
+---
+title: "Standing World Records"
+author: "Duncan Gates"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    self-contained: true
+    highlight-style: kate
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(xml2)
+library(here)
+library(lubridate)
+library(countrycode)
+library(gt)
+```
+
+```{r}
+parse_perf <- function(x) {
+  dplyr::case_when(
+    stringr::str_detect(x, ":[[:digit:]][[:digit:]]:") ~
+      lubridate::period_to_seconds(lubridate::hms(x)),
+    stringr::str_detect(x, ":") ~
+      lubridate::period_to_seconds(lubridate::ms(x)),
+    .default = as.numeric(x)
+  )
+}
+```
+
+## Data Obtain
+
+Scrape the data from the [worldathletics.org](https://www.worldathletics.org/records/by-category/world-records) website
+
+```{r}
+#| eval: false
+url <- "https://www.worldathletics.org/records/by-category/world-records"
+mens_world_records <- url |>
+  rvest::read_html() |>
+  rvest::html_nodes(xpath = '//*[@id="menoutdoor"]/table') |>
+  rvest::html_table()
+mens_world_records <- mens_world_records[[1]]
+
+womens_world_records <- url |>
+  rvest::read_html() |>
+  rvest::html_nodes(xpath = '//*[@id="womenoutdoor"]/table') |>
+  rvest::html_table()
+womens_world_records <- womens_world_records[[1]]
+```
+
+Then do a bit of cleaning to get the ideal data format for plotting
+
+```{r}
+mens_world_records_clean <- mens_world_records |>
+  dplyr::select(Discipline, Perf, Competitor, DOB, Country, Date) |>
+  dplyr::mutate(
+    DOB = lubridate::dmy(DOB),
+    Date = lubridate::dmy(Date)
+  ) |>
+  dplyr::mutate(
+    Perf = gsub("h #", "", Perf),
+    Perf = stringr::str_remove(Perf, "h"),
+    Perf = stringr::str_remove(Perf, "   *"),
+    Perf = stringr::str_remove(Perf, "\\*"),
+    Perf = stringr::str_remove_all(Perf, "   \\(i\\)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  ) |>
+  dplyr::mutate(
+    Perf = parse_perf(Perf),
+    Discipline = stringr::str_replace_all(Discipline, c(
+      "5 Kilometres" = "5000 Metres\n(Road)",
+      "10 Kilometres" = "10 Kilometres\n(Road)"
+    )),
+    Discipline = dplyr::if_else(
+      Discipline == "50 Kilometres" & Perf > dplyr::lag(Perf),
+      "50 Kilometres (Road)",
+      Discipline
+    )
+  ) |>
+  dplyr::rename_with(~paste0(.x, " (Men)")) |>
+  dplyr::rename(Discipline = 1) |>
+  dplyr::mutate(Type = dplyr::case_when(
+    stringr::str_detect(Discipline, "Metres|Mile|Marathon|Hour|Kilometres") ~ "Running Solo",
+    stringr::str_detect(Discipline, "Relay") ~ "Running Relay",
+    stringr::str_detect(Discipline, "Jump|Vault") ~ "Jumping",
+    stringr::str_detect(Discipline, "Shot|Throw") ~ "Throwing"
+  )) |>
+  dplyr::relocate(Type, .before = Discipline)
+
+womens_world_records_clean <- womens_world_records |>
+  dplyr::select(Discipline, Perf, Competitor, DOB, Country, Date) |>
+  dplyr::mutate(
+    DOB = lubridate::dmy(DOB),
+    Date = lubridate::dmy(Date)
+  ) |>
+  dplyr::filter(!stringr::str_detect(Perf, "\\*")) |>
+  dplyr::mutate(
+    Perf = gsub("h #", "", Perf),
+    Perf = gsub(" #", "", Perf),
+    Perf = stringr::str_remove(Perf, "h"),
+    Perf = stringr::str_remove(Perf, "Wo   *"),
+    Perf = stringr::str_remove(Perf, "Wo"),
+    Perf = stringr::str_remove(Perf, " Mx"),
+    Perf = stringr::str_remove(Perf, "\\*"),
+    Perf = stringr::str_remove_all(Perf, "   \\(i\\)"),
+    Discipline = factor(Discipline),
+    Country = factor(Country)
+  ) |>
+  dplyr::mutate(
+    Perf = parse_perf(Perf),
+    Discipline = dplyr::if_else(
+      Discipline == dplyr::lead(Discipline) & Perf > dplyr::lead(Perf),
+      paste0(Discipline, " (Road)"),
+      as.character(Discipline)
+    ),
+    Discipline = tidyr::replace_na(Discipline, "Distance Medley Relay")
+  ) |>
+  dplyr::rename_with(~paste0(.x, " (Women)")) |>
+  dplyr::rename(Discipline = 1)
+
+mens_and_womens_world_records <- mens_world_records_clean |>
+  dplyr::left_join(womens_world_records_clean)
+```
+
+
+## Visualizing with gt
+
+```{r}
+mens_and_womens_world_records |>
+  dplyr::group_by(Type) |>
+  gt::gt() |>
+  gt::tab_header(gt::md("**2023 World Records**")) |>
+  gt::tab_source_note("Table created by: Duncan Gates @gates_duncan with {gt} • Data: worldathletics.org") |>
+  gt::sub_missing(missing_text = "---")
+```
